@@ -1328,12 +1328,13 @@ def user_forgot_password():
         return redirect(url_for('user_forgot_password'))
 
     # Generate OTP
+            # Generate OTP
     otp = random.randint(100000, 999999)
 
     session['reset_otp'] = otp
     session['reset_email'] = email
 
-     try:
+    try:
         response = requests.post(
             "https://api.resend.com/emails",
             headers={
@@ -1345,24 +1346,24 @@ def user_forgot_password():
                 "to": [email],
                 "subject": "SmartCart Password Reset OTP",
                 "html": f"""
-                    <h2>SmartCart Password Reset</h2>
-                    <p>Your OTP is:</p>
-                    <h1>{otp}</h1>
-                    <p>Do not share this OTP with anyone.</p>
+                <h2>SmartCart Password Reset</h2>
+                <p>Your OTP is:</p>
+                <h1>{otp}</h1>
+                <p>Do not share this OTP with anyone.</p>
                 """
             },
             timeout=15
         )
-    
+
         response.raise_for_status()
         flash("OTP sent successfully!", "success")
-    
+
     except Exception as e:
         print("Resend error:", e)
         flash(f"Mail Error: {e}", "danger")
         return redirect(url_for('user_forgot_password'))
 
-    
+    return redirect(url_for('user_reset_password'))
 
     return redirect(url_for('user_reset_password'))
 
