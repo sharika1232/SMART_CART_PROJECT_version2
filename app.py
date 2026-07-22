@@ -159,7 +159,7 @@ def admin_contact():
                 },
                 json={
                     "from": "SmartCart <onboarding@resend.dev>",
-                    "to": ["YOUR_RESEND_EMAIL@gmail.com"],
+                    "to": ["ammulucky506@gmail.com"],
                     "subject": subject or f"SmartCart Admin Contact - {name}",
                     "html": f"""
                         <h2>New Admin Contact Message</h2>
