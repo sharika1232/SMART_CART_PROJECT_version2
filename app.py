@@ -138,46 +138,68 @@ def admin_about():
     return render_template("admin/admin_about.html")
 
 # ==========================================================
-# ADMIN CONTACT PAGE
+# ADMIN CONTACT
 # ==========================================================
-@app.route("/admin-contact", methods=["GET", "POST"])
+@app.route('/admin-contact', methods=['GET', 'POST'])
 def admin_contact():
 
-    if request.method == "POST":
+    if request.method == 'POST':
 
-        name = request.form.get("name")
-        email = request.form.get("email")
-        subject = request.form.get("subject")
-        message = request.form.get("message")
-
-        body = f"""
-Name: {name}
-Email: {email}
-
-Message:
-{message}
-"""
-
-        msg = MIMEText(body)
-        msg["Subject"] = subject
-        msg["From"] = config.MAIL_USERNAME
-        msg["To"] = config.MAIL_USERNAME
+        name = request.form.get('name')
+        email = request.form.get('email')
+        subject = request.form.get('subject')
+        message = request.form.get('message')
 
         try:
-            server = smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10)
-            server.starttls()
-            server.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
-            server.send_message(msg)
-            server.quit()
+            response = requests.post(
+                "https://api.resend.com/emails",
+                headers={
+                    "Authorization": f"Bearer {os.environ.get('RESEND_API_KEY')}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "from": "SmartCart <onboarding@resend.dev>",
+                    "to": ["YOUR_RESEND_EMAIL@gmail.com"],
+                    "subject": subject or f"SmartCart Admin Contact - {name}",
+                    "html": f"""
+                        <h2>New Admin Contact Message</h2>
 
-            flash("Message sent successfully!", "success")
+                        <p><strong>Name:</strong> {name}</p>
+                        <p><strong>Email:</strong> {email}</p>
+
+                        <p><strong>Message:</strong></p>
+                        <p>{message}</p>
+                    """
+                },
+                timeout=15
+            )
+
+            response.raise_for_status()
+
+            flash(
+                "Message sent successfully!",
+                "success"
+            )
 
         except Exception as e:
-            flash(str(e), "danger")
 
-        return redirect(url_for("admin_contact"))
+            print(
+                "Admin Contact Resend Error:",
+                e
+            )
 
-    return render_template("admin/admin_contact.html")
+            flash(
+                "Unable to send message. Please try again.",
+                "danger"
+            )
+
+        return redirect(
+            url_for('admin_contact')
+        )
+
+    return render_template(
+        "admin/admin_contact.html"
+    )
 
 # ==========================================================
 # ADMIN SIGNUP
@@ -1130,7 +1152,6 @@ def admin_profile_update():
 def user_about():
     return render_template("user/user_about.html")
 
-
 # ==========================================================
 # USER CONTACT
 # ==========================================================
@@ -1144,19 +1165,6 @@ def user_contact():
         subject = request.form.get('subject')
         message = request.form.get('message')
 
-                body = f"""
-        Name : {name}
-        Email : {email}
-        
-        Message:
-        {message}
-        """
-
-        msg = MIMEText(body)
-        msg['Subject'] = subject
-        msg['From'] = config.MAIL_USERNAME
-        msg['To'] = config.MAIL_USERNAME
-
         try:
             response = requests.post(
                 "https://api.resend.com/emails",
@@ -1166,30 +1174,47 @@ def user_contact():
                 },
                 json={
                     "from": "SmartCart <onboarding@resend.dev>",
-                    "to": ["YOUR_RESEND_ACCOUNT_EMAIL@gmail.com"],
-                    "subject": f"SmartCart User Contact - {name}",
+                    "to": ["ammulucky506@gmail.com"],
+                    "subject": subject or f"SmartCart User Contact - {name}",
                     "html": f"""
                         <h2>New User Contact Message</h2>
+
                         <p><strong>Name:</strong> {name}</p>
                         <p><strong>Email:</strong> {email}</p>
+
                         <p><strong>Message:</strong></p>
                         <p>{message}</p>
                     """
                 },
                 timeout=15
             )
-        
+
             response.raise_for_status()
-        
-            flash("Message sent successfully!", "success")
 
-    except Exception as e:
-        print("User Contact Resend Error:", e)
-        flash("Unable to send message. Please try again.", "danger")
-                return redirect(url_for('user_contact'))
+            flash(
+                "Message sent successfully!",
+                "success"
+            )
 
-    return render_template("user/user_contact.html")
+        except Exception as e:
 
+            print(
+                "User Contact Resend Error:",
+                e
+            )
+
+            flash(
+                "Unable to send message. Please try again.",
+                "danger"
+            )
+
+        return redirect(
+            url_for('user_contact')
+        )
+
+    return render_template(
+        "user/user_contact.html"
+    )
 
 # ==========================================================
 # USER REGISTER
