@@ -584,7 +584,6 @@ def admin_forgot_password():
 
     cursor.close()
     conn.close()
-
     if not admin:
         flash(
             "Email not found! Please register first.",
