@@ -10,6 +10,7 @@ import traceback
 import config
 import os
 import requests
+import resend
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -563,40 +564,37 @@ def admin_forgot_password():
         flash("Email not found! Please register first.", "danger")
         return redirect(url_for('admin_forgot_password'))
 
-    otp = random.randint(100000,999999)
+       otp = random.randint(100000, 999999)
 
-    session['admin_reset_otp'] = otp
-    session['admin_reset_email'] = email
+session['admin_reset_otp'] = otp
+session['admin_reset_email'] = email
 
-    try:
+try:
+    resend.api_key = os.environ.get("RESEND_API_KEY")
 
-        message = Message(
-            subject="SmartCart Admin Password Reset OTP",
-            sender=config.MAIL_USERNAME,
-            recipients=[email]
-        )
+    params = {
+        "from": "SmartCart <onboarding@resend.dev>",
+        "to": [email],
+        "subject": "SmartCart Admin Password Reset OTP",
+        "html": f"""
+            <h2>SmartCart Admin Password Reset</h2>
+            <p>Hello Admin,</p>
+            <p>Your password reset OTP is:</p>
+            <h1>{otp}</h1>
+            <p>Please do not share this OTP with anyone.</p>
+        """
+    }
 
-        message.body = f"""
-Hello Admin,
+    resend.Emails.send(params)
 
-Your SmartCart password reset OTP is:
+    flash("OTP sent successfully!", "success")
 
-{otp}
+except Exception as e:
+    print("Resend Admin OTP Error:", e)
+    flash(f"Mail Error: {e}", "danger")
+    return redirect(url_for('admin_forgot_password'))
 
-Please do not share this OTP with anyone.
-"""
-
-        mail.send(message)
-
-        flash("OTP sent successfully!", "success")
-
-    except Exception as e:
-
-        flash(f"Mail Error : {e}", "danger")
-
-        return redirect(url_for('admin_forgot_password'))
-
-    return redirect(url_for('admin_reset_password'))
+return redirect(url_for('admin_reset_password'))
 # ==========================================================
 # ADMIN RESET PASSWORD
 # ==========================================================
