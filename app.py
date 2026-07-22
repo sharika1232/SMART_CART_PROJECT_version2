@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash, jsonify, url_for
 from flask_mail import Mail, Message
-import mysql.connector
+import sqlite3
 from email.mime.text import MIMEText
 import smtplib
 import bcrypt
@@ -40,6 +40,12 @@ UPLOAD_FOLDER = os.path.join(
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# ---------------- SQLITE DATABASE PATH ----------------
+DATABASE = os.path.join(
+    app.root_path,
+    "smartcart.db"
+)
+
 # ---------------- RAZORPAY ----------------
 razorpay_client = razorpay.Client(
     auth=(config.RAZORPAY_KEY_ID, config.RAZORPAY_KEY_SECRET)
@@ -58,12 +64,54 @@ mail = Mail(app)
 
 # ---------------- DATABASE CONNECTION ----------------
 def get_db_connection():
-    return mysql.connector.connect(
-        host=config.DB_HOST,
-        user=config.DB_USER,
-        password=config.DB_PASSWORD,
-        database=config.DB_NAME
+    conn = sqlite3.connect(
+        DATABASE,
+        timeout=20
     )
+
+    # Allows:
+    # row["email"]
+    # row["admin_id"]
+    # row["name"]
+    #
+    # Similar to MySQL dictionary=True
+    conn.row_factory = sqlite3.Row
+
+    # Enable foreign key support
+    conn.execute("PRAGMA foreign_keys = ON")
+
+    class ConnectionProxy:
+        def __init__(self, real_conn):
+            self._conn = real_conn
+
+        def cursor(self, *args, **kwargs):
+            real_cur = self._conn.cursor()
+
+            class CursorProxy:
+                def __init__(self, cur):
+                    self._cur = cur
+
+                def execute(self, query, params=None):
+                    if isinstance(query, str) and "%s" in query:
+                        query = query.replace("%s", "?")
+                    if params is None:
+                        return self._cur.execute(query)
+                    return self._cur.execute(query, params)
+
+                def executemany(self, query, seq):
+                    if isinstance(query, str) and "%s" in query:
+                        query = query.replace("%s", "?")
+                    return self._cur.executemany(query, seq)
+
+                def __getattr__(self, name):
+                    return getattr(self._cur, name)
+
+            return CursorProxy(real_cur)
+
+        def __getattr__(self, name):
+            return getattr(self._conn, name)
+
+    return ConnectionProxy(conn)
 
 # ==========================================================
 # USER HOME PAGE
@@ -1947,8 +1995,9 @@ def user_orders():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("""
-        SELECT * FROM orders
-        WHERE user_id=%s
+        SELECT *, created_at AS order_date
+        FROM orders
+        WHERE user_id=?
         ORDER BY order_id DESC
     """, (session['user_id'],))
 
@@ -1977,7 +2026,7 @@ def order_success(order_id):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM orders WHERE order_id=%s AND user_id=%s",
+        "SELECT *, created_at AS order_date FROM orders WHERE order_id=? AND user_id=?",
         (order_id, session['user_id'])
     )
     order = cursor.fetchone()
@@ -2019,7 +2068,7 @@ def invoice(order_id):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM orders WHERE order_id=%s AND user_id=%s",
+        "SELECT *, created_at AS order_date FROM orders WHERE order_id=? AND user_id=?",
         (order_id, session['user_id'])
     )
     order = cursor.fetchone()
@@ -2061,8 +2110,9 @@ def my_orders():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("""
-        SELECT * FROM orders
-        WHERE user_id=%s
+        SELECT *, created_at AS order_date
+        FROM orders
+        WHERE user_id=?
         ORDER BY order_date DESC
     """, (session['user_id'],))
 
