@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Smart Cart | Smart Shopping Made Simple</title>
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    background:#ffffff;
+
+    color:#1e293b;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav{
+
+    width:100%;
+
+    min-height:78px;
+
+    padding:0 6%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0866d9,
+            #18a8d8
+        );
+
+    box-shadow:
+
+        0 4px 18px
+        rgba(15,23,42,0.12);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:white;
+
+    white-space:nowrap;
+
+}
+
+
+.logo-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+
+        rgba(255,255,255,.15);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.22);
+
+    font-size:20px;
+
+}
+
+
+.logo-text h2{
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    line-height:1.1;
+
+    letter-spacing:.3px;
+
+}
+
+
+.logo-text span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+
+        rgba(255,255,255,.75);
+
+    font-size:8px;
+
+    letter-spacing:1.5px;
+
+}
+
+
+/* =========================================
+   NAVIGATION LINKS
+========================================= */
+
+nav ul{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:22px;
+
+    list-style:none;
+
+}
+
+
+nav ul li{
+
+    list-style:none;
+
+    white-space:nowrap;
+
+}
+
+
+nav ul li a{
+
+    position:relative;
+
+    color:
+
+        rgba(255,255,255,.92);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    transition:.3s ease;
+
+}
+
+
+nav ul li a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s ease;
+
+}
+
+
+nav ul li a:hover{
+
+    color:white;
+
+}
+
+
+nav ul li a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* =========================================
+   REGISTER BUTTON
+========================================= */
+
+.register-link{
+
+    display:inline-block;
+
+    padding:9px 16px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.65);
+
+    border-radius:8px;
+
+}
+
+
+.register-link::after{
+
+    display:none;
+
+}
+
+
+.register-link:hover{
+
+    background:white;
+
+    color:#0876d1 !important;
+
+}
+
+
+/* =========================================
+   ADMIN HOME BUTTON
+========================================= */
+
+.admin-home-link{
+
+    display:inline-block;
+
+    padding:9px 16px;
+
+    background:white;
+
+    color:#0876d1 !important;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+    box-shadow:
+
+        0 5px 15px
+        rgba(0,0,0,.08);
+
+    transition:.3s ease;
+
+}
+
+
+.admin-home-link::after{
+
+    display:none;
+
+}
+
+
+.admin-home-link:hover{
+
+    transform:translateY(-2px);
+
+    background:#f8fbff;
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(0,0,0,.12);
+
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:29px;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero{
+
+    min-height:82vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:80px 20px;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(56,189,248,.13),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(13,110,253,.10),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #ffffff
+        );
+
+}
+
+
+.hero-content{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+.hero-badge{
+
+    display:inline-block;
+
+    margin-bottom:22px;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#e8f4ff;
+
+    color:#0878ce;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+}
+
+
+.hero h1{
+
+    margin-bottom:25px;
+
+    color:#123f78;
+
+    font-size:
+
+        clamp(
+            48px,
+            6vw,
+            76px
+        );
+
+    font-weight:800;
+
+    line-height:1.1;
+
+}
+
+
+.hero h1 span{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #087bea,
+            #00a6c8
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+}
+
+
+.hero p{
+
+    max-width:700px;
+
+    margin:
+
+        0 auto 35px;
+
+    color:#64748b;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================================
+   HERO BUTTONS
+========================================= */
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.btn-primary,
+.btn-secondary{
+
+    display:inline-block;
+
+    min-width:165px;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:
+
+        all .3s ease;
+
+}
+
+
+.btn-primary{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #087bea,
+            #00a6c8
+        );
+
+    box-shadow:
+
+        0 8px 22px
+        rgba(8,123,234,.25);
+
+}
+
+
+.btn-primary:hover{
+
+    transform:
+
+        translateY(-3px);
+
+    box-shadow:
+
+        0 12px 28px
+        rgba(8,123,234,.35);
+
+}
+
+
+.btn-secondary{
+
+    color:#087bea;
+
+    background:white;
+
+    border:
+
+        1px solid
+        #cfe2f5;
+
+}
+
+
+.btn-secondary:hover{
+
+    transform:
+
+        translateY(-3px);
+
+    background:#f2f8ff;
+
+    box-shadow:
+
+        0 8px 20px
+        rgba(15,23,42,.08);
+
+}
+
+
+/* =========================================
+   FEATURES SECTION
+========================================= */
+
+.features-section{
+
+    padding:85px 8%;
+
+    background:white;
+
+}
+
+
+.section-heading{
+
+    max-width:700px;
+
+    margin:
+
+        0 auto 50px;
+
+    text-align:center;
+
+}
+
+
+.section-heading span{
+
+    color:#0785d1;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:1.4px;
+
+}
+
+
+.section-heading h2{
+
+    margin-top:10px;
+
+    margin-bottom:14px;
+
+    color:#123f78;
+
+    font-size:38px;
+
+    font-weight:700;
+
+}
+
+
+.section-heading p{
+
+    color:#64748b;
+
+    font-size:16px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================
+   FEATURE GRID
+========================================= */
+
+.features{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+            auto-fit,
+            minmax(250px,1fr)
+        );
+
+    gap:25px;
+
+    max-width:1150px;
+
+    margin:auto;
+
+}
+
+
+.feature-card{
+
+    padding:35px 28px;
+
+    background:white;
+
+    border:
+
+        1px solid
+        #e2e8f0;
+
+    border-radius:18px;
+
+    text-align:left;
+
+    transition:
+
+        all .3s ease;
+
+}
+
+
+.feature-card:hover{
+
+    transform:
+
+        translateY(-8px);
+
+    border-color:#bae6fd;
+
+    box-shadow:
+
+        0 18px 40px
+        rgba(15,23,42,.09);
+
+}
+
+
+.feature-icon{
+
+    width:55px;
+
+    height:55px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+    border-radius:14px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #dbeafe
+        );
+
+    font-size:25px;
+
+}
+
+
+.feature-card h3{
+
+    margin-bottom:12px;
+
+    color:#123f78;
+
+    font-size:20px;
+
+    font-weight:600;
+
+}
+
+
+.feature-card p{
+
+    color:#64748b;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================
+   CTA SECTION
+========================================= */
+
+.cta{
+
+    margin:
+
+        20px 8% 80px;
+
+    padding:65px 25px;
+
+    border-radius:24px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0866d9,
+            #16a8d7
+        );
+
+    box-shadow:
+
+        0 18px 45px
+        rgba(8,102,217,.18);
+
+}
+
+
+.cta h2{
+
+    margin-bottom:14px;
+
+    font-size:36px;
+
+    font-weight:700;
+
+}
+
+
+.cta p{
+
+    max-width:650px;
+
+    margin:
+
+        0 auto 28px;
+
+    color:
+
+        rgba(255,255,255,.9);
+
+    font-size:16px;
+
+    line-height:1.7;
+
+}
+
+
+.cta-btn{
+
+    display:inline-block;
+
+    padding:14px 28px;
+
+    background:white;
+
+    color:#0876d1;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s ease;
+
+}
+
+
+.cta-btn:hover{
+
+    transform:
+
+        translateY(-3px);
+
+    box-shadow:
+
+        0 10px 25px
+        rgba(0,0,0,.15);
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+
+    padding:
+
+        55px 8% 25px;
+
+    background:#0f172a;
+
+    color:#cbd5e1;
+
+}
+
+
+.footer-content{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+
+        2fr 1fr 1.3fr;
+
+    gap:50px;
+
+}
+
+
+.footer-brand h2{
+
+    margin-bottom:15px;
+
+    color:white;
+
+    font-size:25px;
+
+}
+
+
+.footer-brand p{
+
+    max-width:430px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    line-height:1.8;
+
+}
+
+
+.footer-links h3,
+.footer-contact h3{
+
+    margin-bottom:18px;
+
+    color:white;
+
+    font-size:17px;
+
+}
+
+
+.footer-links a{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+
+.footer-links a:hover{
+
+    color:#38bdf8;
+
+}
+
+
+.footer-contact p{
+
+    margin-bottom:10px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+}
+
+
+.footer-contact a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+}
+
+
+.footer-bottom{
+
+    max-width:1150px;
+
+    margin:
+
+        40px auto 0;
+
+    padding-top:22px;
+
+    border-top:
+
+        1px solid
+        rgba(255,255,255,.1);
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:13px;
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width:1050px){
+
+
+    nav{
+
+        padding:
+
+            15px 4%;
+
+    }
+
+
+    nav ul{
+
+        gap:14px;
+
+    }
+
+
+    nav ul li a{
+
+        font-size:12px;
+
+    }
+
+
+    .register-link,
+    .admin-home-link{
+
+        padding:
+
+            8px 12px;
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+@media screen and (max-width:768px){
+
+
+    nav{
+
+        min-height:70px;
+
+        padding:
+
+            12px 5%;
+
+        flex-direction:row;
+
+        position:sticky;
+
+    }
+
+
+    .logo-icon{
+
+        width:38px;
+
+        height:38px;
+
+        font-size:18px;
+
+    }
+
+
+    .logo-text h2{
+
+        font-size:18px;
+
+    }
+
+
+    .logo-text span{
+
+        font-size:7px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    nav ul{
+
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+
+        left:0;
+
+        width:100%;
+
+        padding:
+
+            10px 5% 18px;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:3px;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #0866d9,
+                #0d8ee8
+            );
+
+        box-shadow:
+
+            0 12px 25px
+            rgba(15,23,42,.15);
+
+    }
+
+
+    nav ul.active{
+
+        display:flex;
+
+    }
+
+
+    nav ul li{
+
+        width:100%;
+
+    }
+
+
+    nav ul li a{
+
+        display:block;
+
+        width:100%;
+
+        padding:12px;
+
+        border-radius:7px;
+
+        text-align:center;
+
+        font-size:13px;
+
+    }
+
+
+    nav ul li a::after{
+
+        display:none;
+
+    }
+
+
+    nav ul li a:hover{
+
+        background:
+
+            rgba(255,255,255,.12);
+
+    }
+
+
+    .register-link{
+
+        border:none;
+
+    }
+
+
+    .admin-home-link{
+
+        margin-top:5px;
+
+        background:white;
+
+        color:#0876d1 !important;
+
+    }
+
+
+    /* HERO */
+
+    .hero{
+
+        min-height:75vh;
+
+        padding:
+
+            65px 20px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:46px;
+
+    }
+
+
+    .hero p{
+
+        font-size:16px;
+
+    }
+
+
+    .section-heading h2{
+
+        font-size:31px;
+
+    }
+
+
+    .footer-content{
+
+        grid-template-columns:1fr;
+
+        gap:35px;
+
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media screen and (max-width:520px){
+
+
+    nav{
+
+        padding:
+
+            11px 14px;
+
+    }
+
+
+    .logo-icon{
+
+        width:36px;
+
+        height:36px;
+
+    }
+
+
+    .logo-text h2{
+
+        font-size:16px;
+
+    }
+
+
+    .logo-text span{
+
+        font-size:7px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:25px;
+
+    }
+
+
+    .hero{
+
+        padding:
+
+            55px 16px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:38px;
+
+    }
+
+
+    .hero p{
+
+        font-size:15px;
+
+        line-height:1.7;
+
+    }
+
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+    .btn-primary,
+    .btn-secondary{
+
+        width:100%;
+
+        max-width:280px;
+
+    }
+
+
+    .features-section{
+
+        padding:
+
+            65px 18px;
+
+    }
+
+
+    .section-heading h2{
+
+        font-size:27px;
+
+    }
+
+
+    .feature-card{
+
+        padding:28px 22px;
+
+    }
+
+
+    .cta{
+
+        margin:
+
+            10px 5% 60px;
+
+        padding:
+
+            45px 20px;
+
+    }
+
+
+    .cta h2{
+
+        font-size:27px;
+
+    }
+
+
+    .cta p{
+
+        font-size:14px;
+
+    }
+
+
+    footer{
+
+        padding:
+
+            45px 20px 22px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav>
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+            <span>
+
+                SMART SHOPPING
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- MOBILE MENU -->
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <!-- NAVIGATION -->
+
+    <ul id="navLinks">
+
+
+        <li>
+
+            <a href="/">
+
+                HOME
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user-about">
+
+                ABOUT
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user-contact">
+
+                CONTACT
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user-login">
+
+                LOGIN
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user-register"
+               class="register-link">
+
+                REGISTER
+
+            </a>
+
+        </li>
+
+
+        <!-- ADMIN HOME -->
+
+        <li>
+
+            <a href="{{ url_for('admin_home') }}"
+               class="admin-home-link">
+
+                ADMIN HOME
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     HERO SECTION
+========================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <span class="hero-badge">
+
+            SMART SHOPPING EXPERIENCE
+
+        </span>
+
+
+        <h1>
+
+            Shop Smarter.
+
+            <br>
+
+            <span>
+
+                Live Better.
+
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Experience a faster, simpler, and smarter
+            way to shop. Discover products, manage your
+            cart, and enjoy a seamless shopping journey
+            with Smart Cart.
+
+        </p>
+
+
+
+        <div class="hero-buttons">
+
+
+            <a href="/user-login"
+               class="btn-primary">
+
+                Start Shopping
+
+            </a>
+
+
+            <a href="/user-about"
+               class="btn-secondary">
+
+                Explore Smart Cart
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     FEATURES SECTION
+========================================= -->
+
+<section class="features-section">
+
+
+    <div class="section-heading">
+
+
+        <span>
+
+            WHY SMART CART?
+
+        </span>
+
+
+        <h2>
+
+            Everything You Need for
+            Smarter Shopping
+
+        </h2>
+
+
+        <p>
+
+            Smart Cart combines convenience,
+            security, and simplicity to make
+            your shopping experience effortless.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="features">
+
+
+        <!-- FEATURE 1 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🛍️
+
+            </div>
+
+
+            <h3>
+
+                Simple Shopping
+
+            </h3>
+
+
+            <p>
+
+                Browse and discover products easily
+                through a clean and user-friendly
+                shopping experience.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- FEATURE 2 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🛒
+
+            </div>
+
+
+            <h3>
+
+                Smart Cart Management
+
+            </h3>
+
+
+            <p>
+
+                Add, review, and manage your selected
+                products effortlessly before completing
+                your purchase.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- FEATURE 3 -->
+
+        <div class="feature-card">
+
+
+            <div class="feature-icon">
+
+                🔒
+
+            </div>
+
+
+            <h3>
+
+                Secure & Reliable
+
+            </h3>
+
+
+            <p>
+
+                Enjoy a reliable platform designed
+                to provide a safe and smooth
+                shopping experience.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     CTA SECTION
+========================================= -->
+
+<section class="cta">
+
+
+    <h2>
+
+        Ready to Shop the Smarter Way?
+
+    </h2>
+
+
+    <p>
+
+        Create your Smart Cart account and enjoy
+        a simple, convenient, and seamless
+        shopping experience.
+
+    </p>
+
+
+    <a href="/user-register"
+       class="cta-btn">
+
+        Create an Account
+
+    </a>
+
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <!-- FOOTER BRAND -->
+
+        <div class="footer-brand">
+
+
+            <h2>
+
+                🛒 Smart Cart
+
+            </h2>
+
+
+            <p>
+
+                Smart Cart is a modern shopping
+                platform designed to make product
+                discovery, cart management, and
+                online shopping simple, efficient,
+                and convenient.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+
+            <h3>
+
+                Quick Links
+
+            </h3>
+
+
+            <a href="/">
+
+                Home
+
+            </a>
+
+
+            <a href="/user-about">
+
+                About
+
+            </a>
+
+
+            <a href="/user-contact">
+
+                Contact
+
+            </a>
+
+
+            <a href="/user-login">
+
+                Login
+
+            </a>
+
+
+            <a href="/user-register">
+
+                Register
+
+            </a>
+
+
+            <a href="{{ url_for('admin_home') }}">
+
+                Admin Home
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-contact">
+
+
+            <h3>
+
+                Contact
+
+            </h3>
+
+
+            <p>
+
+                📍 Telangana, India
+
+            </p>
+
+
+            <p>
+
+                📧 Email:
+
+                <a href="mailto:support@smartcart.com">
+
+                    support@smartcart.com
+
+                </a>
+
+            </p>
+
+
+            <p>
+
+                📞 Phone:
+                +91 6281172858
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-bottom">
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* OPEN / CLOSE MOBILE MENU */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* CLOSE MENU AFTER CLICKING LINK */
+
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* RESET MENU WHEN RETURNING TO DESKTOP */
+
+window.addEventListener(
+
+    "resize",
+
+    function(){
+
+
+        if(window.innerWidth > 768){
+
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+
+        }
+
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>

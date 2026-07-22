@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Address | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --primary:#0d6efd;
+    --secondary:#38bdf8;
+    --dark:#0f172a;
+    --light:#f8fbff;
+    --danger:#ef4444;
+    --success:#22c55e;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:linear-gradient(135deg,#eef7ff,#dbeafe);
+    color:#334155;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    width:100%;
+    min-height:78px;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(90deg,#0d6efd,#38bdf8);
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+    position:relative;
+    z-index:1000;
+}
+
+.logo{
+    color:white;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:.5px;
+    white-space:nowrap;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.nav-links a{
+    position:relative;
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:white;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#e0f2fe;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.menu-toggle{
+    display:none;
+    border:none;
+    background:transparent;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
+}
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+    position:fixed;
+    top:90px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:550px;
+    z-index:9999;
+}
+
+.flash-message{
+    position:relative;
+    padding:14px 45px 14px 18px;
+    margin-bottom:10px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:500;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.flash-message.success{
+    background:#dcfce7;
+    color:#15803d;
+    border:1px solid #bbf7d0;
+}
+
+.flash-message.error,
+.flash-message.danger{
+    background:#fee2e2;
+    color:#b91c1c;
+    border:1px solid #fecaca;
+}
+
+.flash-message.warning{
+    background:#fef3c7;
+    color:#92400e;
+    border:1px solid #fde68a;
+}
+
+.flash-message.info{
+    background:#dbeafe;
+    color:#1d4ed8;
+    border:1px solid #bfdbfe;
+}
+
+.close-btn{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:transparent;
+    color:inherit;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+    width:94%;
+    max-width:780px;
+    margin:45px auto;
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* =========================
+   ADDRESS CARD
+========================= */
+
+.address-card{
+    width:100%;
+    background:white;
+    padding:40px;
+    border-radius:24px;
+    box-shadow:
+        0 15px 35px rgba(13,110,253,.12),
+        0 5px 15px rgba(0,0,0,.05);
+}
+
+.card-header{
+    text-align:center;
+    margin-bottom:32px;
+}
+
+.edit-icon{
+    font-size:50px;
+    margin-bottom:8px;
+}
+
+.card-header h1{
+    color:#0d47a1;
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.card-header p{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#334155;
+    font-size:14px;
+    font-weight:600;
+}
+
+.required{
+    color:#ef4444;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:14px 15px;
+    border:2px solid #dbeafe;
+    border-radius:12px;
+    background:#f8fbff;
+    color:#334155;
+    font-size:15px;
+    outline:none;
+    transition:.3s;
+}
+
+.form-group input:hover,
+.form-group textarea:hover{
+    border-color:#bfdbfe;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color:#38bdf8;
+    background:white;
+    box-shadow:0 0 12px rgba(56,189,248,.20);
+}
+
+.form-group textarea{
+    min-height:120px;
+    resize:vertical;
+    line-height:1.6;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-group{
+    display:flex;
+    gap:15px;
+    margin-top:28px;
+}
+
+.btn{
+    flex:1;
+    min-height:50px;
+    padding:14px 20px;
+    border:none;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn{
+    background:linear-gradient(90deg,#0d6efd,#38bdf8);
+    color:white;
+}
+
+.save-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(13,110,253,.25);
+}
+
+.back-btn{
+    background:linear-gradient(90deg,#64748b,#94a3b8);
+    color:white;
+}
+
+.back-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(100,116,139,.20);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    width:100%;
+    padding:30px 20px;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+}
+
+footer h3{
+    margin-bottom:10px;
+    font-size:21px;
+}
+
+footer p{
+    max-width:850px;
+    margin:5px auto;
+    color:#cbd5e1;
+    font-size:14px;
+    line-height:1.7;
+}
+
+footer a{
+    color:#38bdf8;
+    text-decoration:none;
+}
+
+footer a:hover{
+    text-decoration:underline;
+}
+
+.footer-links{
+    margin-top:15px;
+}
+
+.footer-links a{
+    margin:0 6px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:992px){
+
+    .navbar{
+        padding:15px 20px;
+    }
+
+    .logo{
+        font-size:25px;
+    }
+
+    .nav-links{
+        gap:16px;
+    }
+
+    .nav-links a{
+        font-size:12px;
+    }
+
+    .main-content{
+        margin:35px auto;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+    .navbar{
+        min-height:68px;
+        padding:14px 18px;
+    }
+
+    .logo{
+        font-size:22px;
+    }
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding:8px 0;
+        background:#0d6efd;
+        box-shadow:0 10px 25px rgba(0,0,0,.15);
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .nav-links a{
+        width:100%;
+        padding:13px 20px;
+        text-align:center;
+        font-size:14px;
+        border-bottom:1px solid rgba(255,255,255,.15);
+    }
+
+    .nav-links a:last-child{
+        border-bottom:none;
+    }
+
+    .nav-links a::after{
+        display:none;
+    }
+
+    .nav-links a:hover{
+        background:rgba(255,255,255,.1);
+        color:white;
+    }
+
+    .main-content{
+        width:94%;
+        margin:25px auto;
+    }
+
+    .address-card{
+        padding:25px;
+        border-radius:18px;
+    }
+
+    .card-header h1{
+        font-size:29px;
+    }
+
+    .edit-icon{
+        font-size:42px;
+    }
+
+    .row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .btn-group{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width:480px){
+
+    .navbar{
+        padding:13px 15px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .menu-toggle{
+        font-size:26px;
+    }
+
+    .main-content{
+        width:95%;
+        margin:20px auto;
+    }
+
+    .address-card{
+        padding:18px 15px;
+        border-radius:15px;
+    }
+
+    .card-header{
+        margin-bottom:25px;
+    }
+
+    .edit-icon{
+        font-size:38px;
+    }
+
+    .card-header h1{
+        font-size:25px;
+    }
+
+    .card-header p{
+        font-size:12px;
+    }
+
+    .form-group input,
+    .form-group textarea{
+        padding:12px;
+        font-size:14px;
+    }
+
+    .btn{
+        min-height:46px;
+        padding:12px;
+        font-size:13px;
+    }
+
+    footer{
+        padding:25px 15px;
+    }
+
+    footer p{
+        font-size:12px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        SMART CART
+    </div>
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+        ☰
+    </button>
+
+    <div class="nav-links" id="navLinks">
+
+        <a href="/user-dashboard">
+            DASHBOARD
+        </a>
+
+        <a href="/user/products">
+            PRODUCTS
+        </a>
+
+        <a href="/user/cart">
+            CART
+        </a>
+
+        <a href="/user/orders">
+            ORDERS
+        </a>
+
+        <a href="/user/address">
+            ADDRESSES
+        </a>
+
+        <a href="/user-logout">
+            LOGOUT
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     FLASH MESSAGES
+========================= -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for category, message in messages %}
+
+                <div
+                    class="flash-message {{ category }}"
+                    id="flash{{ loop.index }}">
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="close-btn"
+                        onclick="closeFlash('flash{{ loop.index }}')">
+                        &times;
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+    <div class="address-card">
+
+        <div class="card-header">
+
+            <div class="edit-icon">
+                ✏️
+            </div>
+
+            <h1>
+                Edit Address
+            </h1>
+
+            <p>
+                Update your delivery address information below.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             EDIT ADDRESS FORM
+        ========================== -->
+
+        <form method="POST">
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+                <label for="full_name">
+                    Full Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    value="{{ address.full_name }}"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value="{{ address.phone }}"
+                    placeholder="Enter 10-digit phone number"
+                    inputmode="numeric"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    autocomplete="tel"
+                    title="Please enter a valid 10-digit phone number"
+                    required>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-group">
+
+                <label for="address">
+                    Address
+                    <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="address"
+                    name="address"
+                    placeholder="House number, street, area, landmark..."
+                    autocomplete="street-address"
+                    required>{{ address.address }}</textarea>
+
+            </div>
+
+
+            <!-- CITY + STATE -->
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label for="city">
+                        City
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value="{{ address.city }}"
+                        placeholder="Enter city"
+                        autocomplete="address-level2"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="state">
+                        State
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        value="{{ address.state }}"
+                        placeholder="Enter state"
+                        autocomplete="address-level1"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <!-- PINCODE -->
+
+            <div class="form-group">
+
+                <label for="pincode">
+                    Pincode
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="pincode"
+                    name="pincode"
+                    value="{{ address.pincode }}"
+                    placeholder="Enter 6-digit pincode"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    maxlength="6"
+                    autocomplete="postal-code"
+                    title="Please enter a valid 6-digit pincode"
+                    required>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="btn-group">
+
+                <button
+                    type="submit"
+                    class="btn save-btn">
+
+                    💾 Update Address
+
+                </button>
+
+                <a
+                    href="/user/address"
+                    class="btn back-btn">
+
+                    ← Back to Addresses
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <h3>
+        🛒 Smart Cart
+    </h3>
+
+    <p>
+        Smart Cart is an innovative online shopping platform
+        designed to provide a seamless and secure shopping experience.
+    </p>
+
+    <br>
+
+    <p>
+        📍 Telangana, India
+    </p>
+
+    <p>
+        📧
+        <a href="mailto:support@smartcart.com">
+            support@smartcart.com
+        </a>
+    </p>
+
+    <p>
+        📞 +91 6281172858
+    </p>
+
+    <div class="footer-links">
+
+        <a href="#">
+            Privacy Policy
+        </a>
+
+        |
+
+        <a href="#">
+            Terms & Conditions
+        </a>
+
+        |
+
+        <a href="/user-contact">
+            Contact Us
+        </a>
+
+    </div>
+
+    <br>
+
+    <p>
+        © 2026 Smart Cart. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* MOBILE NAVBAR */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+/* CLOSE FLASH MESSAGE */
+
+function closeFlash(id){
+
+    const flash =
+        document.getElementById(id);
+
+    if(flash){
+
+        flash.style.display = "none";
+
+    }
+
+}
+
+
+/* CLOSE MOBILE MENU AFTER LINK CLICK */
+
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+            }
+        );
+
+    });
+
+
+/* RESET MOBILE MENU WHEN SCREEN BECOMES DESKTOP */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        if(window.innerWidth > 768){
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

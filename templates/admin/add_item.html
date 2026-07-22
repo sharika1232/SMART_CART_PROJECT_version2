@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product | Smart Cart Admin</title>
+
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: #f5f8fc;
+
+            color: #1e293b;
+        }
+
+
+        /* =========================================
+           ADMIN NAVBAR
+        ========================================= */
+
+        .navbar {
+
+            min-height: 76px;
+
+            padding: 0 6%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0866d9,
+                    #0d8ee8,
+                    #16a8d7
+                );
+
+            box-shadow:
+                0 4px 18px
+                rgba(15, 23, 42, 0.12);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        /* BRAND */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+
+            color: white;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(255,255,255,0.17);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.25);
+
+            border-radius: 11px;
+
+            font-size: 21px;
+        }
+
+
+        .logo-text h2 {
+
+            color: white;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            line-height: 1.1;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .logo-text span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 9px;
+
+            font-weight: 500;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        /* NAV LINKS */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+
+            color:
+                rgba(255,255,255,0.9);
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            white-space: nowrap;
+
+            transition: 0.3s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+        }
+
+
+        .nav-links .active-link {
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        /* LOGOUT */
+
+        .nav-links .logout-link {
+
+            padding: 9px 17px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.65);
+
+            border-radius: 8px;
+        }
+
+
+        .nav-links .logout-link:hover {
+
+            background: white;
+
+            color: #0876d1;
+
+            border-color: white;
+        }
+
+
+        /* MOBILE MENU */
+
+        .menu-toggle {
+
+            display: none;
+
+            background: transparent;
+
+            border: none;
+
+            color: white;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           FLASH MESSAGES
+        ========================================= */
+
+        .flash-container {
+
+            position: fixed;
+
+            top: 90px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 500px;
+
+            max-width: 90%;
+
+            z-index: 9999;
+        }
+
+
+        .flash-message {
+
+            position: relative;
+
+            margin-bottom: 10px;
+
+            padding:
+                14px 45px 14px 18px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            box-shadow:
+                0 10px 30px
+                rgba(15,23,42,0.15);
+        }
+
+
+        .flash-message.success {
+
+            background: #16a34a;
+        }
+
+
+        .flash-message.error,
+        .flash-message.danger {
+
+            background: #dc2626;
+        }
+
+
+        .flash-message.warning {
+
+            background: #d97706;
+        }
+
+
+        .close-btn {
+
+            position: absolute;
+
+            top: 8px;
+
+            right: 14px;
+
+            cursor: pointer;
+
+            font-size: 21px;
+        }
+
+
+        /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+        .page-header {
+
+            padding:
+                50px 7% 42px;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(56,189,248,0.13),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 70%,
+                    rgba(13,110,253,0.08),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid #e8eef5;
+        }
+
+
+        .page-header-container {
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        .page-badge {
+
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            padding: 7px 15px;
+
+            background: #e7f3ff;
+
+            color: #0878ce;
+
+            border-radius: 30px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.4px;
+        }
+
+
+        .page-header h1 {
+
+            margin-bottom: 10px;
+
+            color: #123f78;
+
+            font-size:
+                clamp(32px,4vw,44px);
+
+            font-weight: 750;
+        }
+
+
+        .page-header p {
+
+            max-width: 650px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+
+        .main-content {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding:
+                45px 5% 70px;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           FORM CARD
+        ========================================= */
+
+        .form-card {
+
+            overflow: hidden;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(15,23,42,0.06);
+        }
+
+
+        /* Form Card Header */
+
+        .form-card-header {
+
+            padding: 25px 30px;
+
+            border-bottom:
+                1px solid #e8eef5;
+        }
+
+
+        .form-card-header h2 {
+
+            margin-bottom: 5px;
+
+            color: #123f78;
+
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+
+        .form-card-header p {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .product-form {
+
+            padding: 32px;
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px 25px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .full-width {
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        label {
+
+            margin-bottom: 8px;
+
+            color: #334155;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .required {
+
+            color: #dc2626;
+
+            margin-left: 2px;
+        }
+
+
+        /* INPUTS */
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            background: #f8fbff;
+
+            color: #334155;
+
+            border:
+                1px solid #dbe5ef;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: 0.3s ease;
+        }
+
+
+        input[type="text"],
+        input[type="number"] {
+
+            height: 47px;
+        }
+
+
+        textarea {
+
+            min-height: 125px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color: #94a3b8;
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            background: white;
+
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(56,189,248,0.10);
+        }
+
+
+        /* =========================================
+           FILE UPLOAD
+        ========================================= */
+
+        .file-upload {
+
+            position: relative;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: #f8fbff;
+
+            border:
+                1px dashed #93c5fd;
+
+            border-radius: 12px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .file-upload:hover {
+
+            background: #f1f8ff;
+
+            border-color: #38bdf8;
+        }
+
+
+        .upload-icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            margin:
+                0 auto 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #dbeafe
+                );
+
+            font-size: 23px;
+        }
+
+
+        .file-upload h4 {
+
+            margin-bottom: 5px;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .file-upload p {
+
+            margin-bottom: 15px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        input[type="file"] {
+
+            width: 100%;
+
+            max-width: 360px;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+
+        input[type="file"]::file-selector-button {
+
+            margin-right: 12px;
+
+            padding: 9px 14px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #e7f3ff;
+
+            color: #0876d1;
+
+            font-family:
+                'Poppins', sans-serif;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        /* Selected File */
+
+        .file-name {
+
+            display: none;
+
+            margin-top: 12px;
+
+            color: #15803d;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           FORM ACTIONS
+        ========================================= */
+
+        .form-actions {
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 12px;
+
+            border-top:
+                1px solid #edf2f7;
+        }
+
+
+        .cancel-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 120px;
+
+            height: 45px;
+
+            padding: 0 20px;
+
+            background: white;
+
+            color: #475569;
+
+            border:
+                1px solid #dbe5ef;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.3s ease;
+        }
+
+
+        .cancel-btn:hover {
+
+            background: #f8fafc;
+
+            border-color: #cbd5e1;
+        }
+
+
+        .submit-btn {
+
+            min-width: 155px;
+
+            height: 45px;
+
+            padding: 0 22px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #087bea,
+                    #00a6c8
+                );
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px
+                rgba(8,123,234,0.20);
+
+            transition: 0.3s ease;
+        }
+
+
+        .submit-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 11px 25px
+                rgba(8,123,234,0.30);
+        }
+
+
+        /* =========================================
+           HELP SECTION
+        ========================================= */
+
+        .form-help {
+
+            margin-top: 22px;
+
+            padding: 20px 22px;
+
+            display: flex;
+
+            gap: 14px;
+
+            align-items: flex-start;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f1f8ff,
+                    #ecfeff
+                );
+
+            border:
+                1px solid #dbeafe;
+
+            border-radius: 13px;
+        }
+
+
+        .help-icon {
+
+            min-width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: white;
+
+            border-radius: 10px;
+
+            font-size: 17px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(15,23,42,0.05);
+        }
+
+
+        .help-content h4 {
+
+            margin-bottom: 4px;
+
+            color: #123f78;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .help-content p {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            padding: 25px 7%;
+
+            background: #0f172a;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+
+            color: white;
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media screen and (max-width: 1000px) {
+
+            .navbar {
+
+                padding:
+                    0 4%;
+            }
+
+
+            .nav-links {
+
+                gap: 15px;
+            }
+
+
+            .nav-links a {
+
+                font-size: 12px;
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 768px) {
+
+            /* NAVBAR */
+
+            .navbar {
+
+                min-height: 70px;
+
+                padding:
+                    12px 5%;
+
+                position: sticky;
+            }
+
+
+            .logo-icon {
+
+                width: 38px;
+
+                height: 38px;
+
+                font-size: 18px;
+            }
+
+
+            .logo-text h2 {
+
+                font-size: 18px;
+            }
+
+
+            .logo-text span {
+
+                font-size: 8px;
+            }
+
+
+            .menu-toggle {
+
+                display: block;
+            }
+
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                left: 0;
+
+                width: 100%;
+
+                padding:
+                    10px 5% 18px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 3px;
+
+                background:
+                    linear-gradient(
+                        135deg,
+                        #0866d9,
+                        #0d8ee8
+                    );
+
+                box-shadow:
+                    0 12px 25px
+                    rgba(15,23,42,0.15);
+            }
+
+
+            .nav-links.active {
+
+                display: flex;
+            }
+
+
+            .nav-links a {
+
+                width: 100%;
+
+                padding:
+                    11px 13px;
+
+                border-radius: 7px;
+
+                font-size: 13px;
+            }
+
+
+            .nav-links a:hover {
+
+                background:
+                    rgba(255,255,255,0.12);
+            }
+
+
+            .nav-links .logout-link {
+
+                margin-top: 5px;
+
+                text-align: center;
+            }
+
+
+            /* HEADER */
+
+            .page-header {
+
+                padding:
+                    38px 5%;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 31px;
+            }
+
+
+            /* MAIN */
+
+            .main-content {
+
+                padding:
+                    28px 4% 50px;
+            }
+
+
+            /* FORM */
+
+            .form-card {
+
+                border-radius: 14px;
+            }
+
+
+            .form-card-header {
+
+                padding: 22px;
+            }
+
+
+            .product-form {
+
+                padding: 22px;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+
+            .full-width {
+
+                grid-column: auto;
+            }
+
+
+            /* ACTIONS */
+
+            .form-actions {
+
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+            }
+
+
+            .cancel-btn,
+            .submit-btn {
+
+                width: 100%;
+            }
+
+
+            .flash-container {
+
+                top: 82px;
+            }
+
+        }
+
+
+        /* =========================================
+           SMALL MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 480px) {
+
+            .page-header h1 {
+
+                font-size: 27px;
+            }
+
+
+            .page-header p {
+
+                font-size: 13px;
+            }
+
+
+            .main-content {
+
+                padding-left: 12px;
+
+                padding-right: 12px;
+            }
+
+
+            .form-card-header {
+
+                padding: 19px;
+            }
+
+
+            .form-card-header h2 {
+
+                font-size: 19px;
+            }
+
+
+            .product-form {
+
+                padding: 18px;
+            }
+
+
+            .file-upload {
+
+                padding: 20px 12px;
+            }
+
+
+            .form-help {
+
+                padding: 17px;
+
+                flex-direction: column;
+            }
+
+
+            footer {
+
+                font-size: 12px;
+
+                line-height: 1.7;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ADMIN NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+
+    <!-- BRAND -->
+
+    <a href="{{ url_for('admin_dashboard') }}"
+       class="brand">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+
+            <span>
+
+                ADMIN PORTAL
+
+            </span>
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- MOBILE MENU -->
+
+    <button class="menu-toggle"
+
+            type="button"
+
+            onclick="toggleMenu()"
+
+            aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <!-- NAVIGATION -->
+
+    <div class="nav-links"
+         id="navLinks">
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="{{ url_for('item_list') }}">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="{{ url_for('add_item_page') }}"
+           class="active-link">
+
+            ADD PRODUCT
+
+        </a>
+
+
+        <a href="{{ url_for('admin_profile') }}">
+
+            PROFILE
+
+        </a>
+
+
+        <a href="{{ url_for('admin_logout') }}"
+           class="logout-link">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     FLASH MESSAGES
+========================================= -->
+
+<div class="flash-container">
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+
+    {% if messages %}
+
+
+        {% for category, message in messages %}
+
+
+        <div class="flash-message {{ category }}"
+             id="flash{{ loop.index }}">
+
+
+            {{ message }}
+
+
+            <span class="close-btn"
+
+                  onclick="
+                  document.getElementById(
+                  'flash{{ loop.index }}'
+                  ).style.display='none'">
+
+                &times;
+
+            </span>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% endif %}
+
+
+{% endwith %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<section class="page-header">
+
+
+    <div class="page-header-container">
+
+
+        <span class="page-badge">
+
+            PRODUCT MANAGEMENT
+
+        </span>
+
+
+        <h1>
+
+            Add New Product
+
+        </h1>
+
+
+        <p>
+
+            Create a new product listing by entering
+            the product details, pricing, category,
+            and product image.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="main-content">
+
+
+    <!-- FORM CARD -->
+
+    <div class="form-card">
+
+
+        <!-- CARD HEADER -->
+
+        <div class="form-card-header">
+
+
+            <h2>
+
+                Product Information
+
+            </h2>
+
+
+            <p>
+
+                Enter the required information below
+                to add a new product to Smart Cart.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             PRODUCT FORM
+        ====================================== -->
+
+        <form
+
+            method="POST"
+
+            action="{{ url_for('add_item') }}"
+
+            enctype="multipart/form-data"
+
+            class="product-form">
+
+
+            <div class="form-grid">
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+
+                    <label for="name">
+
+                        Product Name
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        id="name"
+
+                        name="name"
+
+                        placeholder="Enter product name"
+
+                        required>
+
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+
+                    <label for="category">
+
+                        Category
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        id="category"
+
+                        name="category"
+
+                        placeholder="Example: Electronics"
+
+                        required>
+
+
+                </div>
+
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+
+                    <label for="price">
+
+                        Price (₹)
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+
+                        type="number"
+
+                        id="price"
+
+                        name="price"
+
+                        step="0.01"
+
+                        min="0"
+
+                        placeholder="Enter product price"
+
+                        required>
+
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full-width">
+
+
+                    <label for="description">
+
+                        Product Description
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <textarea
+
+                        id="description"
+
+                        name="description"
+
+                        rows="5"
+
+                        placeholder="Enter a clear description of the product..."
+
+                        required></textarea>
+
+
+                </div>
+
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group full-width">
+
+
+                    <label for="image">
+
+                        Product Image
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="file-upload">
+
+
+                        <div class="upload-icon">
+
+                            🖼️
+
+                        </div>
+
+
+                        <h4>
+
+                            Upload Product Image
+
+                        </h4>
+
+
+                        <p>
+
+                            Choose a clear image
+                            for your product.
+
+                        </p>
+
+
+                        <input
+
+                            type="file"
+
+                            id="image"
+
+                            name="image"
+
+                            accept="image/*"
+
+                            onchange="showFileName(this)"
+
+                            required>
+
+
+                        <div
+
+                            class="file-name"
+
+                            id="fileName">
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 FORM ACTIONS
+            ================================== -->
+
+            <div class="form-actions">
+
+
+                <a href="{{ url_for('item_list') }}"
+                   class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+
+                    type="submit"
+
+                    class="submit-btn">
+
+                    ＋ Add Product
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         INFORMATION BOX
+    ====================================== -->
+
+    <div class="form-help">
+
+
+        <div class="help-icon">
+
+            💡
+
+        </div>
+
+
+        <div class="help-content">
+
+
+            <h4>
+
+                Product Listing Tip
+
+            </h4>
+
+
+            <p>
+
+                Use a clear product name,
+                accurate category and price,
+                a useful description, and a
+                high-quality image to keep
+                your product catalog organized
+                and easy to manage.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    © 2026
+
+    <strong>
+
+        Smart Cart
+
+    </strong>
+
+    Administration Portal.
+
+    All Rights Reserved.
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+    /* Mobile Navigation */
+
+    function toggleMenu() {
+
+        document
+            .getElementById('navLinks')
+            .classList
+            .toggle('active');
+
+    }
+
+
+
+    /* Close mobile menu after clicking link */
+
+    document
+        .querySelectorAll('.nav-links a')
+        .forEach(function(link) {
+
+
+            link.addEventListener(
+                'click',
+                function() {
+
+
+                    document
+                        .getElementById('navLinks')
+                        .classList
+                        .remove('active');
+
+
+                }
+            );
+
+
+        });
+
+
+
+    /* Display selected image filename */
+
+    function showFileName(input) {
+
+
+        const fileName =
+            document.getElementById('fileName');
+
+
+        if (
+            input.files &&
+            input.files.length > 0
+        ) {
+
+
+            fileName.textContent =
+                '✓ Selected: ' +
+                input.files[0].name;
+
+
+            fileName.style.display =
+                'block';
+
+
+        } else {
+
+
+            fileName.textContent = '';
+
+
+            fileName.style.display =
+                'none';
+
+
+        }
+
+
+    }
+
+
+
+    /* Auto hide flash messages */
+
+    setTimeout(function() {
+
+
+        document
+            .querySelectorAll('.flash-message')
+            .forEach(function(message) {
+
+
+                message.style.display =
+                    'none';
+
+
+            });
+
+
+    }, 5000);
+
+
+</script>
+
+
+</body>
+
+</html>

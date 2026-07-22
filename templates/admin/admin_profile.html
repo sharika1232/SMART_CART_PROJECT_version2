@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Admin Profile | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+:root{
+    --primary:#0d6efd;
+    --secondary:#38bdf8;
+    --dark:#0f172a;
+    --text:#334155;
+    --muted:#64748b;
+    --border:#dbeafe;
+    --light:#f8fbff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(56,189,248,.12),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(13,110,253,.09),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #eef7ff
+        );
+
+    color:var(--text);
+
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:76px;
+
+    padding:0 6%;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0866d9,
+            #0d8ee8,
+            #16a8d7
+        );
+
+    box-shadow:
+
+        0 4px 18px
+        rgba(15,23,42,.12);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:white;
+
+    flex-shrink:0;
+}
+
+
+.logo-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.16);
+
+    border:
+        1px solid
+        rgba(255,255,255,.22);
+
+    font-size:21px;
+}
+
+
+.logo-text h2{
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    line-height:1.1;
+
+    letter-spacing:.3px;
+}
+
+
+.logo-text span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+        rgba(255,255,255,.75);
+
+    font-size:9px;
+
+    font-weight:500;
+
+    letter-spacing:1.5px;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+    list-style:none;
+}
+
+
+.nav-links li{
+
+    list-style:none;
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:
+        rgba(255,255,255,.92);
+
+    font-size:12px;
+
+    font-weight:500;
+
+    white-space:nowrap;
+
+    transition:.3s ease;
+}
+
+
+.normal-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s ease;
+}
+
+
+.normal-link:hover::after{
+
+    width:100%;
+}
+
+
+.nav-links a:hover{
+
+    color:white;
+}
+
+
+/* =========================================
+   ACTIVE PROFILE
+========================================= */
+
+.profile-link{
+
+    display:inline-block;
+
+    padding:9px 16px;
+
+    background:white;
+
+    color:#0876d1 !important;
+
+    border-radius:8px;
+
+    font-weight:600 !important;
+
+    box-shadow:
+
+        0 5px 15px
+        rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+
+.profile-link:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(0,0,0,.13);
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.logout-link{
+
+    display:inline-block;
+
+    padding:9px 16px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.6);
+
+    border-radius:8px;
+
+    transition:.3s;
+}
+
+
+.logout-link:hover{
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+
+/* =========================================
+   MENU BUTTON
+========================================= */
+
+.menu-toggle{
+
+    display:none;
+
+    background:transparent;
+
+    border:none;
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   FLASH MESSAGES
+========================================= */
+
+.flash-container{
+
+    position:fixed;
+
+    top:90px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:500px;
+
+    max-width:90%;
+
+    z-index:9999;
+}
+
+
+.flash-message{
+
+    position:relative;
+
+    margin-bottom:10px;
+
+    padding:
+
+        14px 45px
+        14px 18px;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    box-shadow:
+
+        0 10px 30px
+        rgba(15,23,42,.15);
+}
+
+
+.flash-message.success{
+
+    background:#16a34a;
+}
+
+
+.flash-message.error,
+.flash-message.danger{
+
+    background:#dc2626;
+}
+
+
+.flash-message.warning{
+
+    background:#d97706;
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:7px;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content{
+
+    flex:1;
+
+    width:100%;
+
+    padding:
+
+        60px 5%
+        75px;
+
+    display:flex;
+
+    justify-content:center;
+}
+
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
+.profile-container{
+
+    width:100%;
+
+    max-width:1050px;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header{
+
+    margin-bottom:28px;
+}
+
+
+.page-header span{
+
+    color:#0785d1;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+}
+
+
+.page-header h1{
+
+    margin:
+
+        6px 0
+        7px;
+
+    color:#123f78;
+
+    font-size:34px;
+
+    font-weight:700;
+}
+
+
+.page-header p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================
+   PROFILE WRAPPER
+========================================= */
+
+.profile-wrapper{
+
+    display:grid;
+
+    grid-template-columns:
+
+        330px 1fr;
+
+    background:white;
+
+    border:
+
+        1px solid
+        #e2e8f0;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 18px 45px
+        rgba(15,23,42,.08);
+}
+
+
+/* =========================================
+   PROFILE LEFT SIDE
+========================================= */
+
+.profile-summary{
+
+    padding:
+
+        45px 30px;
+
+    text-align:center;
+
+    background:
+
+        radial-gradient(
+            circle at top,
+            rgba(56,189,248,.16),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            145deg,
+            #eef8ff,
+            #ecfeff
+        );
+
+    border-right:
+
+        1px solid
+        #dbeafe;
+}
+
+
+/* =========================================
+   PROFILE IMAGE
+========================================= */
+
+.profile-image-wrapper{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:22px;
+}
+
+
+.profile-image{
+
+    position:relative;
+
+    width:145px;
+
+    height:145px;
+}
+
+
+.profile-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:
+
+        5px solid
+        white;
+
+    box-shadow:
+
+        0 10px 30px
+        rgba(15,23,42,.15);
+
+    outline:
+
+        3px solid
+        #38bdf8;
+}
+
+
+/* =========================================
+   NO IMAGE AVATAR
+========================================= */
+
+.no-profile-image{
+
+    width:145px;
+
+    height:145px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    font-size:50px;
+
+    border:
+
+        5px solid
+        white;
+
+    box-shadow:
+
+        0 10px 30px
+        rgba(15,23,42,.15);
+
+    outline:
+
+        3px solid
+        #38bdf8;
+}
+
+
+/* =========================================
+   PROFILE DETAILS
+========================================= */
+
+.profile-summary h2{
+
+    margin-top:23px;
+
+    margin-bottom:5px;
+
+    color:#123f78;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    overflow-wrap:anywhere;
+}
+
+
+.profile-summary .email{
+
+    color:#64748b;
+
+    font-size:12px;
+
+    overflow-wrap:anywhere;
+}
+
+
+.admin-badge{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    padding:
+
+        7px 14px;
+
+    border-radius:30px;
+
+    background:#dbeafe;
+
+    color:#075fb4;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================
+   PROFILE INFO
+========================================= */
+
+.profile-info{
+
+    margin-top:30px;
+
+    padding-top:25px;
+
+    border-top:
+
+        1px solid
+        #dbeafe;
+
+    text-align:left;
+}
+
+
+.info-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    margin-bottom:14px;
+
+    color:#475569;
+
+    font-size:11px;
+}
+
+
+.info-icon{
+
+    min-width:31px;
+
+    height:31px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:8px;
+
+    background:white;
+
+    border:
+
+        1px solid
+        #dbeafe;
+}
+
+
+/* =========================================
+   PROFILE FORM SIDE
+========================================= */
+
+.profile-form-section{
+
+    padding:
+
+        45px 45px;
+}
+
+
+.form-header{
+
+    margin-bottom:28px;
+}
+
+
+.form-header span{
+
+    color:#0785d1;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:1.4px;
+}
+
+
+.form-header h2{
+
+    margin:
+
+        6px 0
+        7px;
+
+    color:#123f78;
+
+    font-size:27px;
+
+    font-weight:700;
+}
+
+
+.form-header p{
+
+    color:#64748b;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(2,1fr);
+
+    gap:18px;
+}
+
+
+.form-group{
+
+    margin-bottom:19px;
+}
+
+
+label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#334155;
+
+    font-size:12px;
+
+    font-weight:600;
+}
+
+
+.optional{
+
+    color:#94a3b8;
+
+    font-size:10px;
+
+    font-weight:400;
+}
+
+
+input{
+
+    width:100%;
+
+    height:48px;
+
+    padding:
+
+        0 14px;
+
+    border:
+
+        1px solid
+        #dbe5ef;
+
+    border-radius:9px;
+
+    background:#f8fbff;
+
+    color:#334155;
+
+    font-size:13px;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+
+input:focus{
+
+    background:white;
+
+    border-color:#38bdf8;
+
+    box-shadow:
+
+        0 0 0 3px
+        rgba(56,189,248,.10);
+}
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+.password-wrapper{
+
+    position:relative;
+}
+
+
+.password-wrapper input{
+
+    padding-right:65px;
+}
+
+
+.password-toggle{
+
+    position:absolute;
+
+    top:50%;
+
+    right:13px;
+
+    transform:
+        translateY(-50%);
+
+    border:none;
+
+    background:none;
+
+    color:#087bea;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   FILE INPUT
+========================================= */
+
+input[type="file"]{
+
+    height:auto;
+
+    padding:11px;
+
+    cursor:pointer;
+}
+
+
+input[type="file"]::file-selector-button{
+
+    margin-right:12px;
+
+    padding:
+
+        8px 13px;
+
+    border:none;
+
+    border-radius:7px;
+
+    background:#e0f2fe;
+
+    color:#075fb4;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   IMAGE HELP
+========================================= */
+
+.file-help{
+
+    margin-top:-10px;
+
+    margin-bottom:20px;
+
+    color:#94a3b8;
+
+    font-size:10px;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.button-group{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    margin-top:8px;
+}
+
+
+.update-btn{
+
+    flex:1;
+
+    min-height:47px;
+
+    border:none;
+
+    border-radius:9px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #087bea,
+            #00a6c8
+        );
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:
+
+        0 8px 20px
+        rgba(8,123,234,.20);
+
+    transition:.3s;
+}
+
+
+.update-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+
+        0 12px 26px
+        rgba(8,123,234,.30);
+}
+
+
+.dashboard-btn{
+
+    min-height:47px;
+
+    padding:
+
+        0 20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:
+
+        1px solid
+        #dbeafe;
+
+    border-radius:9px;
+
+    background:white;
+
+    color:#087bea;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+
+.dashboard-btn:hover{
+
+    background:#f0f8ff;
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================
+   SECURITY NOTE
+========================================= */
+
+.security-note{
+
+    margin-top:20px;
+
+    padding:
+
+        12px 14px;
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:9px;
+
+    border:
+
+        1px solid
+        #dbeafe;
+
+    border-radius:9px;
+
+    background:#f8fbff;
+
+    color:#64748b;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+
+    margin-top:auto;
+
+    padding:
+
+        24px 7%;
+
+    background:#0f172a;
+
+    color:#94a3b8;
+
+    text-align:center;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+
+footer strong{
+
+    color:white;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width:992px){
+
+
+    .navbar{
+
+        padding:
+
+            0 4%;
+    }
+
+
+    .nav-links{
+
+        gap:14px;
+    }
+
+
+    .nav-links a{
+
+        font-size:10px;
+    }
+
+
+    .profile-link,
+    .logout-link{
+
+        padding:
+
+            8px 11px;
+    }
+
+
+    .profile-wrapper{
+
+        grid-template-columns:
+
+            290px 1fr;
+    }
+
+
+    .profile-summary{
+
+        padding:
+
+            40px 22px;
+    }
+
+
+    .profile-form-section{
+
+        padding:
+
+            40px 30px;
+    }
+
+
+    .form-row{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:70px;
+
+        padding:
+
+            12px 5%;
+
+        position:sticky;
+    }
+
+
+    .logo-icon{
+
+        width:38px;
+
+        height:38px;
+
+        font-size:18px;
+    }
+
+
+    .logo-text h2{
+
+        font-size:18px;
+    }
+
+
+    .logo-text span{
+
+        font-size:8px;
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+    }
+
+
+    /* MOBILE MENU */
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+
+        left:0;
+
+        width:100%;
+
+        padding:
+
+            10px 5%
+            18px;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:3px;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #0866d9,
+                #0d8ee8
+            );
+
+        box-shadow:
+
+            0 12px 25px
+            rgba(15,23,42,.15);
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+    }
+
+
+    .nav-links li{
+
+        width:100%;
+    }
+
+
+    .nav-links a{
+
+        display:block;
+
+        width:100%;
+
+        padding:
+
+            11px 13px;
+
+        border-radius:7px;
+
+        font-size:13px;
+    }
+
+
+    .normal-link::after{
+
+        display:none;
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+
+            rgba(255,255,255,.12);
+    }
+
+
+    .profile-link{
+
+        text-align:center;
+
+        margin-top:3px;
+    }
+
+
+    .logout-link{
+
+        border:none;
+
+        text-align:center;
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        padding:
+
+            45px 5%
+            60px;
+    }
+
+
+    .page-header h1{
+
+        font-size:29px;
+    }
+
+
+    .profile-wrapper{
+
+        grid-template-columns:1fr;
+
+        max-width:600px;
+
+        margin:auto;
+    }
+
+
+    .profile-summary{
+
+        border-right:none;
+
+        border-bottom:
+
+            1px solid
+            #dbeafe;
+
+        padding:
+
+            35px 25px;
+    }
+
+
+    .profile-info{
+
+        max-width:300px;
+
+        margin:
+
+            27px auto 0;
+    }
+
+
+    .profile-form-section{
+
+        padding:
+
+            35px 28px;
+    }
+
+
+    .form-row{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .button-group{
+
+        flex-direction:column;
+    }
+
+
+    .update-btn,
+    .dashboard-btn{
+
+        width:100%;
+    }
+
+
+    .flash-container{
+
+        top:82px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:
+
+            11px 14px;
+    }
+
+
+    .logo-icon{
+
+        width:36px;
+
+        height:36px;
+    }
+
+
+    .logo-text h2{
+
+        font-size:16px;
+    }
+
+
+    .logo-text span{
+
+        font-size:7px;
+    }
+
+
+    .menu-toggle{
+
+        font-size:25px;
+    }
+
+
+    .main-content{
+
+        padding:
+
+            32px 13px
+            45px;
+    }
+
+
+    .page-header h1{
+
+        font-size:25px;
+    }
+
+
+    .page-header p{
+
+        font-size:12px;
+    }
+
+
+    .profile-wrapper{
+
+        border-radius:16px;
+    }
+
+
+    .profile-summary{
+
+        padding:
+
+            30px 18px;
+    }
+
+
+    .profile-image,
+    .no-profile-image{
+
+        width:120px;
+
+        height:120px;
+    }
+
+
+    .no-profile-image{
+
+        font-size:42px;
+    }
+
+
+    .profile-summary h2{
+
+        font-size:20px;
+    }
+
+
+    .profile-form-section{
+
+        padding:
+
+            30px 20px;
+    }
+
+
+    .form-header h2{
+
+        font-size:23px;
+    }
+
+
+    input{
+
+        height:46px;
+
+        font-size:12px;
+    }
+
+
+    .update-btn,
+    .dashboard-btn{
+
+        min-height:46px;
+    }
+
+
+    footer{
+
+        padding:
+
+            20px 14px;
+
+        font-size:11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+
+    <!-- BRAND -->
+
+    <a href="{{ url_for('admin_dashboard') }}"
+       class="brand">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+
+            <span>
+
+                ADMIN PORTAL
+
+            </span>
+
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- MOBILE MENU -->
+
+    <button
+
+        type="button"
+
+        class="menu-toggle"
+
+        onclick="toggleMenu()"
+
+        aria-label="Toggle Navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <!-- NAVIGATION -->
+
+    <ul class="nav-links"
+        id="navLinks">
+
+
+        <li>
+
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="normal-link">
+
+                DASHBOARD
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('add_item_page') }}"
+               class="normal-link">
+
+                ADD PRODUCT
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('item_list') }}"
+               class="normal-link">
+
+                PRODUCTS
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_profile') }}"
+               class="profile-link">
+
+                PROFILE
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_logout') }}"
+               class="logout-link">
+
+                LOGOUT
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     FLASH MESSAGES
+========================================= -->
+
+<div class="flash-container">
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+
+    {% if messages %}
+
+
+        {% for category, message in messages %}
+
+
+        <div
+
+            class="flash-message {{ category }}"
+
+            id="flash{{ loop.index }}">
+
+
+            {{ message }}
+
+
+            <span
+
+                class="close-btn"
+
+                onclick="
+                document.getElementById(
+                'flash{{ loop.index }}'
+                ).style.display='none'">
+
+                &times;
+
+            </span>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% endif %}
+
+
+{% endwith %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="main-content">
+
+
+    <div class="profile-container">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+
+            <span>
+
+                ACCOUNT SETTINGS
+
+            </span>
+
+
+            <h1>
+
+                Admin Profile
+
+            </h1>
+
+
+            <p>
+
+                View and manage your administrator
+                account information and profile settings.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-wrapper">
+
+
+            <!-- =================================
+                 LEFT PROFILE SUMMARY
+            ================================== -->
+
+            <section class="profile-summary">
+
+
+                {% if admin.profile_image %}
+
+
+                <div class="profile-image-wrapper">
+
+
+                    <div class="profile-image">
+
+
+                        <img
+
+                            src="{{ url_for('static', filename='uploads/admin_profiles/' + admin.profile_image) }}"
+
+                            alt="{{ admin.name }} Profile Image">
+
+
+                    </div>
+
+
+                </div>
+
+
+                {% else %}
+
+
+                <div class="no-profile-image">
+
+                    👤
+
+                </div>
+
+
+                {% endif %}
+
+
+
+                <h2>
+
+                    {{ admin.name }}
+
+                </h2>
+
+
+                <p class="email">
+
+                    {{ admin.email }}
+
+                </p>
+
+
+                <span class="admin-badge">
+
+                    ADMINISTRATOR
+
+                </span>
+
+
+
+                <div class="profile-info">
+
+
+                    <div class="info-item">
+
+
+                        <span class="info-icon">
+
+                            👤
+
+                        </span>
+
+
+                        Administrator Account
+
+
+                    </div>
+
+
+
+                    <div class="info-item">
+
+
+                        <span class="info-icon">
+
+                            🔐
+
+                        </span>
+
+
+                        Secure Profile Management
+
+
+                    </div>
+
+
+
+                    <div class="info-item">
+
+
+                        <span class="info-icon">
+
+                            ⚙️
+
+                        </span>
+
+
+                        Administrative Access
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 PROFILE FORM
+            ================================== -->
+
+            <section class="profile-form-section">
+
+
+                <div class="form-header">
+
+
+                    <span>
+
+                        PROFILE INFORMATION
+
+                    </span>
+
+
+                    <h2>
+
+                        Edit Your Profile
+
+                    </h2>
+
+
+                    <p>
+
+                        Update your personal information,
+                        password, or profile image below.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <form
+
+                    method="POST"
+
+                    action="{{ url_for('admin_profile_update') }}"
+
+                    enctype="multipart/form-data">
+
+
+
+                    <!-- NAME + EMAIL -->
+
+                    <div class="form-row">
+
+
+                        <div class="form-group">
+
+
+                            <label for="name">
+
+                                Full Name
+
+                            </label>
+
+
+                            <input
+
+                                type="text"
+
+                                id="name"
+
+                                name="name"
+
+                                value="{{ admin.name }}"
+
+                                placeholder="Enter your name"
+
+                                required>
+
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+
+                            <label for="email">
+
+                                Email Address
+
+                            </label>
+
+
+                            <input
+
+                                type="email"
+
+                                id="email"
+
+                                name="email"
+
+                                value="{{ admin.email }}"
+
+                                placeholder="Enter your email"
+
+                                required>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+
+                        <label for="password">
+
+                            New Password
+
+                            <span class="optional">
+
+                                (Optional)
+
+                            </span>
+
+                        </label>
+
+
+                        <div class="password-wrapper">
+
+
+                            <input
+
+                                type="password"
+
+                                id="password"
+
+                                name="password"
+
+                                placeholder="Leave blank to keep current password"
+
+                                autocomplete="new-password">
+
+
+                            <button
+
+                                type="button"
+
+                                class="password-toggle"
+
+                                id="passwordToggle"
+
+                                onclick="togglePassword()">
+
+                                Show
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PROFILE IMAGE -->
+
+                    <div class="form-group">
+
+
+                        <label for="profile_image">
+
+                            Profile Image
+
+                            <span class="optional">
+
+                                (Optional)
+
+                            </span>
+
+                        </label>
+
+
+                        <input
+
+                            type="file"
+
+                            id="profile_image"
+
+                            name="profile_image"
+
+                            accept="image/*"
+
+                            onchange="previewImage(event)">
+
+
+                    </div>
+
+
+                    <p class="file-help">
+
+                        Select a new image only if you
+                        want to change your current profile picture.
+
+                    </p>
+
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="button-group">
+
+
+                        <button
+
+                            type="submit"
+
+                            class="update-btn">
+
+                            Update Profile
+
+                        </button>
+
+
+                        <a
+
+                            href="{{ url_for('admin_dashboard') }}"
+
+                            class="dashboard-btn">
+
+                            ← Back to Dashboard
+
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- SECURITY -->
+
+                    <div class="security-note">
+
+
+                        <span>
+
+                            🔒
+
+                        </span>
+
+
+                        <p>
+
+                            For account security, use a strong
+                            password when changing your login
+                            credentials.
+
+                        </p>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    © 2026
+
+    <strong>
+
+        Smart Cart
+
+    </strong>
+
+    Administration Portal.
+
+    All Rights Reserved.
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* MOBILE MENU */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* CLOSE MOBILE MENU */
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* RESET MENU ON DESKTOP */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(window.innerWidth > 768){
+
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+
+        }
+
+
+    }
+);
+
+
+
+/* SHOW / HIDE PASSWORD */
+
+function togglePassword(){
+
+
+    const password =
+        document.getElementById("password");
+
+
+    const toggle =
+        document.getElementById("passwordToggle");
+
+
+    if(password.type === "password"){
+
+
+        password.type = "text";
+
+        toggle.textContent = "Hide";
+
+
+    }
+
+    else{
+
+
+        password.type = "password";
+
+        toggle.textContent = "Show";
+
+
+    }
+
+
+}
+
+
+
+/* PROFILE IMAGE PREVIEW */
+
+function previewImage(event){
+
+
+    const file =
+        event.target.files[0];
+
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e){
+
+
+            let profileImage =
+                document.querySelector(
+                    ".profile-image img"
+                );
+
+
+            let noImage =
+                document.querySelector(
+                    ".no-profile-image"
+                );
+
+
+            /*
+               Existing image unte
+               direct ga preview update chestundi
+            */
+
+            if(profileImage){
+
+
+                profileImage.src =
+                    e.target.result;
+
+
+            }
+
+
+            /*
+               Existing image lekapothe
+               avatar place lo preview create chestundi
+            */
+
+            else if(noImage){
+
+
+                const wrapper =
+                    document.createElement("div");
+
+
+                wrapper.className =
+                    "profile-image-wrapper";
+
+
+                wrapper.innerHTML =
+
+                    '<div class="profile-image">' +
+
+                    '<img src="' +
+                    e.target.result +
+                    '" alt="Profile Preview">' +
+
+                    '</div>';
+
+
+                noImage.replaceWith(wrapper);
+
+
+            }
+
+
+        };
+
+
+    reader.readAsDataURL(file);
+
+
+}
+
+
+
+/* AUTO HIDE FLASH MESSAGES */
+
+setTimeout(function(){
+
+
+    document
+        .querySelectorAll(
+            ".flash-message"
+        )
+        .forEach(function(message){
+
+
+            message.style.display =
+                "none";
+
+
+        });
+
+
+},5000);
+
+
+</script>
+
+
+</body>
+
+</html>

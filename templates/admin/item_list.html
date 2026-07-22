@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Product Management | Smart Cart Admin</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background: #f5f8fc;
+            color: #1e293b;
+        }
+
+
+        /* =========================================
+           ADMIN NAVBAR
+        ========================================= */
+
+        .navbar {
+
+            min-height: 76px;
+
+            padding: 0 6%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0866d9,
+                    #0d8ee8,
+                    #16a8d7
+                );
+
+            box-shadow:
+                0 4px 18px
+                rgba(15, 23, 42, 0.12);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        /* Logo */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+
+            color: white;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                rgba(255, 255, 255, 0.17);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            border-radius: 11px;
+
+            font-size: 21px;
+        }
+
+
+        .logo-text h2 {
+
+            color: white;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            line-height: 1.1;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .logo-text span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            font-size: 9px;
+
+            font-weight: 500;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        /* Navigation Links */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+
+            color:
+                rgba(255, 255, 255, 0.9);
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            white-space: nowrap;
+
+            transition: 0.3s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+        }
+
+
+        .nav-links .active-link {
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        /* Logout */
+
+        .nav-links .logout-link {
+
+            padding: 9px 17px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.65);
+
+            border-radius: 8px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .nav-links .logout-link:hover {
+
+            background: white;
+
+            color: #0876d1;
+
+            border-color: white;
+        }
+
+
+        /* Hamburger */
+
+        .menu-toggle {
+
+            display: none;
+
+            background: transparent;
+
+            border: none;
+
+            color: white;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           FLASH MESSAGES
+        ========================================= */
+
+        .flash-container {
+
+            position: fixed;
+
+            top: 90px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 500px;
+
+            max-width: 90%;
+
+            z-index: 9999;
+        }
+
+
+        .flash-message {
+
+            position: relative;
+
+            margin-bottom: 10px;
+
+            padding: 14px 45px 14px 18px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            box-shadow:
+                0 10px 30px
+                rgba(15, 23, 42, 0.15);
+        }
+
+
+        .flash-message.success {
+
+            background: #16a34a;
+        }
+
+
+        .flash-message.error,
+        .flash-message.danger {
+
+            background: #dc2626;
+        }
+
+
+        .flash-message.warning {
+
+            background: #d97706;
+        }
+
+
+        .close-btn {
+
+            position: absolute;
+
+            top: 8px;
+
+            right: 14px;
+
+            cursor: pointer;
+
+            font-size: 21px;
+        }
+
+
+        /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+        .page-header {
+
+            padding: 55px 7% 45px;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(56, 189, 248, 0.13),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 70%,
+                    rgba(13, 110, 253, 0.08),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid #e8eef5;
+        }
+
+
+        .page-header-container {
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+
+        .page-heading {
+
+            max-width: 700px;
+        }
+
+
+        .page-badge {
+
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            padding: 7px 15px;
+
+            background: #e7f3ff;
+
+            color: #0878ce;
+
+            border-radius: 30px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.4px;
+        }
+
+
+        .page-heading h1 {
+
+            color: #123f78;
+
+            font-size:
+                clamp(32px, 4vw, 45px);
+
+            font-weight: 750;
+
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+        }
+
+
+        .page-heading p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* Add Product Header Button */
+
+        .header-add-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 13px 21px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #087bea,
+                    #00a6c8
+                );
+
+            color: white;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 8px 22px
+                rgba(8, 123, 234, 0.22);
+
+            transition: 0.3s ease;
+        }
+
+
+        .header-add-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 28px
+                rgba(8, 123, 234, 0.32);
+        }
+
+
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+
+        .main-content {
+
+            width: 100%;
+
+            max-width: 1320px;
+
+            margin: auto;
+
+            padding: 40px 5% 70px;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           SEARCH AND FILTER
+        ========================================= */
+
+        .search-filter-card {
+
+            margin-bottom: 28px;
+
+            padding: 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(15, 23, 42, 0.05);
+        }
+
+
+        .search-form,
+        .filter-form {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .search-form {
+
+            flex: 1;
+
+            max-width: 600px;
+        }
+
+
+        .search-form input {
+
+            flex: 1;
+
+            min-width: 250px;
+        }
+
+
+        .search-form input,
+        .filter-form select {
+
+            height: 46px;
+
+            padding: 0 15px;
+
+            background: #f8fbff;
+
+            color: #334155;
+
+            border:
+                1px solid #dbe5ef;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            outline: none;
+
+            transition: 0.3s ease;
+        }
+
+
+        .filter-form select {
+
+            min-width: 210px;
+
+            cursor: pointer;
+        }
+
+
+        .search-form input:focus,
+        .filter-form select:focus {
+
+            border-color: #38bdf8;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(56, 189, 248, 0.10);
+        }
+
+
+        .search-btn,
+        .filter-btn {
+
+            height: 46px;
+
+            padding: 0 20px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #087bea,
+                    #00a6c8
+                );
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+
+        .search-btn:hover,
+        .filter-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(8, 123, 234, 0.20);
+        }
+
+
+        /* =========================================
+           PRODUCT TABLE CARD
+        ========================================= */
+
+        .table-card {
+
+            overflow: hidden;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(15, 23, 42, 0.06);
+        }
+
+
+        /* Table Header Area */
+
+        .table-card-header {
+
+            padding: 24px 28px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            border-bottom:
+                1px solid #e8eef5;
+        }
+
+
+        .table-title h2 {
+
+            margin-bottom: 4px;
+
+            color: #123f78;
+
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+
+        .table-title p {
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+
+        /* Product Count */
+
+        .product-count {
+
+            padding: 9px 15px;
+
+            background: #eef7ff;
+
+            color: #0876d1;
+
+            border:
+                1px solid #dbeafe;
+
+            border-radius: 30px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           TABLE
+        ========================================= */
+
+        .table-responsive {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        thead {
+
+            background: #f7faff;
+        }
+
+
+        th {
+
+            padding: 16px 18px;
+
+            color: #475569;
+
+            border-bottom:
+                1px solid #dfe7f0;
+
+            text-align: left;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.6px;
+
+            text-transform: uppercase;
+        }
+
+
+        td {
+
+            padding: 15px 18px;
+
+            color: #475569;
+
+            border-bottom:
+                1px solid #edf2f7;
+
+            font-size: 13px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s ease;
+        }
+
+
+        tbody tr:hover {
+
+            background: #f8fbff;
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        /* ID */
+
+        .product-id {
+
+            color: #94a3b8;
+
+            font-weight: 600;
+        }
+
+
+        /* Image */
+
+        .product-img {
+
+            width: 65px;
+
+            height: 65px;
+
+            object-fit: cover;
+
+            border-radius: 11px;
+
+            border:
+                1px solid #dbeafe;
+
+            background: #f8fafc;
+        }
+
+
+        /* Product Name */
+
+        .product-name {
+
+            color: #1e3a5f;
+
+            font-weight: 600;
+        }
+
+
+        /* Category Badge */
+
+        .category-badge {
+
+            display: inline-block;
+
+            padding: 6px 11px;
+
+            background: #eef7ff;
+
+            color: #0876d1;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        /* Price */
+
+        .price {
+
+            color: #15803d;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           ACTION BUTTONS
+        ========================================= */
+
+        .action-col {
+
+            min-width: 285px;
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            flex-wrap: nowrap;
+        }
+
+
+        .view-btn,
+        .update-btn,
+        .delete-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 8px 12px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.3s ease;
+        }
+
+
+        .view-btn {
+
+            color: #0876d1;
+
+            background: #eaf5ff;
+
+            border:
+                1px solid #cde8ff;
+        }
+
+
+        .update-btn {
+
+            color: #b45309;
+
+            background: #fff7e6;
+
+            border:
+                1px solid #fde6b3;
+        }
+
+
+        .delete-btn {
+
+            color: #dc2626;
+
+            background: #fff0f0;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        .view-btn:hover,
+        .update-btn:hover,
+        .delete-btn:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .view-btn:hover {
+
+            background: #dcefff;
+        }
+
+
+        .update-btn:hover {
+
+            background: #ffedc7;
+        }
+
+
+        .delete-btn:hover {
+
+            background: #fee2e2;
+        }
+
+
+        /* =========================================
+           EMPTY STATE
+        ========================================= */
+
+        .empty-state {
+
+            padding: 70px 25px;
+
+            text-align: center;
+        }
+
+
+        .empty-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin:
+                0 auto 20px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #dbeafe
+                );
+
+            border-radius: 20px;
+
+            font-size: 32px;
+        }
+
+
+        .empty-state h3 {
+
+            margin-bottom: 8px;
+
+            color: #123f78;
+
+            font-size: 20px;
+        }
+
+
+        .empty-state p {
+
+            margin-bottom: 22px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        .empty-add-btn {
+
+            display: inline-block;
+
+            padding: 11px 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #087bea,
+                    #00a6c8
+                );
+
+            color: white;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            padding: 25px 7%;
+
+            background: #0f172a;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+
+            color: white;
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media screen and (max-width: 1000px) {
+
+            .navbar {
+
+                padding:
+                    0 4%;
+            }
+
+
+            .nav-links {
+
+                gap: 15px;
+            }
+
+
+            .nav-links a {
+
+                font-size: 12px;
+            }
+
+
+            .page-header {
+
+                padding:
+                    45px 5%;
+            }
+
+
+            .main-content {
+
+                padding:
+                    35px 4% 60px;
+            }
+
+
+            .search-filter-card {
+
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+
+            .search-form,
+            .filter-form {
+
+                width: 100%;
+
+                max-width: none;
+            }
+
+
+            .search-form input,
+            .filter-form select {
+
+                flex: 1;
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 768px) {
+
+            .navbar {
+
+                min-height: 70px;
+
+                padding:
+                    12px 5%;
+
+                position: sticky;
+            }
+
+
+            .logo-text h2 {
+
+                font-size: 18px;
+            }
+
+
+            .logo-text span {
+
+                font-size: 8px;
+            }
+
+
+            .logo-icon {
+
+                width: 38px;
+
+                height: 38px;
+
+                font-size: 18px;
+            }
+
+
+            .menu-toggle {
+
+                display: block;
+            }
+
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                left: 0;
+
+                width: 100%;
+
+                padding:
+                    10px 5% 18px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 3px;
+
+                background:
+                    linear-gradient(
+                        135deg,
+                        #0866d9,
+                        #0d8ee8
+                    );
+
+                box-shadow:
+                    0 12px 25px
+                    rgba(15, 23, 42, 0.15);
+            }
+
+
+            .nav-links.active {
+
+                display: flex;
+            }
+
+
+            .nav-links a {
+
+                width: 100%;
+
+                padding:
+                    11px 13px;
+
+                border-radius: 7px;
+
+                font-size: 13px;
+            }
+
+
+            .nav-links a:hover {
+
+                background:
+                    rgba(255, 255, 255, 0.12);
+            }
+
+
+            .nav-links .logout-link {
+
+                margin-top: 5px;
+
+                text-align: center;
+            }
+
+
+            /* Page Header */
+
+            .page-header {
+
+                padding:
+                    38px 5%;
+            }
+
+
+            .page-header-container {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .page-heading h1 {
+
+                font-size: 32px;
+            }
+
+
+            .header-add-btn {
+
+                width: 100%;
+
+                justify-content: center;
+            }
+
+
+            /* Main */
+
+            .main-content {
+
+                padding:
+                    25px 4% 50px;
+            }
+
+
+            /* Search */
+
+            .search-filter-card {
+
+                padding: 16px;
+            }
+
+
+            .search-form,
+            .filter-form {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .search-form input,
+            .filter-form select {
+
+                width: 100%;
+
+                min-width: 0;
+            }
+
+
+            .search-btn,
+            .filter-btn {
+
+                width: 100%;
+            }
+
+
+            /* Table Card */
+
+            .table-card {
+
+                border-radius: 14px;
+            }
+
+
+            .table-card-header {
+
+                padding: 20px;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .table-title h2 {
+
+                font-size: 20px;
+            }
+
+
+            /* Scrollable Table */
+
+            .table-responsive {
+
+                overflow-x: auto;
+
+                -webkit-overflow-scrolling:
+                    touch;
+            }
+
+
+            table {
+
+                min-width: 850px;
+            }
+
+
+            /* Flash */
+
+            .flash-container {
+
+                top: 82px;
+            }
+
+        }
+
+
+        /* =========================================
+           SMALL MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 480px) {
+
+            .page-heading h1 {
+
+                font-size: 28px;
+            }
+
+
+            .page-heading p {
+
+                font-size: 13px;
+            }
+
+
+            .main-content {
+
+                padding-left: 12px;
+
+                padding-right: 12px;
+            }
+
+
+            .search-filter-card {
+
+                border-radius: 12px;
+            }
+
+
+            .table-card {
+
+                border-radius: 12px;
+            }
+
+
+            footer {
+
+                font-size: 12px;
+
+                line-height: 1.7;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ADMIN NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+
+    <!-- BRAND -->
+
+    <a href="{{ url_for('admin_dashboard') }}"
+       class="brand">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+
+            <span>
+
+                ADMIN PORTAL
+
+            </span>
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- MOBILE MENU BUTTON -->
+
+    <button class="menu-toggle"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <!-- NAVIGATION -->
+
+    <div class="nav-links"
+         id="navLinks">
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="{{ url_for('item_list') }}"
+           class="active-link">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="{{ url_for('add_item_page') }}">
+
+            ADD PRODUCT
+
+        </a>
+
+
+        <a href="{{ url_for('admin_profile') }}">
+
+            PROFILE
+
+        </a>
+
+
+        <a href="{{ url_for('admin_logout') }}"
+           class="logout-link">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     FLASH MESSAGES
+========================================= -->
+
+<div class="flash-container">
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+
+    {% if messages %}
+
+
+        {% for category, message in messages %}
+
+
+        <div class="flash-message {{ category }}"
+             id="flash{{ loop.index }}">
+
+
+            {{ message }}
+
+
+            <span class="close-btn"
+
+                  onclick="
+                  document.getElementById(
+                  'flash{{ loop.index }}'
+                  ).style.display='none'">
+
+                &times;
+
+            </span>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% endif %}
+
+
+{% endwith %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<section class="page-header">
+
+
+    <div class="page-header-container">
+
+
+        <div class="page-heading">
+
+
+            <span class="page-badge">
+
+                PRODUCT MANAGEMENT
+
+            </span>
+
+
+            <h1>
+
+                Manage Your Products
+
+            </h1>
+
+
+            <p>
+
+                View, search, update, and manage
+                all products available in your
+                Smart Cart store from one place.
+
+            </p>
+
+
+        </div>
+
+
+
+        <a href="{{ url_for('add_item_page') }}"
+           class="header-add-btn">
+
+            ＋ Add New Product
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="main-content">
+
+
+
+    <!-- =====================================
+         SEARCH AND FILTER
+    ====================================== -->
+
+    <div class="search-filter-card">
+
+
+        <!-- SEARCH -->
+
+        <form method="GET"
+
+              action="{{ url_for('item_list') }}"
+
+              class="search-form">
+
+
+            <input
+
+                type="text"
+
+                name="search"
+
+                placeholder="Search by product name..."
+
+                value="{{ request.args.get('search', '') }}">
+
+
+            <button type="submit"
+                    class="search-btn">
+
+                Search
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- FILTER -->
+
+        <form method="GET"
+
+              action="{{ url_for('item_list') }}"
+
+              class="filter-form">
+
+
+            <select name="category">
+
+
+                <option value="">
+
+                    All Categories
+
+                </option>
+
+
+                {% for cat in categories %}
+
+
+                <option
+
+                    value="{{ cat.category }}"
+
+                    {% if request.args.get('category') == cat.category %}
+
+                    selected
+
+                    {% endif %}>
+
+
+                    {{ cat.category }}
+
+
+                </option>
+
+
+                {% endfor %}
+
+
+            </select>
+
+
+
+            <button type="submit"
+                    class="filter-btn">
+
+                Filter
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         PRODUCT TABLE CARD
+    ====================================== -->
+
+    <div class="table-card">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="table-card-header">
+
+
+            <div class="table-title">
+
+
+                <h2>
+
+                    Product Inventory
+
+                </h2>
+
+
+                <p>
+
+                    Manage all products currently
+                    available in Smart Cart.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="product-count">
+
+                {{ products|length }}
+                Products
+
+            </div>
+
+
+        </div>
+
+
+
+        {% if products %}
+
+
+
+        <!-- =================================
+             PRODUCT TABLE
+        ================================== -->
+
+        <div class="table-responsive">
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Product</th>
+
+                        <th>Name</th>
+
+                        <th>Category</th>
+
+                        <th>Price</th>
+
+                        <th class="action-col">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                {% for product in products %}
+
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            <span class="product-id">
+
+                                #{{ product.product_id }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- IMAGE -->
+
+                        <td>
+
+
+                            <img
+
+                                src="{{ url_for(
+                                'static',
+                                filename=
+                                'uploads/product_images/'
+                                + product.image
+                                ) }}"
+
+                                class="product-img"
+
+                                alt="{{ product.name }}">
+
+
+                        </td>
+
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+
+                            <span class="product-name">
+
+                                {{ product.name }}
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+
+
+                            <span class="category-badge">
+
+                                {{ product.category }}
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- PRICE -->
+
+                        <td>
+
+
+                            <span class="price">
+
+                                ₹{{ product.price }}
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ACTIONS -->
+
+                        <td class="action-col">
+
+
+                            <div class="actions">
+
+
+                                <!-- VIEW -->
+
+                                <a
+
+                                    href="{{ url_for(
+                                    'view_item',
+                                    item_id=
+                                    product.product_id
+                                    ) }}"
+
+                                    class="view-btn">
+
+                                    View
+
+                                </a>
+
+
+
+                                <!-- UPDATE -->
+
+                                <a
+
+                                    href="{{ url_for(
+                                    'update_item',
+                                    item_id=
+                                    product.product_id
+                                    ) }}"
+
+                                    class="update-btn">
+
+                                    Edit
+
+                                </a>
+
+
+
+                                <!-- DELETE -->
+
+                                <a
+
+                                    href="{{ url_for(
+                                    'delete_item',
+                                    item_id=
+                                    product.product_id
+                                    ) }}"
+
+                                    class="delete-btn"
+
+                                    onclick="
+                                    return confirm(
+                                    'Are you sure you want to delete this product?'
+                                    )">
+
+                                    Delete
+
+                                </a>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+        {% else %}
+
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================== -->
+
+        <div class="empty-state">
+
+
+            <div class="empty-icon">
+
+                📦
+
+            </div>
+
+
+            <h3>
+
+                No Products Found
+
+            </h3>
+
+
+            <p>
+
+                There are currently no products
+                matching your search or category.
+
+            </p>
+
+
+            <a href="{{ url_for('add_item_page') }}"
+               class="empty-add-btn">
+
+                Add Your First Product
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    © 2026
+
+    <strong>
+
+        Smart Cart
+
+    </strong>
+
+    Administration Portal.
+
+    All Rights Reserved.
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+    function toggleMenu() {
+
+        document
+            .getElementById('navLinks')
+            .classList
+            .toggle('active');
+
+    }
+
+
+    /*
+       Mobile menu:
+       Link click chesina tarvata
+       menu automatic ga close avutundi.
+    */
+
+    document
+        .querySelectorAll('.nav-links a')
+        .forEach(function(link) {
+
+            link.addEventListener(
+                'click',
+                function() {
+
+                    document
+                        .getElementById('navLinks')
+                        .classList
+                        .remove('active');
+
+                }
+            );
+
+        });
+
+
+    /*
+       Flash messages automatic ga
+       5 seconds tarvata hide avutayi.
+    */
+
+    setTimeout(function() {
+
+        document
+            .querySelectorAll('.flash-message')
+            .forEach(function(message) {
+
+                message.style.display = 'none';
+
+            });
+
+    }, 5000);
+
+
+</script>
+
+
+</body>
+
+</html>

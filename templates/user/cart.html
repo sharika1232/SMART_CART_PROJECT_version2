@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Cart | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================
+   ROOT
+========================= */
+
+:root{
+
+    --primary:#0d6efd;
+
+    --secondary:#38bdf8;
+
+    --success:#22c55e;
+
+    --warning:#f59e0b;
+
+    --danger:#ef4444;
+
+    --dark:#0f172a;
+
+    --light:#f8fbff;
+
+}
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+
+    color:#334155;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:78px;
+
+    padding:15px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.15);
+
+    position:relative;
+
+    z-index:1000;
+
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a:hover{
+
+    color:#e0f2fe;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    line-height:1;
+
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+
+    width:95%;
+
+    max-width:1200px;
+
+    margin:35px auto;
+
+    flex:1;
+
+}
+
+
+/* =========================
+   CART CARD
+========================= */
+
+.cart-card{
+
+    width:100%;
+
+    padding:30px;
+
+    background:white;
+
+    border-radius:24px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(13,110,253,.12),
+
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+}
+
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+.page-title{
+
+    text-align:center;
+
+    color:#0d47a1;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+
+.page-subtitle{
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    margin-bottom:30px;
+
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:0 auto 25px;
+
+}
+
+
+.flash-message{
+
+    position:relative;
+
+    padding:14px 45px 14px 16px;
+
+    margin-bottom:10px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+
+.flash-message.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:1px solid #bbf7d0;
+
+}
+
+
+.flash-message.error,
+.flash-message.danger{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:1px solid #fecaca;
+
+}
+
+
+.flash-message.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:1px solid #fde68a;
+
+}
+
+
+.flash-message.info{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    border:1px solid #bfdbfe;
+
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:transparent;
+
+    color:inherit;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   EMPTY CART
+========================= */
+
+.empty-cart{
+
+    max-width:650px;
+
+    margin:auto;
+
+    padding:55px 25px;
+
+    text-align:center;
+
+}
+
+
+.empty-icon{
+
+    font-size:70px;
+
+    margin-bottom:15px;
+
+}
+
+
+.empty-cart h3{
+
+    color:#0d47a1;
+
+    font-size:25px;
+
+    margin-bottom:10px;
+
+}
+
+
+.empty-cart p{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+    margin-bottom:25px;
+
+}
+
+
+.shop-btn{
+
+    display:inline-block;
+
+    padding:14px 25px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.shop-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(13,110,253,.25);
+
+}
+
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+
+.table-responsive{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:14px;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+table{
+
+    width:100%;
+
+    min-width:850px;
+
+    border-collapse:collapse;
+
+}
+
+
+thead{
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+}
+
+
+th{
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+
+th,
+td{
+
+    padding:15px;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    vertical-align:middle;
+
+}
+
+
+td{
+
+    color:#475569;
+
+    font-size:14px;
+
+}
+
+
+tbody tr{
+
+    transition:.2s;
+
+}
+
+
+tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+
+tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+
+/* =========================
+   PRODUCT IMAGE
+========================= */
+
+.product-img{
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
+    border:3px solid #dbeafe;
+
+    box-shadow:
+        0 5px 12px
+        rgba(0,0,0,.08);
+
+}
+
+
+/* =========================
+   PRODUCT NAME
+========================= */
+
+.product-name{
+
+    min-width:150px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.price{
+
+    white-space:nowrap;
+
+    font-weight:500;
+
+}
+
+
+.item-total{
+
+    color:#16a34a;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+.quantity-control{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.qty-btn{
+
+    width:35px;
+
+    height:35px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:#0d6efd;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+
+.qty-btn:hover{
+
+    background:#0b5ed7;
+
+    transform:scale(1.08);
+
+}
+
+
+.quantity-number{
+
+    min-width:25px;
+
+    font-size:15px;
+
+    color:#334155;
+
+}
+
+
+/* =========================
+   REMOVE BUTTON
+========================= */
+
+.remove-btn{
+
+    display:inline-block;
+
+    padding:9px 14px;
+
+    border-radius:9px;
+
+    background:#ef4444;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.remove-btn:hover{
+
+    background:#dc2626;
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================
+   CART SUMMARY
+========================= */
+
+.cart-footer{
+
+    margin-top:30px;
+
+    padding-top:25px;
+
+    border-top:1px solid #e2e8f0;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:25px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.total-section{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+
+.total-label{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    font-weight:500;
+
+}
+
+
+.grand-total{
+
+    color:#16a34a;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.action-buttons form{
+
+    margin:0;
+
+}
+
+
+.continue-btn,
+.address-btn,
+.checkout-btn{
+
+    min-height:48px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:13px 20px;
+
+    border:none;
+
+    border-radius:11px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.continue-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #16a34a,
+            #22c55e
+        );
+
+}
+
+
+.address-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #f59e0b,
+            #fbbf24
+        );
+
+}
+
+
+.checkout-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+}
+
+
+.continue-btn:hover,
+.address-btn:hover,
+.checkout-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+.continue-btn:hover{
+
+    box-shadow:
+        0 8px 20px
+        rgba(34,197,94,.25);
+
+}
+
+
+.address-btn:hover{
+
+    box-shadow:
+        0 8px 20px
+        rgba(245,158,11,.25);
+
+}
+
+
+.checkout-btn:hover{
+
+    box-shadow:
+        0 8px 20px
+        rgba(13,110,253,.25);
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    width:100%;
+
+    padding:30px 20px;
+
+    background:#0f172a;
+
+    color:white;
+
+    text-align:center;
+
+}
+
+
+footer h3{
+
+    margin-bottom:10px;
+
+    font-size:21px;
+
+}
+
+
+footer p{
+
+    max-width:850px;
+
+    margin:5px auto;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+footer a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+}
+
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+.footer-links{
+
+    margin-top:15px;
+
+}
+
+
+.footer-links a{
+
+    margin:0 6px;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:992px){
+
+
+    .navbar{
+
+        padding:15px 20px;
+
+    }
+
+
+    .logo{
+
+        font-size:25px;
+
+    }
+
+
+    .nav-links{
+
+        gap:16px;
+
+    }
+
+
+    .nav-links a{
+
+        font-size:12px;
+
+    }
+
+
+    .main-content{
+
+        width:96%;
+
+    }
+
+
+    .cart-card{
+
+        padding:22px;
+
+    }
+
+
+    .cart-footer{
+
+        align-items:flex-start;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:68px;
+
+        padding:14px 18px;
+
+    }
+
+
+    .logo{
+
+        font-size:22px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:0;
+
+        padding:8px 0;
+
+        background:#0d6efd;
+
+        box-shadow:
+            0 10px 25px
+            rgba(0,0,0,.15);
+
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        width:100%;
+
+        padding:13px 20px;
+
+        text-align:center;
+
+        font-size:14px;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.15);
+
+    }
+
+
+    .nav-links a:last-child{
+
+        border-bottom:none;
+
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+            rgba(255,255,255,.1);
+
+        color:white;
+
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        width:94%;
+
+        margin:25px auto;
+
+    }
+
+
+    .cart-card{
+
+        padding:15px;
+
+        border-radius:18px;
+
+    }
+
+
+    .page-title{
+
+        font-size:29px;
+
+    }
+
+
+    .page-subtitle{
+
+        font-size:13px;
+
+    }
+
+
+    /* TABLE */
+
+    .table-responsive{
+
+        border-radius:10px;
+
+    }
+
+
+    table{
+
+        min-width:800px;
+
+    }
+
+
+    th,
+    td{
+
+        padding:12px 10px;
+
+        font-size:12px;
+
+    }
+
+
+    .product-img{
+
+        width:75px;
+
+        height:75px;
+
+    }
+
+
+    /* CART FOOTER */
+
+    .cart-footer{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        text-align:center;
+
+    }
+
+
+    .total-section{
+
+        align-items:center;
+
+    }
+
+
+    .grand-total{
+
+        font-size:28px;
+
+    }
+
+
+    .action-buttons{
+
+        width:100%;
+
+        flex-direction:column;
+
+    }
+
+
+    .action-buttons a,
+    .action-buttons form{
+
+        width:100%;
+
+    }
+
+
+    .continue-btn,
+    .address-btn,
+    .checkout-btn{
+
+        width:100%;
+
+    }
+
+
+    /* EMPTY CART */
+
+    .empty-cart{
+
+        padding:40px 15px;
+
+    }
+
+
+    .empty-icon{
+
+        font-size:55px;
+
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:13px 15px;
+
+    }
+
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:26px;
+
+    }
+
+
+    .main-content{
+
+        width:95%;
+
+        margin:20px auto;
+
+    }
+
+
+    .cart-card{
+
+        padding:10px;
+
+        border-radius:15px;
+
+    }
+
+
+    .page-title{
+
+        font-size:25px;
+
+        margin-top:10px;
+
+    }
+
+
+    .page-subtitle{
+
+        padding:0 10px;
+
+        margin-bottom:20px;
+
+    }
+
+
+    .table-responsive{
+
+        border:1px solid #e2e8f0;
+
+    }
+
+
+    .grand-total{
+
+        font-size:24px;
+
+    }
+
+
+    .continue-btn,
+    .address-btn,
+    .checkout-btn{
+
+        font-size:12px;
+
+        padding:12px 15px;
+
+    }
+
+
+    footer{
+
+        padding:25px 15px;
+
+    }
+
+
+    footer p{
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+    <div
+        class="nav-links"
+        id="navLinks">
+
+
+        <a href="/user-dashboard">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="/user/products">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="/user/cart">
+
+            CART
+
+        </a>
+
+
+        <a href="/user/orders">
+
+            ORDERS
+
+        </a>
+
+
+        <a href="/user-logout">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+
+    <div class="cart-card">
+
+
+        <!-- =========================
+             TITLE
+        ========================== -->
+
+        <h2 class="page-title">
+
+            🛒 Your Cart
+
+        </h2>
+
+
+        <p class="page-subtitle">
+
+            Review your selected products,
+            update quantities and proceed to checkout.
+
+        </p>
+
+
+
+        <!-- =========================
+             FLASH MESSAGES
+        ========================== -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+
+                <div class="flash-container">
+
+
+                    {% for category, message in messages %}
+
+
+                        <div
+                            class="flash-message {{ category }}"
+                            id="flash{{ loop.index }}">
+
+
+                            {{ message }}
+
+
+                            <button
+                                type="button"
+                                class="close-btn"
+                                onclick="closeFlash('flash{{ loop.index }}')">
+
+                                &times;
+
+                            </button>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- =========================
+             EMPTY CART
+        ========================== -->
+
+        {% if not cart %}
+
+
+            <div class="empty-cart">
+
+
+                <div class="empty-icon">
+
+                    🛒
+
+                </div>
+
+
+                <h3>
+
+                    Your Cart is Empty
+
+                </h3>
+
+
+                <p>
+
+                    Looks like you haven't added
+                    any products to your cart yet.
+                    Explore our products and start shopping.
+
+                </p>
+
+
+                <a
+                    href="/user/products"
+                    class="shop-btn">
+
+                    🛍️ Shop Now
+
+                </a>
+
+
+            </div>
+
+
+
+        {% else %}
+
+
+
+            <!-- =========================
+                 CART TABLE
+            ========================== -->
+
+            <div class="table-responsive">
+
+
+                <table>
+
+
+                    <thead>
+
+
+                        <tr>
+
+
+                            <th>
+
+                                Image
+
+                            </th>
+
+
+                            <th>
+
+                                Product
+
+                            </th>
+
+
+                            <th>
+
+                                Price
+
+                            </th>
+
+
+                            <th>
+
+                                Quantity
+
+                            </th>
+
+
+                            <th>
+
+                                Total
+
+                            </th>
+
+
+                            <th>
+
+                                Action
+
+                            </th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for pid, item in cart.items() %}
+
+
+                            <tr>
+
+
+                                <!-- IMAGE -->
+
+                                <td>
+
+
+                                    <img
+                                        src="/static/uploads/product_images/{{ item.image }}"
+                                        alt="{{ item.name }}"
+                                        class="product-img">
+
+
+                                </td>
+
+
+
+                                <!-- NAME -->
+
+                                <td class="product-name">
+
+                                    {{ item.name }}
+
+                                </td>
+
+
+
+                                <!-- PRICE -->
+
+                                <td class="price">
+
+                                    ₹{{ item.price }}
+
+                                </td>
+
+
+
+                                <!-- QUANTITY -->
+
+                                <td>
+
+
+                                    <div class="quantity-control">
+
+
+                                        <a
+                                            href="/user/cart/decrease/{{ pid }}"
+                                            class="qty-btn"
+                                            title="Decrease quantity">
+
+                                            −
+
+                                        </a>
+
+
+                                        <strong class="quantity-number">
+
+                                            {{ item.quantity }}
+
+                                        </strong>
+
+
+                                        <a
+                                            href="/user/cart/increase/{{ pid }}"
+                                            class="qty-btn"
+                                            title="Increase quantity">
+
+                                            +
+
+                                        </a>
+
+
+                                    </div>
+
+
+                                </td>
+
+
+
+                                <!-- TOTAL -->
+
+                                <td class="item-total">
+
+                                    ₹{{ item.price * item.quantity }}
+
+                                </td>
+
+
+
+                                <!-- REMOVE -->
+
+                                <td>
+
+
+                                    <a
+                                        href="/user/cart/remove/{{ pid }}"
+                                        class="remove-btn"
+                                        onclick="return confirmRemove();">
+
+                                        🗑️ Remove
+
+                                    </a>
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 CART FOOTER
+            ========================== -->
+
+            <div class="cart-footer">
+
+
+                <!-- GRAND TOTAL -->
+
+                <div class="total-section">
+
+
+                    <span class="total-label">
+
+                        GRAND TOTAL
+
+                    </span>
+
+
+                    <div class="grand-total">
+
+                        ₹{{ grand_total }}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="action-buttons">
+
+
+                    <a
+                        href="/user/products"
+                        class="continue-btn">
+
+                        🛍️ Continue Shopping
+
+                    </a>
+
+
+                    <a
+                        href="/user/add-address"
+                        class="address-btn">
+
+                        📍 Add Delivery Address
+
+                    </a>
+
+
+                    <form
+                        action="/user/pay"
+                        method="GET">
+
+
+                        <button
+                            type="submit"
+                            class="checkout-btn">
+
+                            💳 Proceed To Checkout
+
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <h3>
+
+        🛒 Smart Cart
+
+    </h3>
+
+
+    <p>
+
+        Smart Cart is an innovative online shopping
+        platform designed to provide a seamless and
+        secure shopping experience.
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        📍 Telangana, India
+
+    </p>
+
+
+    <p>
+
+        📧
+
+        <a href="mailto:support@smartcart.com">
+
+            support@smartcart.com
+
+        </a>
+
+    </p>
+
+
+    <p>
+
+        📞 +91 6281172858
+
+    </p>
+
+
+    <div class="footer-links">
+
+
+        <a href="#">
+
+            Privacy Policy
+
+        </a>
+
+        |
+
+        <a href="#">
+
+            Terms & Conditions
+
+        </a>
+
+        |
+
+        <a href="/user-contact">
+
+            Contact Us
+
+        </a>
+
+
+    </div>
+
+
+    <br>
+
+
+    <p>
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* MOBILE NAVBAR */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* CLOSE FLASH MESSAGE */
+
+function closeFlash(id){
+
+    const flash =
+        document.getElementById(id);
+
+
+    if(flash){
+
+        flash.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* REMOVE CONFIRMATION */
+
+function confirmRemove(){
+
+    return confirm(
+        "Are you sure you want to remove this product from your cart?"
+    );
+
+}
+
+
+
+/* CLOSE MOBILE MENU AFTER CLICK */
+
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* RESET MENU WHEN SCREEN BECOMES DESKTOP */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(window.innerWidth > 768){
+
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+
+        }
+
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

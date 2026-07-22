@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | Smart Cart</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',Arial,sans-serif;
+        }
+
+        :root{
+            --primary:#0d6efd;
+            --secondary:#38bdf8;
+            --success:#22c55e;
+            --danger:#ef4444;
+            --dark:#0f172a;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            background:linear-gradient(
+                135deg,
+                #eef7ff,
+                #dbeafe
+            );
+        }
+
+
+        /* =====================================
+           NAVBAR
+        ===================================== */
+
+        nav{
+            min-height:78px;
+
+            background:linear-gradient(
+                90deg,
+                #0d6efd,
+                #38bdf8
+            );
+
+            padding:18px 50px;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,.12);
+
+            position:relative;
+            z-index:1000;
+        }
+
+
+        .logo{
+            color:white;
+            font-size:28px;
+            font-weight:700;
+        }
+
+
+        nav ul{
+            list-style:none;
+
+            display:flex;
+            align-items:center;
+
+            gap:25px;
+        }
+
+
+        nav ul li a{
+
+            color:white;
+
+            text-decoration:none;
+
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+
+        nav ul li a:hover{
+
+            color:#dbeafe;
+
+        }
+
+
+        /* Hamburger */
+
+        .menu-toggle{
+
+            display:none;
+
+            color:white;
+
+            font-size:30px;
+
+            cursor:pointer;
+
+            user-select:none;
+
+        }
+
+
+        /* =====================================
+           FLASH MESSAGES
+        ===================================== */
+
+        .flash-container{
+
+            width:90%;
+
+            max-width:600px;
+
+            margin:20px auto 0;
+
+        }
+
+
+        .flash-message{
+
+            padding:14px 45px 14px 18px;
+
+            border-radius:12px;
+
+            margin-bottom:10px;
+
+            color:white;
+
+            position:relative;
+
+            box-shadow:
+                0 6px 18px rgba(0,0,0,.12);
+
+        }
+
+
+        .flash-message.success{
+
+            background:#22c55e;
+
+        }
+
+
+        .flash-message.error,
+        .flash-message.danger{
+
+            background:#ef4444;
+
+        }
+
+
+        .flash-message.warning{
+
+            background:#f59e0b;
+
+        }
+
+
+        .close-btn{
+
+            position:absolute;
+
+            right:15px;
+
+            top:7px;
+
+            font-size:24px;
+
+            cursor:pointer;
+
+        }
+
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+        .container{
+
+            flex:1;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            padding:45px 20px;
+
+        }
+
+
+        /* =====================================
+           PAYMENT CARD
+        ===================================== */
+
+        .payment-box{
+
+            width:100%;
+
+            max-width:550px;
+
+            background:white;
+
+            padding:42px;
+
+            border-radius:24px;
+
+            text-align:center;
+
+            box-shadow:
+                0 15px 35px rgba(13,110,253,.12),
+                0 5px 15px rgba(0,0,0,.05);
+
+        }
+
+
+        .payment-icon{
+
+            width:85px;
+
+            height:85px;
+
+            margin:0 auto 18px;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            border-radius:50%;
+
+            background:linear-gradient(
+                135deg,
+                #dbeafe,
+                #e0f2fe
+            );
+
+            font-size:42px;
+
+        }
+
+
+        .payment-box h2{
+
+            color:#0d47a1;
+
+            font-size:34px;
+
+            margin-bottom:12px;
+
+        }
+
+
+        .description{
+
+            color:#64748b;
+
+            margin-bottom:25px;
+
+            line-height:1.7;
+
+        }
+
+
+        /* Amount */
+
+        .amount-label{
+
+            color:#64748b;
+
+            font-size:14px;
+
+            margin-bottom:5px;
+
+        }
+
+
+        .amount{
+
+            font-size:42px;
+
+            font-weight:700;
+
+            color:#22c55e;
+
+            margin-bottom:28px;
+
+        }
+
+
+        /* Payment Button */
+
+        #rzp-button{
+
+            width:100%;
+
+            background:linear-gradient(
+                90deg,
+                #0d6efd,
+                #38bdf8
+            );
+
+            color:white;
+
+            border:none;
+
+            padding:16px 35px;
+
+            border-radius:12px;
+
+            cursor:pointer;
+
+            font-size:18px;
+
+            font-weight:600;
+
+            transition:.3s;
+
+        }
+
+
+        #rzp-button:hover:not(:disabled){
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(13,110,253,.25);
+
+        }
+
+
+        #rzp-button:disabled{
+
+            opacity:.65;
+
+            cursor:not-allowed;
+
+        }
+
+
+        /* Secure Payment */
+
+        .secure-text{
+
+            margin-top:20px;
+
+            color:#64748b;
+
+            font-size:13px;
+
+            line-height:1.6;
+
+        }
+
+
+        /* Payment error */
+
+        .payment-error{
+
+            display:none;
+
+            margin-top:18px;
+
+            padding:12px;
+
+            border-radius:10px;
+
+            background:#fee2e2;
+
+            color:#b91c1c;
+
+            font-size:14px;
+
+        }
+
+
+        /* Back Link */
+
+        .back-link{
+
+            display:inline-block;
+
+            margin-top:20px;
+
+            color:#0d6efd;
+
+            text-decoration:none;
+
+            font-weight:600;
+
+        }
+
+
+        .back-link:hover{
+
+            text-decoration:underline;
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        footer{
+
+            background:#0f172a;
+
+            color:white;
+
+            text-align:center;
+
+            padding:28px 20px;
+
+            line-height:1.7;
+
+        }
+
+
+        footer h3{
+
+            margin-bottom:8px;
+
+        }
+
+
+        footer p{
+
+            font-size:14px;
+
+        }
+
+
+        footer a{
+
+            color:#38bdf8;
+
+            text-decoration:none;
+
+        }
+
+
+        /* =====================================
+           TABLET
+        ===================================== */
+
+        @media(max-width:992px){
+
+            nav{
+
+                padding:18px 25px;
+
+            }
+
+
+            nav ul{
+
+                gap:15px;
+
+            }
+
+
+            nav ul li a{
+
+                font-size:14px;
+
+            }
+
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media(max-width:768px){
+
+            nav{
+
+                padding:15px 20px;
+
+            }
+
+
+            .logo{
+
+                font-size:22px;
+
+            }
+
+
+            .menu-toggle{
+
+                display:block;
+
+            }
+
+
+            nav ul{
+
+                display:none;
+
+                position:absolute;
+
+                top:100%;
+
+                left:0;
+
+                width:100%;
+
+                flex-direction:column;
+
+                gap:0;
+
+                background:#0d6efd;
+
+                box-shadow:
+                    0 8px 15px
+                    rgba(0,0,0,.12);
+
+            }
+
+
+            nav ul.active{
+
+                display:flex;
+
+            }
+
+
+            nav ul li{
+
+                width:100%;
+
+            }
+
+
+            nav ul li a{
+
+                display:block;
+
+                width:100%;
+
+                padding:14px;
+
+                text-align:center;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,.15);
+
+            }
+
+
+            .container{
+
+                padding:30px 15px;
+
+            }
+
+
+            .payment-box{
+
+                padding:28px 20px;
+
+            }
+
+
+            .payment-box h2{
+
+                font-size:27px;
+
+            }
+
+
+            .amount{
+
+                font-size:34px;
+
+            }
+
+
+            .payment-icon{
+
+                width:70px;
+
+                height:70px;
+
+                font-size:34px;
+
+            }
+
+        }
+
+
+        /* =====================================
+           SMALL MOBILE
+        ===================================== */
+
+        @media(max-width:480px){
+
+            .logo{
+
+                font-size:19px;
+
+            }
+
+
+            .payment-box{
+
+                border-radius:18px;
+
+            }
+
+
+            #rzp-button{
+
+                padding:14px;
+
+                font-size:16px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     NAVBAR
+===================================== -->
+
+<nav>
+
+    <div class="logo">
+        SMART CART
+    </div>
+
+
+    <div class="menu-toggle"
+         onclick="toggleMenu()">
+
+        ☰
+
+    </div>
+
+
+    <ul id="navLinks">
+
+        <li>
+
+            <a href="/user-dashboard">
+                DASHBOARD
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user/products">
+                PRODUCTS
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user/cart">
+                CART
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user/my-orders">
+                ORDERS
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="/user-logout">
+                LOGOUT
+            </a>
+
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================
+     FLASH MESSAGES
+===================================== -->
+
+<div class="flash-container">
+
+    {% with messages =
+        get_flashed_messages(
+            with_categories=true
+        )
+    %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="flash-message {{ category }}"
+                    id="flash{{ loop.index }}">
+
+                    {{ message }}
+
+                    <span
+                        class="close-btn"
+                        onclick="
+                        document
+                        .getElementById(
+                            'flash{{ loop.index }}'
+                        )
+                        .style.display='none';
+                        ">
+
+                        &times;
+
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+
+
+<!-- =====================================
+     PAYMENT SECTION
+===================================== -->
+
+<main class="container">
+
+    <div class="payment-box">
+
+
+        <div class="payment-icon">
+
+            💳
+
+        </div>
+
+
+        <h2>
+
+            Complete Your Payment
+
+        </h2>
+
+
+        <p class="description">
+
+            Review the payable amount and
+            complete your payment securely.
+
+        </p>
+
+
+        <div class="amount-label">
+
+            Total Amount
+
+        </div>
+
+
+        <div class="amount">
+
+            ₹{{ amount }}
+
+        </div>
+
+
+        <button
+            type="button"
+            id="rzp-button">
+
+            🔒 Pay ₹{{ amount }} Now
+
+        </button>
+
+
+        <div
+            id="payment-error"
+            class="payment-error">
+
+        </div>
+
+
+        <p class="secure-text">
+
+            🔐 Your payment is processed
+            through Razorpay's secure checkout.
+
+            <br>
+
+            Please do not refresh or close
+            the page while payment is being
+            processed.
+
+        </p>
+
+
+        <a
+            href="/user/cart"
+            class="back-link">
+
+            ← Back to Cart
+
+        </a>
+
+
+    </div>
+
+</main>
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer>
+
+    <h3>
+
+        🛒 Smart Cart
+
+    </h3>
+
+
+    <p>
+
+        Smart Cart is an innovative online
+        shopping platform designed to provide
+        a seamless and secure shopping
+        experience.
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        📍 Telangana, India
+
+    </p>
+
+
+    <p>
+
+        📧
+
+        <a href="mailto:support@smartcart.com">
+
+            support@smartcart.com
+
+        </a>
+
+    </p>
+
+
+    <p>
+
+        📞 +91 6281172858
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+<!-- =====================================
+     RAZORPAY CHECKOUT
+===================================== -->
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+    /*
+    =========================================
+    MOBILE MENU
+    =========================================
+    */
+
+    function toggleMenu(){
+
+        document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+    }
+
+
+
+    /*
+    =========================================
+    PAYMENT ELEMENTS
+    =========================================
+    */
+
+    const payButton =
+        document.getElementById(
+            "rzp-button"
+        );
+
+    const paymentError =
+        document.getElementById(
+            "payment-error"
+        );
+
+
+
+    /*
+    =========================================
+    SHOW ERROR FUNCTION
+    =========================================
+    */
+
+    function showPaymentError(message){
+
+        paymentError.textContent =
+            message;
+
+        paymentError.style.display =
+            "block";
+
+        payButton.disabled =
+            false;
+
+        payButton.innerHTML =
+            "🔒 Pay ₹{{ amount }} Now";
+
+    }
+
+
+
+    /*
+    =========================================
+    RAZORPAY OPTIONS
+    =========================================
+    */
+
+    var options = {
+
+        /*
+        Public Razorpay Key ID.
+
+        IMPORTANT:
+        Never put Razorpay Key Secret here.
+        */
+
+        key: "{{ key_id }}",
+
+
+        /*
+        Razorpay expects amount in paise.
+
+        Example:
+        ₹100 = 10000 paise
+
+        For maximum reliability,
+        calculate this in Flask and pass
+        amount_paise from backend.
+        */
+
+        amount:
+            "{{ amount * 100 }}",
+
+
+        currency:
+            "INR",
+
+
+        name:
+            "Smart Cart",
+
+
+        description:
+            "Smart Cart Order Payment",
+
+
+        /*
+        This must be the Razorpay Order ID
+        created by your Flask backend.
+
+        Example:
+        order_Qxxxxxxx
+        */
+
+        order_id:
+            "{{ order_id }}",
+
+
+
+        /*
+        =====================================
+        PAYMENT SUCCESS HANDLER
+        =====================================
+        */
+
+        handler:
+        function(response){
+
+
+            payButton.disabled =
+                true;
+
+
+            payButton.innerHTML =
+                "Verifying Payment...";
+
+
+            /*
+            Create hidden POST form.
+
+            Payment details are sent to Flask
+            backend for signature verification.
+            */
+
+
+            var form =
+                document.createElement(
+                    "form"
+                );
+
+
+            form.method =
+                "POST";
+
+
+            form.action =
+                "/verify-payment";
+
+
+
+            /*
+            Razorpay returns these 3 values.
+            */
+
+            var fields = {
+
+                razorpay_payment_id:
+                    response
+                    .razorpay_payment_id,
+
+                razorpay_order_id:
+                    response
+                    .razorpay_order_id,
+
+                razorpay_signature:
+                    response
+                    .razorpay_signature
+
+            };
+
+
+
+            /*
+            Add values as hidden inputs.
+            */
+
+            for(
+                var name in fields
+            ){
+
+                if(
+                    Object.prototype
+                    .hasOwnProperty
+                    .call(
+                        fields,
+                        name
+                    )
+                ){
+
+                    var input =
+                        document
+                        .createElement(
+                            "input"
+                        );
+
+
+                    input.type =
+                        "hidden";
+
+
+                    input.name =
+                        name;
+
+
+                    input.value =
+                        fields[name];
+
+
+                    form.appendChild(
+                        input
+                    );
+
+                }
+
+            }
+
+
+
+            /*
+            Submit payment data
+            to Flask backend.
+            */
+
+            document.body
+            .appendChild(
+                form
+            );
+
+
+            form.submit();
+
+        },
+
+
+
+        /*
+        Checkout popup styling.
+        */
+
+        theme: {
+
+            color:
+                "#0d6efd"
+
+        }
+
+    };
+
+
+
+    /*
+    =========================================
+    INITIALIZE RAZORPAY
+    =========================================
+    */
+
+    var rzp = null;
+
+
+    if(
+        typeof Razorpay !==
+        "undefined"
+    ){
+
+        rzp =
+            new Razorpay(
+                options
+            );
+
+    }
+
+    else{
+
+        showPaymentError(
+
+            "Payment service could not be loaded. Please refresh the page and try again."
+
+        );
+
+    }
+
+
+
+    /*
+    =========================================
+    PAYMENT FAILED EVENT
+    =========================================
+    */
+
+    if(rzp){
+
+        rzp.on(
+
+            "payment.failed",
+
+            function(response){
+
+                var description =
+                    "Payment failed. Please try again.";
+
+
+                if(
+                    response &&
+                    response.error &&
+                    response.error.description
+                ){
+
+                    description =
+                        response
+                        .error
+                        .description;
+
+                }
+
+
+                showPaymentError(
+                    description
+                );
+
+            }
+
+        );
+
+    }
+
+
+
+    /*
+    =========================================
+    PAY BUTTON CLICK
+    =========================================
+    */
+
+    payButton.addEventListener(
+
+        "click",
+
+        function(event){
+
+            event.preventDefault();
+
+
+            paymentError.style.display =
+                "none";
+
+
+            /*
+            Prevent repeated clicks.
+            */
+
+            payButton.disabled =
+                true;
+
+
+            payButton.innerHTML =
+                "Opening Secure Payment...";
+
+
+            if(!rzp){
+
+                showPaymentError(
+
+                    "Payment service is unavailable. Please refresh and try again."
+
+                );
+
+                return;
+
+            }
+
+
+            try{
+
+                rzp.open();
+
+
+                /*
+                Re-enable after opening popup.
+
+                This allows retry if user
+                closes Razorpay checkout.
+                */
+
+                setTimeout(
+
+                    function(){
+
+                        payButton.disabled =
+                            false;
+
+                        payButton.innerHTML =
+                            "🔒 Pay ₹{{ amount }} Now";
+
+                    },
+
+                    1500
+
+                );
+
+            }
+
+            catch(error){
+
+                console.error(
+                    error
+                );
+
+
+                showPaymentError(
+
+                    "Unable to open payment window. Please try again."
+
+                );
+
+            }
+
+        }
+
+    );
+
+</script>
+
+
+</body>
+
+</html>

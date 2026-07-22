@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Update Product | Smart Cart</title>
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
+
+:root{
+
+    --primary:#0d6efd;
+
+    --secondary:#38bdf8;
+
+    --dark:#0f172a;
+
+    --light:#f8fbff;
+
+    --text:#334155;
+
+    --muted:#64748b;
+
+    --border:#dbeafe;
+
+}
+
+
+/* =========================================
+   GLOBAL
+========================================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(56,189,248,.12),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(13,110,253,.10),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #f8fbff
+        );
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+
+
+a{
+
+    text-decoration:none;
+
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:76px;
+
+    padding:0 6%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0866d9,
+            #0d8ee8,
+            #16a8d7
+        );
+
+    box-shadow:
+
+        0 4px 18px
+
+        rgba(15,23,42,.12);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    color:white;
+
+    flex-shrink:0;
+
+}
+
+
+.logo-icon{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:11px;
+
+    background:
+
+        rgba(255,255,255,.15);
+
+    border:
+
+        1px solid
+
+        rgba(255,255,255,.22);
+
+    font-size:20px;
+
+}
+
+
+.logo-text h2{
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    line-height:1.1;
+
+    letter-spacing:.3px;
+
+}
+
+
+.logo-text span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+
+        rgba(255,255,255,.75);
+
+    font-size:8px;
+
+    letter-spacing:1.5px;
+
+}
+
+
+/* =========================================
+   NAV LINKS
+========================================= */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:24px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:
+
+        rgba(255,255,255,.92);
+
+    font-size:12px;
+
+    font-weight:500;
+
+    white-space:nowrap;
+
+    transition:.3s ease;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s ease;
+
+}
+
+
+.nav-links a:hover{
+
+    color:white;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* Logout */
+
+.logout-link{
+
+    padding:9px 16px;
+
+    border:
+
+        1px solid
+
+        rgba(255,255,255,.6);
+
+    border-radius:8px;
+
+}
+
+
+.logout-link::after{
+
+    display:none;
+
+}
+
+
+.logout-link:hover{
+
+    background:white;
+
+    color:#0876d1;
+
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================
+   FLASH MESSAGES
+========================================= */
+
+.flash-container{
+
+    position:fixed;
+
+    top:90px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:500px;
+
+    max-width:90%;
+
+    z-index:9999;
+
+}
+
+
+.flash-message{
+
+    position:relative;
+
+    margin-bottom:10px;
+
+    padding:
+
+        14px 45px
+
+        14px 18px;
+
+    border-radius:10px;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    box-shadow:
+
+        0 10px 30px
+
+        rgba(15,23,42,.15);
+
+    animation:slideDown .35s ease;
+
+}
+
+
+.flash-message.success{
+
+    background:#16a34a;
+
+}
+
+
+.flash-message.error,
+.flash-message.danger{
+
+    background:#dc2626;
+
+}
+
+
+.flash-message.warning{
+
+    background:#d97706;
+
+}
+
+
+.flash-message.info{
+
+    background:#0284c7;
+
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:7px;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content{
+
+    flex:1;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:
+
+        60px 20px;
+
+}
+
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.form-card{
+
+    width:100%;
+
+    max-width:700px;
+
+    background:white;
+
+    border:
+
+        1px solid
+
+        #e2e8f0;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 18px 45px
+
+        rgba(15,23,42,.09);
+
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.form-header{
+
+    padding:
+
+        32px 35px
+
+        25px;
+
+    text-align:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #ffffff
+        );
+
+    border-bottom:
+
+        1px solid
+
+        #eaf2fb;
+
+}
+
+
+.form-icon{
+
+    width:64px;
+
+    height:64px;
+
+    margin:
+
+        0 auto
+
+        16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:17px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #e0f2fe,
+            #dbeafe
+        );
+
+    font-size:28px;
+
+}
+
+
+.form-header span{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#0876d1;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+}
+
+
+.form-header h1{
+
+    margin-bottom:9px;
+
+    color:#123f78;
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+
+.form-header p{
+
+    max-width:500px;
+
+    margin:auto;
+
+    color:#64748b;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================
+   FORM BODY
+========================================= */
+
+.form-body{
+
+    padding:
+
+        32px 38px
+
+        38px;
+
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.form-group{
+
+    margin-bottom:19px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+
+.required{
+
+    color:#ef4444;
+
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.form-control{
+
+    width:100%;
+
+    padding:13px 14px;
+
+    border:
+
+        1.5px solid
+
+        #dbeafe;
+
+    border-radius:9px;
+
+    background:#f8fbff;
+
+    color:#334155;
+
+    font-size:13px;
+
+    outline:none;
+
+    transition:.3s ease;
+
+}
+
+
+.form-control::placeholder{
+
+    color:#94a3b8;
+
+}
+
+
+.form-control:focus{
+
+    border-color:#38bdf8;
+
+    background:white;
+
+    box-shadow:
+
+        0 0 0 4px
+
+        rgba(56,189,248,.10);
+
+}
+
+
+textarea.form-control{
+
+    min-height:125px;
+
+    resize:vertical;
+
+    line-height:1.7;
+
+}
+
+
+/* Remove number arrows where supported */
+
+input[type="number"]{
+
+    appearance:textfield;
+
+    -moz-appearance:textfield;
+
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{
+
+    -webkit-appearance:none;
+
+    margin:0;
+
+}
+
+
+/* =========================================
+   PRICE WRAPPER
+========================================= */
+
+.price-wrapper{
+
+    position:relative;
+
+}
+
+
+.currency-symbol{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#64748b;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+.price-wrapper .form-control{
+
+    padding-left:34px;
+
+}
+
+
+/* =========================================
+   CURRENT IMAGE SECTION
+========================================= */
+
+.image-section{
+
+    margin-bottom:22px;
+
+}
+
+
+.image-section-title{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#334155;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+
+.current-image-box{
+
+    padding:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    background:#f8fbff;
+
+    border:
+
+        1px solid
+
+        #dbeafe;
+
+    border-radius:13px;
+
+}
+
+
+.current-image{
+
+    width:150px;
+
+    height:150px;
+
+    flex-shrink:0;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    border:
+
+        3px solid
+
+        white;
+
+    box-shadow:
+
+        0 8px 20px
+
+        rgba(15,23,42,.12);
+
+}
+
+
+.image-info h3{
+
+    margin-bottom:7px;
+
+    color:#123f78;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+
+.image-info p{
+
+    color:#64748b;
+
+    font-size:10px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================
+   FILE INPUT
+========================================= */
+
+.file-input{
+
+    width:100%;
+
+    padding:10px;
+
+    border:
+
+        1.5px dashed
+
+        #93c5fd;
+
+    border-radius:10px;
+
+    background:#f8fbff;
+
+    color:#64748b;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+}
+
+
+.file-input::file-selector-button{
+
+    margin-right:12px;
+
+    padding:
+
+        9px 14px;
+
+    border:none;
+
+    border-radius:7px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #087bea,
+            #00a6c8
+        );
+
+    color:white;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:10px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+.file-help{
+
+    margin-top:7px;
+
+    color:#94a3b8;
+
+    font-size:9px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================
+   NEW IMAGE PREVIEW
+========================================= */
+
+.preview-container{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#f8fbff;
+
+    border:
+
+        1px solid
+
+        #dbeafe;
+
+    border-radius:12px;
+
+    text-align:center;
+
+}
+
+
+.preview-container p{
+
+    margin-bottom:10px;
+
+    color:#64748b;
+
+    font-size:10px;
+
+}
+
+
+.preview-image{
+
+    width:140px;
+
+    height:140px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    box-shadow:
+
+        0 5px 15px
+
+        rgba(15,23,42,.10);
+
+}
+
+
+/* =========================================
+   BUTTON GROUP
+========================================= */
+
+.button-group{
+
+    display:flex;
+
+    gap:13px;
+
+    margin-top:28px;
+
+}
+
+
+.btn{
+
+    min-height:48px;
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:7px;
+
+    border:none;
+
+    border-radius:9px;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+}
+
+
+/* Update */
+
+.update-btn{
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #087bea,
+            #00a6c8
+        );
+
+    box-shadow:
+
+        0 8px 20px
+
+        rgba(8,123,234,.18);
+
+}
+
+
+.update-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 11px 25px
+
+        rgba(8,123,234,.28);
+
+}
+
+
+/* Back */
+
+.back-btn{
+
+    color:#475569;
+
+    background:white;
+
+    border:
+
+        1px solid
+
+        #cbd5e1;
+
+}
+
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#f8fafc;
+
+    border-color:#94a3b8;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+
+    padding:
+
+        50px 8%
+
+        22px;
+
+    background:#0f172a;
+
+    color:#94a3b8;
+
+}
+
+
+.footer-content{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+
+        2fr 1fr 1.3fr;
+
+    gap:45px;
+
+}
+
+
+.footer-brand h2{
+
+    margin-bottom:12px;
+
+    color:white;
+
+    font-size:22px;
+
+}
+
+
+.footer-brand p{
+
+    max-width:420px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    line-height:1.8;
+
+}
+
+
+.footer-links h3,
+.footer-contact h3{
+
+    margin-bottom:15px;
+
+    color:white;
+
+    font-size:14px;
+
+}
+
+
+.footer-links a{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    transition:.3s;
+
+}
+
+
+.footer-links a:hover{
+
+    color:#38bdf8;
+
+}
+
+
+.footer-contact p{
+
+    margin-bottom:8px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+}
+
+
+.footer-contact a{
+
+    color:#38bdf8;
+
+}
+
+
+.footer-bottom{
+
+    max-width:1150px;
+
+    margin:
+
+        35px auto 0;
+
+    padding-top:20px;
+
+    border-top:
+
+        1px solid
+
+        rgba(255,255,255,.1);
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:11px;
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width:992px){
+
+    .navbar{
+
+        padding:
+
+            0 4%;
+
+    }
+
+
+    .nav-links{
+
+        gap:14px;
+
+    }
+
+
+    .nav-links a{
+
+        font-size:10px;
+
+    }
+
+
+    .logout-link{
+
+        padding:
+
+            8px 11px;
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:70px;
+
+        padding:
+
+            12px 5%;
+
+        position:sticky;
+
+    }
+
+
+    .logo-icon{
+
+        width:38px;
+
+        height:38px;
+
+        font-size:18px;
+
+    }
+
+
+    .logo-text h2{
+
+        font-size:18px;
+
+    }
+
+
+    .logo-text span{
+
+        font-size:7px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+
+        left:0;
+
+        width:100%;
+
+        padding:
+
+            10px 5%
+
+            18px;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:3px;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #0866d9,
+                #0d8ee8
+            );
+
+        box-shadow:
+
+            0 12px 25px
+
+            rgba(15,23,42,.15);
+
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        display:block;
+
+        width:100%;
+
+        padding:11px;
+
+        border-radius:7px;
+
+        text-align:center;
+
+        font-size:13px;
+
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+
+            rgba(255,255,255,.12);
+
+    }
+
+
+    .logout-link{
+
+        border:none;
+
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        padding:
+
+            42px 16px;
+
+    }
+
+
+    .form-card{
+
+        max-width:600px;
+
+    }
+
+
+    .form-header{
+
+        padding:
+
+            28px 25px
+
+            22px;
+
+    }
+
+
+    .form-body{
+
+        padding:
+
+            26px 25px
+
+            30px;
+
+    }
+
+
+    /* IMAGE */
+
+    .current-image-box{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+
+    .current-image{
+
+        width:170px;
+
+        height:170px;
+
+    }
+
+
+    /* BUTTONS */
+
+    .button-group{
+
+        flex-direction:column;
+
+    }
+
+
+    .btn{
+
+        width:100%;
+
+        flex:none;
+
+    }
+
+
+    /* FOOTER */
+
+    .footer-content{
+
+        grid-template-columns:1fr;
+
+        gap:30px;
+
+    }
+
+
+    .flash-container{
+
+        top:82px;
+
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:
+
+            11px 14px;
+
+    }
+
+
+    .logo-icon{
+
+        width:36px;
+
+        height:36px;
+
+    }
+
+
+    .logo-text h2{
+
+        font-size:16px;
+
+    }
+
+
+    .logo-text span{
+
+        font-size:7px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:25px;
+
+    }
+
+
+    .main-content{
+
+        padding:
+
+            28px 12px
+
+            40px;
+
+    }
+
+
+    .form-card{
+
+        border-radius:16px;
+
+    }
+
+
+    .form-header{
+
+        padding:
+
+            25px 18px
+
+            20px;
+
+    }
+
+
+    .form-icon{
+
+        width:56px;
+
+        height:56px;
+
+        font-size:24px;
+
+    }
+
+
+    .form-header h1{
+
+        font-size:24px;
+
+    }
+
+
+    .form-body{
+
+        padding:
+
+            22px 18px
+
+            25px;
+
+    }
+
+
+    .form-control{
+
+        padding:
+
+            12px 13px;
+
+        font-size:12px;
+
+    }
+
+
+    .current-image{
+
+        width:145px;
+
+        height:145px;
+
+    }
+
+
+    .button-group{
+
+        margin-top:22px;
+
+    }
+
+
+    footer{
+
+        padding:
+
+            38px 20px
+
+            20px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+
+    <!-- BRAND -->
+
+    <a href="{{ url_for('admin_dashboard') }}"
+       class="brand">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+            <span>
+
+                ADMIN PORTAL
+
+            </span>
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- MOBILE MENU BUTTON -->
+
+    <button
+
+        type="button"
+
+        class="menu-toggle"
+
+        onclick="toggleMenu()"
+
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <!-- NAVIGATION -->
+
+    <div
+
+        class="nav-links"
+
+        id="navLinks">
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="{{ url_for('add_item_page') }}">
+
+            ADD PRODUCT
+
+        </a>
+
+
+        <a href="{{ url_for('item_list') }}">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="{{ url_for('admin_profile') }}">
+
+            PROFILE
+
+        </a>
+
+
+        <a
+
+            href="{{ url_for('admin_logout') }}"
+
+            class="logout-link">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     FLASH MESSAGES
+========================================= -->
+
+<div class="flash-container">
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+
+    {% if messages %}
+
+
+        {% for category, message in messages %}
+
+
+        <div
+
+            class="flash-message {{ category }}"
+
+            id="flash{{ loop.index }}">
+
+
+            {{ message }}
+
+
+            <span
+
+                class="close-btn"
+
+                onclick="
+                document.getElementById(
+                'flash{{ loop.index }}'
+                ).style.display='none'">
+
+                &times;
+
+            </span>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% endif %}
+
+
+{% endwith %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="main-content">
+
+
+    <div class="form-card">
+
+
+
+        <!-- =================================
+             HEADER
+        ================================== -->
+
+        <div class="form-header">
+
+
+            <div class="form-icon">
+
+                ✏️
+
+            </div>
+
+
+            <span>
+
+                PRODUCT MANAGEMENT
+
+            </span>
+
+
+            <h1>
+
+                Update Product
+
+            </h1>
+
+
+            <p>
+
+                Update product information, pricing,
+                description, category, or replace the
+                current product image.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             FORM BODY
+        ================================== -->
+
+        <div class="form-body">
+
+
+            <form
+
+                method="POST"
+
+                action="/admin/update-item/{{ product.product_id }}"
+
+                enctype="multipart/form-data">
+
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+
+                    <label for="name">
+
+                        Product Name
+
+                        <span class="required">
+
+                            *
+
+                        </span>
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        id="name"
+
+                        name="name"
+
+                        class="form-control"
+
+                        value="{{ product.name }}"
+
+                        placeholder="Enter product name"
+
+                        required>
+
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+
+                    <label for="description">
+
+                        Description
+
+                        <span class="required">
+
+                            *
+
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+
+                        id="description"
+
+                        name="description"
+
+                        class="form-control"
+
+                        placeholder="Enter product description"
+
+                        required>{{ product.description }}</textarea>
+
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+
+                    <label for="category">
+
+                        Category
+
+                        <span class="required">
+
+                            *
+
+                        </span>
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        id="category"
+
+                        name="category"
+
+                        class="form-control"
+
+                        value="{{ product.category }}"
+
+                        placeholder="Enter product category"
+
+                        required>
+
+
+                </div>
+
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+
+                    <label for="price">
+
+                        Price
+
+                        <span class="required">
+
+                            *
+
+                        </span>
+
+                    </label>
+
+
+                    <div class="price-wrapper">
+
+
+                        <span class="currency-symbol">
+
+                            ₹
+
+                        </span>
+
+
+                        <input
+
+                            type="number"
+
+                            id="price"
+
+                            name="price"
+
+                            class="form-control"
+
+                            step="0.01"
+
+                            min="0"
+
+                            value="{{ product.price }}"
+
+                            placeholder="0.00"
+
+                            required>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     CURRENT IMAGE
+                ================================== -->
+
+                <div class="image-section">
+
+
+                    <span class="image-section-title">
+
+                        Current Product Image
+
+                    </span>
+
+
+                    <div class="current-image-box">
+
+
+                        <img
+
+                            src="{{ url_for('static',
+                            filename='uploads/product_images/' + product.image) }}"
+
+                            alt="{{ product.name }}"
+
+                            class="current-image">
+
+
+                        <div class="image-info">
+
+
+                            <h3>
+
+                                {{ product.name }}
+
+                            </h3>
+
+
+                            <p>
+
+                                This is the current image
+                                displayed for this product.
+
+                                Upload a new image below only
+                                if you want to replace it.
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     NEW IMAGE
+                ================================== -->
+
+                <div class="form-group">
+
+
+                    <label for="image">
+
+                        Choose New Image
+
+                        <span style="
+                            color:#94a3b8;
+                            font-weight:400;
+                        ">
+
+                            (Optional)
+
+                        </span>
+
+                    </label>
+
+
+                    <input
+
+                        type="file"
+
+                        id="image"
+
+                        name="image"
+
+                        class="file-input"
+
+                        accept="image/*"
+
+                        onchange="previewNewImage(event)">
+
+
+                    <p class="file-help">
+
+                        Leave this field empty if you want
+                        to keep the existing product image.
+
+                    </p>
+
+
+
+                    <!-- NEW IMAGE PREVIEW -->
+
+                    <div
+
+                        class="preview-container"
+
+                        id="previewContainer">
+
+
+                        <p>
+
+                            New Image Preview
+
+                        </p>
+
+
+                        <img
+
+                            id="previewImage"
+
+                            class="preview-image"
+
+                            alt="New product image preview">
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     BUTTONS
+                ================================== -->
+
+                <div class="button-group">
+
+
+                    <button
+
+                        type="submit"
+
+                        class="btn update-btn">
+
+
+                        <span>
+
+                            ✓
+
+                        </span>
+
+
+                        Update Product
+
+
+                    </button>
+
+
+
+                    <a
+
+                        href="{{ url_for('item_list') }}"
+
+                        class="btn back-btn">
+
+
+                        <span>
+
+                            ←
+
+                        </span>
+
+
+                        Back to Products
+
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+
+            <h2>
+
+                🛒 Smart Cart
+
+            </h2>
+
+
+            <p>
+
+                Smart Cart is a modern shopping
+                platform designed to make product
+                management and online shopping
+                simple, secure, efficient, and
+                convenient.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+
+            <h3>
+
+                Admin Links
+
+            </h3>
+
+
+            <a href="{{ url_for('admin_dashboard') }}">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('add_item_page') }}">
+
+                Add Product
+
+            </a>
+
+
+            <a href="{{ url_for('item_list') }}">
+
+                Products
+
+            </a>
+
+
+            <a href="{{ url_for('admin_profile') }}">
+
+                Profile
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-contact">
+
+
+            <h3>
+
+                Contact
+
+            </h3>
+
+
+            <p>
+
+                📍 Telangana, India
+
+            </p>
+
+
+            <p>
+
+                📧
+
+                <a href="mailto:support@smartcart.com">
+
+                    support@smartcart.com
+
+                </a>
+
+            </p>
+
+
+            <p>
+
+                📞 +91 6281172858
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-bottom">
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* =========================================
+   NEW IMAGE PREVIEW
+========================================= */
+
+function previewNewImage(event){
+
+
+    const file =
+        event.target.files[0];
+
+
+    const previewContainer =
+        document.getElementById(
+            "previewContainer"
+        );
+
+
+    const previewImage =
+        document.getElementById(
+            "previewImage"
+        );
+
+
+    if(file){
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+
+                previewImage.src =
+                    e.target.result;
+
+
+                previewContainer.style.display =
+                    "block";
+
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+
+    }
+
+    else{
+
+
+        previewImage.src =
+            "";
+
+
+        previewContainer.style.display =
+            "none";
+
+
+    }
+
+
+}
+
+
+
+/* =========================================
+   CLOSE MENU AFTER CLICKING LINK
+========================================= */
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* =========================================
+   RESET MENU ON DESKTOP
+========================================= */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(window.innerWidth > 768){
+
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+
+        }
+
+
+    }
+);
+
+
+
+/* =========================================
+   AUTO HIDE FLASH MESSAGES
+========================================= */
+
+setTimeout(function(){
+
+
+    document
+        .querySelectorAll(".flash-message")
+        .forEach(function(message){
+
+
+            message.style.transition =
+                "opacity .4s ease";
+
+
+            message.style.opacity =
+                "0";
+
+
+            setTimeout(function(){
+
+
+                message.style.display =
+                    "none";
+
+
+            },400);
+
+
+        });
+
+
+},5000);
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>About Us | Smart Cart</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+        /* =========================
+           GLOBAL
+        ========================== */
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        :root{
+            --primary:#0d6efd;
+            --secondary:#38bdf8;
+            --dark-blue:#0d47a1;
+            --dark:#0f172a;
+            --text:#475569;
+            --light-text:#64748b;
+            --background:#eef7ff;
+        }
+
+        body{
+            min-height:100vh;
+
+            display:flex;
+            flex-direction:column;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef7ff,
+                    #dbeafe
+                );
+
+            color:#334155;
+            line-height:1.7;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar{
+            width:100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0d6efd,
+                    #38bdf8
+                );
+
+            padding:18px 50px;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,.12);
+
+            position:sticky;
+            top:0;
+
+            z-index:1000;
+        }
+
+
+        .logo{
+            color:white;
+
+            font-size:28px;
+            font-weight:700;
+
+            letter-spacing:.5px;
+
+            white-space:nowrap;
+        }
+
+
+        .nav-links{
+            display:flex;
+            align-items:center;
+
+            list-style:none;
+
+            gap:28px;
+        }
+
+
+        .nav-links li{
+            list-style:none;
+        }
+
+
+        .nav-links a{
+            position:relative;
+
+            color:white;
+
+            text-decoration:none;
+
+            font-size:15px;
+            font-weight:600;
+
+            transition:.3s;
+        }
+
+
+        .nav-links a::after{
+            content:"";
+
+            position:absolute;
+
+            left:0;
+            bottom:-6px;
+
+            width:0;
+            height:2px;
+
+            background:white;
+
+            transition:.3s;
+        }
+
+
+        .nav-links a:hover::after{
+            width:100%;
+        }
+
+
+        .nav-links a:hover{
+            color:#eef7ff;
+        }
+
+
+        /* Register Button */
+
+        .register-link{
+            padding:9px 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.8);
+
+            border-radius:9px;
+        }
+
+
+        .register-link::after{
+            display:none;
+        }
+
+
+        .register-link:hover{
+            background:white;
+            color:#0d6efd !important;
+        }
+
+
+        /* Hamburger */
+
+        .menu-toggle{
+            display:none;
+
+            color:white;
+
+            font-size:30px;
+
+            cursor:pointer;
+
+            user-select:none;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container{
+            width:92%;
+
+            max-width:1200px;
+
+            margin:
+                45px auto;
+
+            flex:1;
+        }
+
+
+        /* =========================
+           HERO SECTION
+        ========================== */
+
+        .header{
+            position:relative;
+
+            overflow:hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #38bdf8
+                );
+
+            color:white;
+
+            text-align:center;
+
+            padding:
+                80px
+                30px;
+
+            border-radius:28px;
+
+            margin-bottom:40px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(13,110,253,.22);
+        }
+
+
+        .header::before{
+            content:"";
+
+            position:absolute;
+
+            width:250px;
+            height:250px;
+
+            border-radius:50%;
+
+            background:
+                rgba(255,255,255,.08);
+
+            top:-100px;
+            left:-80px;
+        }
+
+
+        .header::after{
+            content:"";
+
+            position:absolute;
+
+            width:300px;
+            height:300px;
+
+            border-radius:50%;
+
+            background:
+                rgba(255,255,255,.08);
+
+            right:-100px;
+            bottom:-160px;
+        }
+
+
+        .header-content{
+            position:relative;
+            z-index:2;
+        }
+
+
+        .hero-badge{
+            display:inline-block;
+
+            padding:
+                7px
+                17px;
+
+            margin-bottom:18px;
+
+            background:
+                rgba(255,255,255,.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,.30);
+
+            border-radius:30px;
+
+            font-size:13px;
+            font-weight:600;
+
+            letter-spacing:1px;
+        }
+
+
+        .header h1{
+            font-size:
+                clamp(
+                    38px,
+                    6vw,
+                    55px
+                );
+
+            font-weight:800;
+
+            margin-bottom:15px;
+
+            line-height:1.2;
+        }
+
+
+        .header p{
+            max-width:700px;
+
+            margin:auto;
+
+            font-size:19px;
+
+            opacity:.95;
+
+            line-height:1.8;
+        }
+
+
+        /* =========================
+           INTRO SECTION
+        ========================== */
+
+        .intro{
+            text-align:center;
+
+            max-width:850px;
+
+            margin:
+                0 auto
+                40px;
+        }
+
+
+        .intro span{
+            color:#0d6efd;
+
+            font-size:13px;
+            font-weight:700;
+
+            letter-spacing:1.5px;
+        }
+
+
+        .intro h2{
+            color:#0d47a1;
+
+            font-size:34px;
+
+            margin:
+                8px 0
+                12px;
+        }
+
+
+        .intro p{
+            color:#64748b;
+
+            font-size:16px;
+
+            line-height:1.8;
+        }
+
+
+        /* =========================
+           CARDS GRID
+        ========================== */
+
+        .about-grid{
+            display:grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+
+            gap:25px;
+
+            margin-bottom:25px;
+        }
+
+
+        .card{
+            background:white;
+
+            padding:32px;
+
+            border-radius:20px;
+
+            border:
+                1px solid
+                rgba(219,234,254,.9);
+
+            box-shadow:
+                0 15px 35px
+                rgba(13,110,253,.08),
+                0 5px 15px
+                rgba(0,0,0,.04);
+
+            transition:
+                transform .3s,
+                box-shadow .3s;
+        }
+
+
+        .card:hover{
+            transform:
+                translateY(-6px);
+
+            box-shadow:
+                0 20px 40px
+                rgba(13,110,253,.13);
+        }
+
+
+        .card-icon{
+            width:55px;
+            height:55px;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dbeafe,
+                    #e0f2fe
+                );
+
+            border-radius:14px;
+
+            font-size:25px;
+
+            margin-bottom:20px;
+        }
+
+
+        .card h2{
+            color:#0d47a1;
+
+            font-size:24px;
+
+            margin-bottom:14px;
+        }
+
+
+        .card p{
+            color:#475569;
+
+            font-size:15px;
+
+            line-height:1.9;
+        }
+
+
+        /* Full Width Card */
+
+        .full-card{
+            margin-bottom:25px;
+        }
+
+
+        /* =========================
+           FEATURE LISTS
+        ========================== */
+
+        .feature-grid{
+            display:grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+
+            gap:25px;
+
+            margin-bottom:25px;
+        }
+
+
+        .feature-list{
+            list-style:none;
+
+            margin-top:18px;
+
+            padding:0;
+        }
+
+
+        .feature-list li{
+            position:relative;
+
+            padding-left:34px;
+
+            margin-bottom:15px;
+
+            color:#475569;
+
+            font-size:15px;
+        }
+
+
+        .feature-list li::before{
+            content:"✓";
+
+            position:absolute;
+
+            left:0;
+            top:0;
+
+            width:23px;
+            height:23px;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:#dcfce7;
+
+            color:#16a34a;
+
+            border-radius:50%;
+
+            font-size:13px;
+            font-weight:700;
+        }
+
+
+        /* =========================
+           WHY CHOOSE US
+        ========================== */
+
+        .why-card{
+            text-align:center;
+
+            padding:45px 35px;
+        }
+
+
+        .why-card .card-icon{
+            margin:
+                0 auto
+                20px;
+        }
+
+
+        .why-card p{
+            max-width:850px;
+
+            margin:auto;
+        }
+
+
+        /* =========================
+           CONTACT SECTION
+        ========================== */
+
+        .contact-card{
+            margin-top:25px;
+        }
+
+
+        .contact-heading{
+            text-align:center;
+
+            margin-bottom:30px;
+        }
+
+
+        .contact-heading h2{
+            border:none;
+
+            padding:0;
+
+            margin-bottom:8px;
+        }
+
+
+        .contact-heading p{
+            color:#64748b;
+        }
+
+
+        .contact{
+            display:grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap:20px;
+        }
+
+
+        .contact-box{
+            background:#f8fbff;
+
+            border:
+                2px solid
+                #dbeafe;
+
+            padding:28px 20px;
+
+            border-radius:16px;
+
+            text-align:center;
+
+            transition:.3s;
+        }
+
+
+        .contact-box:hover{
+            transform:
+                translateY(-4px);
+
+            border-color:#38bdf8;
+
+            box-shadow:
+                0 10px 20px
+                rgba(13,110,253,.08);
+        }
+
+
+        .contact-icon{
+            font-size:32px;
+
+            margin-bottom:10px;
+        }
+
+
+        .contact-box h3{
+            color:#0d47a1;
+
+            margin-bottom:10px;
+
+            font-size:19px;
+        }
+
+
+        .contact-box p{
+            color:#64748b;
+
+            font-size:14px;
+
+            word-break:break-word;
+        }
+
+
+        .contact-box a{
+            color:#0d6efd;
+
+            text-decoration:none;
+
+            font-weight:500;
+        }
+
+
+        .contact-box a:hover{
+            text-decoration:underline;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================== */
+
+        .button-wrapper{
+            text-align:center;
+
+            margin-top:32px;
+        }
+
+
+        .btn{
+            display:inline-block;
+
+            padding:
+                14px
+                30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0d6efd,
+                    #38bdf8
+                );
+
+            color:white;
+
+            text-decoration:none;
+
+            border-radius:12px;
+
+            font-weight:600;
+
+            transition:.3s;
+
+            box-shadow:
+                0 8px 20px
+                rgba(13,110,253,.18);
+        }
+
+
+        .btn:hover{
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(13,110,253,.28);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer{
+            background:#0f172a;
+
+            color:white;
+
+            padding:
+                50px 8%
+                25px;
+
+            margin-top:40px;
+        }
+
+
+        .footer-content{
+            max-width:1150px;
+
+            margin:auto;
+
+            display:grid;
+
+            grid-template-columns:
+                2fr
+                1fr
+                1.3fr;
+
+            gap:45px;
+        }
+
+
+        .footer-brand h3{
+            color:white;
+
+            font-size:24px;
+
+            margin-bottom:14px;
+        }
+
+
+        .footer-brand p{
+            color:#94a3b8;
+
+            font-size:14px;
+
+            line-height:1.8;
+        }
+
+
+        .footer-links h3,
+        .footer-contact h3{
+            color:white;
+
+            font-size:17px;
+
+            margin-bottom:16px;
+        }
+
+
+        .footer-links a{
+            display:block;
+
+            color:#94a3b8;
+
+            text-decoration:none;
+
+            margin-bottom:9px;
+
+            font-size:14px;
+
+            transition:.3s;
+        }
+
+
+        .footer-links a:hover{
+            color:#38bdf8;
+        }
+
+
+        .footer-contact p{
+            color:#94a3b8;
+
+            margin-bottom:9px;
+
+            font-size:14px;
+        }
+
+
+        .footer-contact a{
+            color:#38bdf8;
+
+            text-decoration:none;
+        }
+
+
+        .footer-bottom{
+            max-width:1150px;
+
+            margin:
+                35px auto
+                0;
+
+            padding-top:20px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.1);
+
+            text-align:center;
+
+            color:#64748b;
+
+            font-size:13px;
+        }
+
+
+        /* =========================
+           TABLET
+        ========================== */
+
+        @media(max-width:992px){
+
+            .navbar{
+                padding:
+                    16px
+                    25px;
+            }
+
+
+            .nav-links{
+                gap:17px;
+            }
+
+
+            .nav-links a{
+                font-size:14px;
+            }
+
+
+            .contact{
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
+            }
+
+
+            .footer-content{
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+
+            .footer-brand{
+                grid-column:
+                    1 / -1;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media(max-width:768px){
+
+            .navbar{
+                padding:
+                    15px
+                    20px;
+
+                position:sticky;
+            }
+
+
+            .logo{
+                font-size:22px;
+            }
+
+
+            .menu-toggle{
+                display:block;
+            }
+
+
+            .nav-links{
+                display:none;
+
+                position:absolute;
+
+                top:100%;
+                left:0;
+
+                width:100%;
+
+                flex-direction:column;
+
+                gap:0;
+
+                padding:8px 0;
+
+                background:#0d6efd;
+
+                box-shadow:
+                    0 10px 20px
+                    rgba(0,0,0,.15);
+            }
+
+
+            .nav-links.active{
+                display:flex;
+            }
+
+
+            .nav-links li{
+                width:100%;
+            }
+
+
+            .nav-links a{
+                display:block;
+
+                width:100%;
+
+                padding:13px;
+
+                text-align:center;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,.15);
+            }
+
+
+            .nav-links a::after{
+                display:none;
+            }
+
+
+            .register-link{
+                border:none;
+
+                border-radius:0;
+            }
+
+
+            .container{
+                width:94%;
+
+                margin:
+                    25px auto;
+            }
+
+
+            .header{
+                padding:
+                    55px
+                    20px;
+
+                border-radius:20px;
+            }
+
+
+            .header h1{
+                font-size:36px;
+            }
+
+
+            .header p{
+                font-size:17px;
+            }
+
+
+            .intro h2{
+                font-size:28px;
+            }
+
+
+            .about-grid,
+            .feature-grid{
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .card{
+                padding:25px;
+            }
+
+
+            .contact{
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .footer-content{
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .footer-brand{
+                grid-column:auto;
+            }
+
+        }
+
+
+        /* =========================
+           SMALL MOBILE
+        ========================== */
+
+        @media(max-width:480px){
+
+            .logo{
+                font-size:19px;
+            }
+
+
+            .menu-toggle{
+                font-size:27px;
+            }
+
+
+            .header{
+                padding:
+                    45px
+                    16px;
+            }
+
+
+            .header h1{
+                font-size:31px;
+            }
+
+
+            .header p{
+                font-size:15px;
+            }
+
+
+            .hero-badge{
+                font-size:11px;
+            }
+
+
+            .intro h2{
+                font-size:25px;
+            }
+
+
+            .card{
+                padding:
+                    22px
+                    18px;
+            }
+
+
+            .card h2{
+                font-size:21px;
+            }
+
+
+            .contact-box{
+                padding:22px 15px;
+            }
+
+
+            .btn{
+                width:100%;
+
+                text-align:center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        SMART CART
+    </div>
+
+
+    <div class="menu-toggle"
+         onclick="toggleMenu()">
+
+        ☰
+
+    </div>
+
+
+    <ul class="nav-links"
+        id="navLinks">
+
+        <li>
+            <a href="/user-home">
+                HOME
+            </a>
+        </li>
+
+        <li>
+            <a href="/user-about">
+                ABOUT
+            </a>
+        </li>
+
+        <li>
+            <a href="/user-contact">
+                CONTACT
+            </a>
+        </li>
+
+        <li>
+            <a href="/user-login">
+                LOGIN
+            </a>
+        </li>
+
+        <li>
+            <a href="/user-register"
+               class="register-link">
+                REGISTER
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================== -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="header">
+
+        <div class="header-content">
+
+            <span class="hero-badge">
+                WELCOME TO SMART CART
+            </span>
+
+            <h1>
+                About Smart Cart
+            </h1>
+
+            <p>
+                Easy • Convenient • Secure • Smart Shopping
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+        <span>
+            WHO WE ARE
+        </span>
+
+        <h2>
+            Making Online Shopping
+            Simple and Convenient
+        </h2>
+
+        <p>
+            Smart Cart is designed to provide customers
+            with a simple, secure, and enjoyable online
+            shopping experience. From discovering products
+            to managing your cart and orders, our goal is
+            to make every step easy and convenient.
+        </p>
+
+    </section>
+
+
+    <!-- WHO WE ARE + VISION -->
+
+    <section class="about-grid">
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🛒
+            </div>
+
+            <h2>
+                Who We Are
+            </h2>
+
+            <p>
+                Smart Cart is an online shopping platform
+                created to provide customers with a simple,
+                secure, and enjoyable shopping experience.
+                We focus on making product discovery,
+                shopping, cart management, and ordering
+                easy for every user.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎯
+            </div>
+
+            <h2>
+                Our Vision
+            </h2>
+
+            <p>
+                Our vision is to become a trusted shopping
+                destination where customers can discover
+                products, explore available options, manage
+                their purchases, and shop confidently with
+                convenience and reliability.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="feature-grid">
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ✨
+            </div>
+
+            <h2>
+                What We Offer
+            </h2>
+
+            <ul class="feature-list">
+
+                <li>
+                    User Registration and Secure Login
+                </li>
+
+                <li>
+                    Easy Product Search and Browsing
+                </li>
+
+                <li>
+                    Simple Shopping Cart Management
+                </li>
+
+                <li>
+                    Secure Online Payment Experience
+                </li>
+
+                <li>
+                    Delivery Address Management
+                </li>
+
+                <li>
+                    Order History and Order Details
+                </li>
+
+                <li>
+                    Responsive and User-Friendly Interface
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                💙
+            </div>
+
+            <h2>
+                User Benefits
+            </h2>
+
+            <ul class="feature-list">
+
+                <li>
+                    Access products anytime and anywhere
+                </li>
+
+                <li>
+                    Quick and simple product discovery
+                </li>
+
+                <li>
+                    Safe and secure shopping environment
+                </li>
+
+                <li>
+                    Easy cart and address management
+                </li>
+
+                <li>
+                    Convenient online payment process
+                </li>
+
+                <li>
+                    Easy access to previous orders
+                </li>
+
+                <li>
+                    Fast and reliable platform experience
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHY CHOOSE -->
+
+    <section class="card full-card why-card">
+
+        <div class="card-icon">
+            ⭐
+        </div>
+
+        <h2>
+            Why Choose Smart Cart?
+        </h2>
+
+        <p>
+            Smart Cart is designed with customers in mind.
+            Our platform combines convenience, security,
+            simplicity, and a clean user experience to help
+            customers enjoy a seamless shopping journey from
+            product discovery to checkout and order
+            management.
+        </p>
+
+    </section>
+
+
+    <!-- MISSION -->
+
+    <section class="card full-card why-card">
+
+        <div class="card-icon">
+            🚀
+        </div>
+
+        <h2>
+            Our Mission
+        </h2>
+
+        <p>
+            Our mission is to simplify online shopping by
+            providing an easy-to-use platform where users
+            can securely browse products, manage their cart,
+            complete payments, and track their purchases.
+            We aim to continuously improve the shopping
+            experience through simplicity, reliability,
+            and user-focused design.
+        </p>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section class="card contact-card">
+
+        <div class="contact-heading">
+
+            <h2>
+                Contact Information
+            </h2>
+
+            <p>
+                Have a question or need assistance?
+                You can reach us using the details below.
+            </p>
+
+        </div>
+
+
+        <div class="contact">
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-box">
+
+                <div class="contact-icon">
+                    📧
+                </div>
+
+                <h3>
+                    Email
+                </h3>
+
+                <p>
+
+                    <a href="mailto:ammulucky506@gmail.com">
+
+                        ammulucky506@gmail.com
+
+                    </a>
+
+                </p>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="contact-box">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <h3>
+                    Phone
+                </h3>
+
+                <p>
+
+                    <a href="tel:+916281172858">
+
+                        +91 6281172858
+
+                    </a>
+
+                </p>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="contact-box">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <h3>
+                    Address
+                </h3>
+
+                <p>
+                    Jangaon, Telangana, India
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="button-wrapper">
+
+            <a href="/user-home"
+               class="btn">
+
+                ← Back to Home
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <h3>
+                🛒 Smart Cart
+            </h3>
+
+            <p>
+                Smart Cart is an innovative online shopping
+                platform designed to provide a seamless,
+                secure, and convenient shopping experience.
+                Browse products, manage your cart, complete
+                payments, and manage your orders easily.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/user-home">
+                Home
+            </a>
+
+            <a href="/user-about">
+                About
+            </a>
+
+            <a href="/user-contact">
+                Contact
+            </a>
+
+            <a href="/user-login">
+                Login
+            </a>
+
+            <a href="/user-register">
+                Register
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-contact">
+
+            <h3>
+                Contact Us
+            </h3>
+
+            <p>
+                📍 Jangaon, Telangana, India
+            </p>
+
+            <p>
+                📧
+                <a href="mailto:support@smartcart.com">
+                    support@smartcart.com
+                </a>
+            </p>
+
+            <p>
+                📞
+                <a href="tel:+916281172858">
+                    +91 6281172858
+                </a>
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script>
+
+    function toggleMenu(){
+
+        document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+    }
+
+
+    /* Close mobile menu after clicking link */
+
+    document
+    .querySelectorAll(".nav-links a")
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+            }
+        );
+
+    });
+
+
+    /* Close menu when clicking outside */
+
+    document.addEventListener(
+        "click",
+        function(event){
+
+            const navbar =
+                document.querySelector(
+                    ".navbar"
+                );
+
+            const navLinks =
+                document.getElementById(
+                    "navLinks"
+                );
+
+            if(
+                !navbar.contains(event.target)
+            ){
+
+                navLinks.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>My Addresses | Smart Cart</title>
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================
+   ROOT
+========================= */
+
+:root{
+
+    --primary:#0d6efd;
+
+    --secondary:#38bdf8;
+
+    --success:#22c55e;
+
+    --danger:#ef4444;
+
+    --dark:#0f172a;
+
+    --light:#f8fbff;
+
+    --text:#334155;
+
+}
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:78px;
+
+    padding:15px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    box-shadow:
+
+        0 4px 15px
+        rgba(0,0,0,.15);
+
+    position:relative;
+
+    z-index:1000;
+
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a:hover{
+
+    color:#e0f2fe;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    line-height:1;
+
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+
+    flex:1;
+
+    width:95%;
+
+    max-width:1300px;
+
+    margin:0 auto;
+
+    padding:45px 0;
+
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.page-title{
+
+    color:#0d47a1;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+
+.page-subtitle{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:
+
+        0 auto 25px;
+
+}
+
+
+.flash{
+
+    position:relative;
+
+    padding:
+
+        14px 45px 14px 16px;
+
+    margin-bottom:12px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    animation:
+
+        slideDown .3s ease;
+
+}
+
+
+.flash.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:
+
+        1px solid #bbf7d0;
+
+}
+
+
+.flash.error,
+.flash.danger{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:
+
+        1px solid #fecaca;
+
+}
+
+
+.flash.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:
+
+        1px solid #fde68a;
+
+}
+
+
+.flash.info{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    border:
+
+        1px solid #bfdbfe;
+
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:
+
+        translateY(-50%);
+
+    border:none;
+
+    background:transparent;
+
+    color:inherit;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================
+   TOP ACTION
+========================= */
+
+.top-actions{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.add-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #4ade80
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:
+
+        0 6px 16px
+        rgba(34,197,94,.18);
+
+}
+
+
+.add-btn:hover{
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0 10px 22px
+        rgba(34,197,94,.25);
+
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.table-card{
+
+    width:100%;
+
+    padding:25px;
+
+    background:white;
+
+    border-radius:24px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(13,110,253,.12),
+
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+}
+
+
+/* =========================
+   RESPONSIVE TABLE WRAPPER
+========================= */
+
+.table-responsive{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border-radius:14px;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+table{
+
+    width:100%;
+
+    min-width:1000px;
+
+    border-collapse:collapse;
+
+    overflow:hidden;
+
+}
+
+
+thead{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+}
+
+
+th{
+
+    padding:15px 12px;
+
+    color:white;
+
+    text-align:center;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+
+td{
+
+    padding:15px 12px;
+
+    border-bottom:
+
+        1px solid #e2e8f0;
+
+    text-align:center;
+
+    color:#475569;
+
+    font-size:13px;
+
+    vertical-align:middle;
+
+}
+
+
+tbody tr{
+
+    transition:.2s;
+
+}
+
+
+tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+
+tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+
+/* Address column */
+
+.address-cell{
+
+    min-width:220px;
+
+    max-width:300px;
+
+    white-space:normal;
+
+    word-break:break-word;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.edit-btn,
+.delete-btn{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    white-space:nowrap;
+
+}
+
+
+.edit-btn{
+
+    background:#0d6efd;
+
+}
+
+
+.edit-btn:hover{
+
+    background:#0b5ed7;
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+
+.delete-btn{
+
+    background:#ef4444;
+
+}
+
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+
+/* =========================
+   NO ADDRESS CARD
+========================= */
+
+.no-address{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:50px 25px;
+
+    background:white;
+
+    text-align:center;
+
+    border-radius:24px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(13,110,253,.12),
+
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+}
+
+
+.no-address-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+
+.no-address h3{
+
+    color:#0d47a1;
+
+    font-size:24px;
+
+    margin-bottom:10px;
+
+}
+
+
+.no-address p{
+
+    max-width:500px;
+
+    margin:
+
+        0 auto 25px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.bottom-actions{
+
+    margin-top:25px;
+
+}
+
+
+.back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.back-btn:hover{
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0 8px 20px
+        rgba(13,110,253,.25);
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    width:100%;
+
+    padding:30px 20px;
+
+    background:#0f172a;
+
+    color:white;
+
+    text-align:center;
+
+}
+
+
+footer h3{
+
+    margin-bottom:10px;
+
+    font-size:21px;
+
+}
+
+
+footer p{
+
+    max-width:850px;
+
+    margin:
+
+        5px auto;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+footer a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+}
+
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+.footer-links{
+
+    margin-top:15px;
+
+}
+
+
+.footer-links a{
+
+    display:inline-block;
+
+    margin:0 6px;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:992px){
+
+
+    .navbar{
+
+        padding:
+
+            15px 20px;
+
+    }
+
+
+    .logo{
+
+        font-size:25px;
+
+    }
+
+
+    .nav-links{
+
+        gap:16px;
+
+    }
+
+
+    .nav-links a{
+
+        font-size:12px;
+
+    }
+
+
+    .main-content{
+
+        width:96%;
+
+        padding:
+
+            35px 0;
+
+    }
+
+
+    .table-card{
+
+        padding:18px;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:68px;
+
+        padding:
+
+            14px 18px;
+
+        position:relative;
+
+    }
+
+
+    .logo{
+
+        font-size:22px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:0;
+
+        padding:8px 0;
+
+        background:#0d6efd;
+
+        box-shadow:
+
+            0 10px 25px
+            rgba(0,0,0,.15);
+
+        z-index:999;
+
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        display:block;
+
+        width:100%;
+
+        padding:
+
+            13px 20px;
+
+        text-align:center;
+
+        font-size:14px;
+
+        border-bottom:
+
+            1px solid
+            rgba(255,255,255,.15);
+
+    }
+
+
+    .nav-links a:last-child{
+
+        border-bottom:none;
+
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+
+            rgba(255,255,255,.1);
+
+        color:white;
+
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        width:94%;
+
+        padding:
+
+            30px 0;
+
+    }
+
+
+    .page-header{
+
+        margin-bottom:25px;
+
+    }
+
+
+    .page-title{
+
+        font-size:29px;
+
+    }
+
+
+    .page-subtitle{
+
+        font-size:13px;
+
+    }
+
+
+    /* ACTIONS */
+
+    .top-actions{
+
+        justify-content:center;
+
+    }
+
+
+    .add-btn{
+
+        width:100%;
+
+        max-width:300px;
+
+    }
+
+
+    /* TABLE */
+
+    .table-card{
+
+        padding:12px;
+
+        border-radius:16px;
+
+    }
+
+
+    .table-responsive{
+
+        border-radius:10px;
+
+    }
+
+
+    table{
+
+        min-width:950px;
+
+    }
+
+
+    th,
+    td{
+
+        padding:
+
+            12px 10px;
+
+        font-size:12px;
+
+    }
+
+
+    /* BACK */
+
+    .bottom-actions{
+
+        text-align:center;
+
+    }
+
+
+    .back-btn{
+
+        width:100%;
+
+        max-width:300px;
+
+    }
+
+
+    /* FOOTER */
+
+    footer{
+
+        padding:
+
+            28px 18px;
+
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:
+
+            13px 15px;
+
+    }
+
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:26px;
+
+    }
+
+
+    .main-content{
+
+        width:94%;
+
+        padding:
+
+            25px 0;
+
+    }
+
+
+    .page-title{
+
+        font-size:25px;
+
+    }
+
+
+    .page-subtitle{
+
+        padding:
+
+            0 10px;
+
+    }
+
+
+    .table-card{
+
+        padding:8px;
+
+        border-radius:14px;
+
+    }
+
+
+    .add-btn,
+    .back-btn{
+
+        width:100%;
+
+        max-width:none;
+
+    }
+
+
+    .no-address{
+
+        padding:
+
+            35px 18px;
+
+        border-radius:16px;
+
+    }
+
+
+    .no-address-icon{
+
+        font-size:50px;
+
+    }
+
+
+    .no-address h3{
+
+        font-size:20px;
+
+    }
+
+
+    footer p{
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <!-- MOBILE MENU -->
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+    <div
+        class="nav-links"
+        id="navLinks">
+
+
+        <a href="/user-dashboard">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="/user/products">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="/user/cart">
+
+            CART
+
+        </a>
+
+
+        <a href="/user/orders">
+
+            ORDERS
+
+        </a>
+
+
+        <a href="/user-logout">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+
+    <!-- =========================
+         FLASH MESSAGES
+    ========================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+
+                {% for category, message in messages %}
+
+
+                    <div
+                        class="flash {{ category }}"
+                        id="flash{{ loop.index }}">
+
+
+                        {{ message }}
+
+
+                        <button
+                            type="button"
+                            class="close-btn"
+                            onclick="closeFlash('flash{{ loop.index }}')">
+
+                            &times;
+
+                        </button>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- =========================
+         PAGE HEADING
+    ========================== -->
+
+    <div class="page-header">
+
+
+        <h2 class="page-title">
+
+            📍 My Saved Addresses
+
+        </h2>
+
+
+        <p class="page-subtitle">
+
+            Manage your saved delivery addresses
+            for faster and easier checkout.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         ADD ADDRESS BUTTON
+    ========================== -->
+
+    <div class="top-actions">
+
+
+        <a
+            href="/user/add-address"
+            class="add-btn">
+
+            ＋ Add New Address
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         ADDRESS LIST
+    ========================== -->
+
+    {% if addresses %}
+
+
+        <div class="table-card">
+
+
+            <div class="table-responsive">
+
+
+                <table>
+
+
+                    <thead>
+
+
+                        <tr>
+
+
+                            <th>
+
+                                ID
+
+                            </th>
+
+
+                            <th>
+
+                                Full Name
+
+                            </th>
+
+
+                            <th>
+
+                                Phone
+
+                            </th>
+
+
+                            <th>
+
+                                Address
+
+                            </th>
+
+
+                            <th>
+
+                                City
+
+                            </th>
+
+
+                            <th>
+
+                                State
+
+                            </th>
+
+
+                            <th>
+
+                                Pincode
+
+                            </th>
+
+
+                            <th>
+
+                                Actions
+
+                            </th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for address in addresses %}
+
+
+                            <tr>
+
+
+                                <td>
+
+                                    {{ address.address_id }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ address.full_name }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ address.phone }}
+
+                                </td>
+
+
+                                <td class="address-cell">
+
+                                    {{ address.address }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ address.city }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ address.state }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ address.pincode }}
+
+                                </td>
+
+
+                                <td>
+
+
+                                    <div class="action-buttons">
+
+
+                                        <!-- EDIT -->
+
+                                        <a
+                                            href="/user/edit-address/{{ address.address_id }}"
+                                            class="edit-btn">
+
+                                            ✏️ Edit
+
+                                        </a>
+
+
+
+                                        <!-- DELETE -->
+
+                                        <a
+                                            href="/user/delete-address/{{ address.address_id }}"
+                                            class="delete-btn"
+                                            onclick="return confirmDelete();">
+
+                                            🗑️ Delete
+
+                                        </a>
+
+
+                                    </div>
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+    {% else %}
+
+
+
+        <!-- =========================
+             NO ADDRESSES
+        ========================== -->
+
+        <div class="no-address">
+
+
+            <div class="no-address-icon">
+
+                📍
+
+            </div>
+
+
+            <h3>
+
+                No Addresses Found
+
+            </h3>
+
+
+            <p>
+
+                You haven't saved any delivery
+                addresses yet. Add your first
+                address to make checkout faster.
+
+            </p>
+
+
+            <a
+                href="/user/add-address"
+                class="add-btn">
+
+                ＋ Add Your First Address
+
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+
+    <!-- =========================
+         BACK BUTTON
+    ========================== -->
+
+    <div class="bottom-actions">
+
+
+        <a
+            href="/user-dashboard"
+            class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <h3>
+
+        🛒 Smart Cart
+
+    </h3>
+
+
+    <p>
+
+        Smart Cart is an innovative online shopping
+        platform designed to provide a seamless and
+        secure shopping experience.
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        📍 Telangana, India
+
+    </p>
+
+
+    <p>
+
+        📧
+
+        <a href="mailto:support@smartcart.com">
+
+            support@smartcart.com
+
+        </a>
+
+    </p>
+
+
+    <p>
+
+        📞 +91 6281172858
+
+    </p>
+
+
+    <div class="footer-links">
+
+
+        <a href="#">
+
+            Privacy Policy
+
+        </a>
+
+        |
+
+        <a href="#">
+
+            Terms & Conditions
+
+        </a>
+
+        |
+
+        <a href="/user-contact">
+
+            Contact Us
+
+        </a>
+
+
+    </div>
+
+
+    <br>
+
+
+    <p>
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* =========================
+   DELETE CONFIRMATION
+========================= */
+
+function confirmDelete(){
+
+    return confirm(
+        "Are you sure you want to delete this address?"
+    );
+
+}
+
+
+
+/* =========================
+   CLOSE FLASH MESSAGE
+========================= */
+
+function closeFlash(id){
+
+    const flash =
+        document.getElementById(id);
+
+
+    if(flash){
+
+        flash.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* =========================
+   CLOSE MENU AFTER CLICK
+========================= */
+
+document
+    .querySelectorAll(
+        "#navLinks a"
+    )
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById(
+                        "navLinks"
+                    )
+                    .classList
+                    .remove(
+                        "active"
+                    );
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* =========================
+   RESET MENU ON DESKTOP
+========================= */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(
+            window.innerWidth > 768
+        ){
+
+
+            document
+                .getElementById(
+                    "navLinks"
+                )
+                .classList
+                .remove(
+                    "active"
+                );
+
+
+        }
+
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

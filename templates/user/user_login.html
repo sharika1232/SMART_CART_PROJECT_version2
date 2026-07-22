@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>User Login | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(56,189,248,.13),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(13,110,253,.10),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    padding:18px 60px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.12);
+
+    position:relative;
+
+    z-index:1000;
+}
+
+
+.logo{
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+}
+
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:
+        rgba(255,255,255,.92);
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+}
+
+
+.nav-links a:hover{
+
+    color:white;
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+}
+
+
+/* Active Login */
+
+.nav-links .active{
+
+    color:white;
+
+    font-weight:700;
+}
+
+
+.nav-links .active::after{
+
+    width:100%;
+}
+
+
+/* Register Button */
+
+.register-nav{
+
+    padding:9px 17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+
+    border-radius:9px;
+}
+
+
+.register-nav::after{
+
+    display:none;
+}
+
+
+.register-nav:hover{
+
+    background:white;
+
+    color:#0d6efd !important;
+}
+
+
+/* Hamburger */
+
+.menu-toggle{
+
+    display:none;
+
+    color:white;
+
+    font-size:29px;
+
+    cursor:pointer;
+
+    user-select:none;
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    position:fixed;
+
+    top:95px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:90%;
+
+    max-width:520px;
+
+    z-index:9999;
+}
+
+
+.flash-message{
+
+    padding:
+        15px
+        45px
+        15px
+        18px;
+
+    border-radius:12px;
+
+    margin-bottom:10px;
+
+    color:white;
+
+    position:relative;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.15);
+}
+
+
+.flash-message.success{
+
+    background:#22c55e;
+}
+
+
+.flash-message.error,
+.flash-message.danger{
+
+    background:#ef4444;
+}
+
+
+.flash-message.warning{
+
+    background:#f59e0b;
+}
+
+
+.flash-message.info{
+
+    background:#0d6efd;
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    top:50%;
+
+    right:14px;
+
+    transform:
+        translateY(-50%);
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    line-height:1;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:
+        55px
+        20px;
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.form-card{
+
+    width:100%;
+
+    max-width:460px;
+
+    background:white;
+
+    padding:
+        42px
+        40px;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 18px 45px
+        rgba(13,110,253,.13),
+        0 5px 15px
+        rgba(0,0,0,.05);
+}
+
+
+/* Login Icon */
+
+.login-icon{
+
+    width:72px;
+
+    height:72px;
+
+    margin:
+        0 auto
+        16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #e0f2fe
+        );
+
+    font-size:34px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(13,110,253,.12);
+}
+
+
+.form-card h2{
+
+    text-align:center;
+
+    color:#0d47a1;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+}
+
+
+.form-description{
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    margin-bottom:28px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+
+    margin-bottom:20px;
+}
+
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#334155;
+
+    font-size:14px;
+}
+
+
+input{
+
+    width:100%;
+
+    padding:
+        14px
+        15px;
+
+    border:
+        2px solid
+        #dbeafe;
+
+    border-radius:12px;
+
+    background:#f8fbff;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+
+input:focus{
+
+    outline:none;
+
+    border-color:#38bdf8;
+
+    background:white;
+
+    box-shadow:
+        0 0 12px
+        rgba(56,189,248,.22);
+}
+
+
+/* Password Wrapper */
+
+.password-wrapper{
+
+    position:relative;
+}
+
+
+.password-wrapper input{
+
+    padding-right:75px;
+}
+
+
+.toggle-password{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    border:none;
+
+    background:transparent;
+
+    color:#0d6efd;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
+
+.forgot-link{
+
+    text-align:right;
+
+    margin-top:-8px;
+
+    margin-bottom:22px;
+}
+
+
+.forgot-link a{
+
+    color:#0d6efd;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+
+.forgot-link a:hover{
+
+    text-decoration:underline;
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.btn{
+
+    width:100%;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+        0 7px 18px
+        rgba(13,110,253,.18);
+}
+
+
+.btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 11px 25px
+        rgba(13,110,253,.28);
+}
+
+
+/* =========================
+   REGISTER LINK
+========================= */
+
+.register-link{
+
+    text-align:center;
+
+    margin-top:22px;
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+.register-link a{
+
+    color:#0d6efd;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+
+.register-link a:hover{
+
+    text-decoration:underline;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    background:#0f172a;
+
+    color:white;
+
+    padding:
+        48px
+        8%
+        24px;
+}
+
+
+.footer-content{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1.3fr;
+
+    gap:45px;
+}
+
+
+.footer-brand h3{
+
+    font-size:23px;
+
+    margin-bottom:13px;
+}
+
+
+.footer-brand p{
+
+    max-width:430px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+
+.footer-links h3,
+.footer-contact h3{
+
+    font-size:17px;
+
+    margin-bottom:15px;
+}
+
+
+.footer-links a{
+
+    display:block;
+
+    margin-bottom:9px;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+
+.footer-links a:hover{
+
+    color:#38bdf8;
+}
+
+
+.footer-contact p{
+
+    margin-bottom:9px;
+
+    color:#94a3b8;
+
+    font-size:14px;
+}
+
+
+.footer-contact a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+}
+
+
+.footer-bottom{
+
+    max-width:1150px;
+
+    margin:
+        35px auto
+        0;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:900px){
+
+    .navbar{
+
+        padding:
+            17px
+            25px;
+    }
+
+
+    .nav-links{
+
+        gap:16px;
+    }
+
+
+    .footer-content{
+
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+
+    .footer-brand{
+
+        grid-column:
+            1 / -1;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .navbar{
+
+        padding:
+            15px
+            20px;
+    }
+
+
+    .logo{
+
+        font-size:22px;
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        gap:0;
+
+        background:#0d6efd;
+
+        padding:
+            8px
+            0;
+
+        box-shadow:
+            0 10px 20px
+            rgba(0,0,0,.15);
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+    }
+
+
+    .nav-links a{
+
+        width:100%;
+
+        padding:13px;
+
+        text-align:center;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.14);
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+    }
+
+
+    .register-nav{
+
+        border:none;
+
+        border-radius:0;
+    }
+
+
+    .flash-container{
+
+        top:80px;
+    }
+
+
+    .main-content{
+
+        padding:
+            40px
+            18px;
+    }
+
+
+    .form-card{
+
+        padding:
+            32px
+            25px;
+    }
+
+
+    .form-card h2{
+
+        font-size:29px;
+    }
+
+
+    .footer-content{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .footer-brand{
+
+        grid-column:auto;
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:420px){
+
+    .form-card{
+
+        padding:
+            28px
+            20px;
+    }
+
+
+    .login-icon{
+
+        width:62px;
+
+        height:62px;
+
+        font-size:29px;
+    }
+
+
+    .form-card h2{
+
+        font-size:26px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <div class="menu-toggle"
+         onclick="toggleMenu()">
+
+        ☰
+
+    </div>
+
+
+    <div class="nav-links"
+         id="navLinks">
+
+        <a href="/user-home">
+
+            HOME
+
+        </a>
+
+        <a href="/user-about">
+
+            ABOUT
+
+        </a>
+
+        <a href="/user-contact">
+
+            CONTACT
+
+        </a>
+
+        <a href="/user-login"
+           class="active">
+
+            LOGIN
+
+        </a>
+
+        <a href="/user-register"
+           class="register-nav">
+
+            REGISTER
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     FLASH MESSAGES
+========================= -->
+
+<div class="flash-container">
+
+{% with messages =
+    get_flashed_messages(
+        with_categories=true
+    )
+%}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="flash-message {{ category }}"
+                 id="msg{{ loop.index }}">
+
+                {{ message }}
+
+                <span class="close-btn"
+                      onclick="closeFlash('msg{{ loop.index }}')">
+
+                    &times;
+
+                </span>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+</div>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+
+    <div class="form-card">
+
+
+        <div class="login-icon">
+
+            👤
+
+        </div>
+
+
+        <h2>
+
+            User Login
+
+        </h2>
+
+
+        <p class="form-description">
+
+            Welcome back!
+            Login to continue your
+            Smart Cart shopping experience.
+
+        </p>
+
+
+        <form method="POST"
+              action="/user-login">
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+
+                    Email Address
+
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+
+                    Password
+
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        onclick="showPassword()">
+
+                        Show
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <div class="forgot-link">
+
+                <a href="/user-forgot-password">
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="btn">
+
+                Login
+
+            </button>
+
+
+            <!-- REGISTER -->
+
+            <div class="register-link">
+
+                Don't have an account?
+
+                <a href="/user-register">
+
+                    Create Account
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <div class="footer-brand">
+
+            <h3>
+
+                🛒 Smart Cart
+
+            </h3>
+
+            <p>
+
+                Smart Cart is an innovative
+                online shopping platform designed
+                to provide a seamless, secure,
+                and convenient shopping experience.
+
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+
+                Quick Links
+
+            </h3>
+
+            <a href="/user-home">
+
+                Home
+
+            </a>
+
+            <a href="/user-about">
+
+                About
+
+            </a>
+
+            <a href="/user-contact">
+
+                Contact
+
+            </a>
+
+            <a href="/user-login">
+
+                Login
+
+            </a>
+
+            <a href="/user-register">
+
+                Register
+
+            </a>
+
+        </div>
+
+
+        <div class="footer-contact">
+
+            <h3>
+
+                Contact
+
+            </h3>
+
+            <p>
+
+                📍 Jangaon,
+                Telangana,
+                India
+
+            </p>
+
+            <p>
+
+                📧
+
+                <a href="mailto:support@smartcart.com">
+
+                    support@smartcart.com
+
+                </a>
+
+            </p>
+
+            <p>
+
+                📞
+
+                <a href="tel:+916281172858">
+
+                    +91 6281172858
+
+                </a>
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* Mobile Navbar */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+/* Close Navbar After Link Click */
+
+document
+    .querySelectorAll(
+        ".nav-links a"
+    )
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .getElementById(
+                        "navLinks"
+                    )
+                    .classList
+                    .remove(
+                        "active"
+                    );
+
+            }
+        );
+
+    });
+
+
+/* Show / Hide Password */
+
+function showPassword(){
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+    const button =
+        document.getElementById(
+            "togglePassword"
+        );
+
+
+    if(
+        password.type ===
+        "password"
+    ){
+
+        password.type =
+            "text";
+
+        button.textContent =
+            "Hide";
+
+    }
+
+    else{
+
+        password.type =
+            "password";
+
+        button.textContent =
+            "Show";
+
+    }
+
+}
+
+
+/* Close Flash Message */
+
+function closeFlash(id){
+
+    const message =
+        document.getElementById(id);
+
+    if(message){
+
+        message.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* Auto Hide Flash Messages */
+
+setTimeout(
+    function(){
+
+        document
+            .querySelectorAll(
+                ".flash-message"
+            )
+            .forEach(
+                function(message){
+
+                    message.style.display =
+                        "none";
+
+                }
+            );
+
+    },
+    5000
+);
+
+
+</script>
+
+
+</body>
+
+</html>

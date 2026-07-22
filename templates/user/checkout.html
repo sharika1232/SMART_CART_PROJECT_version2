@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================
+   ROOT
+========================= */
+
+:root{
+
+    --primary:#0d6efd;
+
+    --secondary:#38bdf8;
+
+    --success:#22c55e;
+
+    --warning:#f59e0b;
+
+    --danger:#ef4444;
+
+    --dark:#0f172a;
+
+    --light:#f8fbff;
+
+}
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+
+    color:#334155;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:78px;
+
+    padding:15px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.15);
+
+    position:relative;
+
+    z-index:1000;
+
+}
+
+
+/* LOGO */
+
+.logo{
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+
+}
+
+
+/* NAV LINKS */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a:hover{
+
+    color:#e0f2fe;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* MOBILE MENU */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    position:fixed;
+
+    top:90px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:90%;
+
+    max-width:550px;
+
+    z-index:9999;
+
+}
+
+
+.flash-message{
+
+    position:relative;
+
+    padding:14px 45px 14px 18px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.12);
+
+}
+
+
+.flash-message.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:1px solid #bbf7d0;
+
+}
+
+
+.flash-message.error,
+.flash-message.danger{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:1px solid #fecaca;
+
+}
+
+
+.flash-message.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:1px solid #fde68a;
+
+}
+
+
+.flash-message.info{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    border:1px solid #bfdbfe;
+
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:transparent;
+
+    color:inherit;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+
+    width:94%;
+
+    max-width:1000px;
+
+    margin:45px auto;
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+/* =========================
+   CHECKOUT CARD
+========================= */
+
+.checkout-card{
+
+    width:100%;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:24px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(13,110,253,.12),
+
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+}
+
+
+/* =========================
+   CHECKOUT HEADER
+========================= */
+
+.checkout-header{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+
+.checkout-icon{
+
+    font-size:55px;
+
+    margin-bottom:8px;
+
+}
+
+
+.checkout-title{
+
+    color:#0d47a1;
+
+    font-size:38px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+
+.checkout-subtitle{
+
+    max-width:650px;
+
+    margin:auto;
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   ADDRESS BOX
+========================= */
+
+.address-box{
+
+    width:100%;
+
+    padding:28px;
+
+    margin-bottom:28px;
+
+    background:#f8fbff;
+
+    border:2px solid #dbeafe;
+
+    border-radius:18px;
+
+    transition:.3s;
+
+}
+
+
+.address-box:hover{
+
+    border-color:#93c5fd;
+
+    box-shadow:
+        0 8px 20px
+        rgba(13,110,253,.08);
+
+}
+
+
+.address-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:22px;
+
+    padding-bottom:15px;
+
+    border-bottom:1px solid #dbeafe;
+
+}
+
+
+.address-heading h3{
+
+    color:#0d6efd;
+
+    font-size:23px;
+
+    font-weight:700;
+
+}
+
+
+.address-icon{
+
+    font-size:27px;
+
+}
+
+
+/* =========================
+   ADDRESS DETAILS
+========================= */
+
+.address-details{
+
+    display:grid;
+
+    gap:16px;
+
+}
+
+
+.detail-row{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+}
+
+
+.detail-icon{
+
+    width:35px;
+
+    height:35px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#dbeafe;
+
+    border-radius:9px;
+
+    font-size:17px;
+
+}
+
+
+.detail-content{
+
+    flex:1;
+
+}
+
+
+.label{
+
+    display:block;
+
+    margin-bottom:3px;
+
+    color:#0d47a1;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+
+.detail-value{
+
+    color:#475569;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+    word-break:break-word;
+
+}
+
+
+/* =========================
+   BUTTON GROUP
+========================= */
+
+.button-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.btn{
+
+    min-width:190px;
+
+    min-height:50px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:14px 25px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.change-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #f59e0b,
+            #fbbf24
+        );
+
+}
+
+
+.pay-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+}
+
+
+.back-btn{
+
+    background:
+        linear-gradient(
+            90deg,
+            #64748b,
+            #94a3b8
+        );
+
+}
+
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+.change-btn:hover{
+
+    box-shadow:
+        0 10px 25px
+        rgba(245,158,11,.25);
+
+}
+
+
+.pay-btn:hover{
+
+    box-shadow:
+        0 10px 25px
+        rgba(13,110,253,.25);
+
+}
+
+
+.back-btn:hover{
+
+    box-shadow:
+        0 10px 25px
+        rgba(100,116,139,.22);
+
+}
+
+
+/* =========================
+   NO ADDRESS
+========================= */
+
+.no-address-box{
+
+    text-align:center;
+
+    padding:45px 25px;
+
+}
+
+
+.no-address-icon{
+
+    font-size:65px;
+
+    margin-bottom:15px;
+
+}
+
+
+.no-address-box h3{
+
+    color:#0d47a1;
+
+    font-size:25px;
+
+    margin-bottom:10px;
+
+}
+
+
+.no-address-box p{
+
+    max-width:500px;
+
+    margin:0 auto 25px;
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   CHECKOUT NOTE
+========================= */
+
+.checkout-note{
+
+    margin-top:28px;
+
+    padding:15px 18px;
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+    background:#eff6ff;
+
+    border-left:4px solid #0d6efd;
+
+    border-radius:10px;
+
+}
+
+
+.checkout-note p{
+
+    color:#475569;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    width:100%;
+
+    padding:30px 20px;
+
+    background:#0f172a;
+
+    color:white;
+
+    text-align:center;
+
+}
+
+
+footer h3{
+
+    margin-bottom:10px;
+
+    font-size:21px;
+
+}
+
+
+footer p{
+
+    max-width:850px;
+
+    margin:5px auto;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+footer a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+}
+
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+.footer-links{
+
+    margin-top:15px;
+
+}
+
+
+.footer-links a{
+
+    margin:0 6px;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:992px){
+
+
+    .navbar{
+
+        padding:15px 20px;
+
+    }
+
+
+    .logo{
+
+        font-size:25px;
+
+    }
+
+
+    .nav-links{
+
+        gap:16px;
+
+    }
+
+
+    .nav-links a{
+
+        font-size:12px;
+
+    }
+
+
+    .main-content{
+
+        width:95%;
+
+        margin:35px auto;
+
+    }
+
+
+    .checkout-card{
+
+        padding:30px;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:68px;
+
+        padding:14px 18px;
+
+    }
+
+
+    .logo{
+
+        font-size:22px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:0;
+
+        padding:8px 0;
+
+        background:#0d6efd;
+
+        box-shadow:
+            0 10px 25px
+            rgba(0,0,0,.15);
+
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        width:100%;
+
+        padding:13px 20px;
+
+        text-align:center;
+
+        font-size:14px;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.15);
+
+    }
+
+
+    .nav-links a:last-child{
+
+        border-bottom:none;
+
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+            rgba(255,255,255,.1);
+
+        color:white;
+
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        width:94%;
+
+        margin:25px auto;
+
+    }
+
+
+    .checkout-card{
+
+        padding:22px;
+
+        border-radius:18px;
+
+    }
+
+
+    .checkout-icon{
+
+        font-size:45px;
+
+    }
+
+
+    .checkout-title{
+
+        font-size:30px;
+
+    }
+
+
+    .checkout-subtitle{
+
+        font-size:13px;
+
+    }
+
+
+    .address-box{
+
+        padding:20px;
+
+    }
+
+
+    .address-heading h3{
+
+        font-size:20px;
+
+    }
+
+
+    .button-group{
+
+        flex-direction:column;
+
+    }
+
+
+    .btn{
+
+        width:100%;
+
+        min-width:0;
+
+    }
+
+
+    .checkout-note{
+
+        text-align:left;
+
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:13px 15px;
+
+    }
+
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:26px;
+
+    }
+
+
+    .main-content{
+
+        width:95%;
+
+        margin:20px auto;
+
+    }
+
+
+    .checkout-card{
+
+        padding:15px;
+
+        border-radius:15px;
+
+    }
+
+
+    .checkout-header{
+
+        margin-bottom:25px;
+
+    }
+
+
+    .checkout-icon{
+
+        font-size:40px;
+
+    }
+
+
+    .checkout-title{
+
+        font-size:26px;
+
+    }
+
+
+    .address-box{
+
+        padding:16px;
+
+        border-radius:14px;
+
+    }
+
+
+    .address-heading{
+
+        align-items:flex-start;
+
+    }
+
+
+    .address-heading h3{
+
+        font-size:18px;
+
+    }
+
+
+    .detail-icon{
+
+        width:32px;
+
+        height:32px;
+
+        font-size:15px;
+
+    }
+
+
+    .detail-value{
+
+        font-size:13px;
+
+    }
+
+
+    .btn{
+
+        min-height:46px;
+
+        padding:12px 15px;
+
+        font-size:12px;
+
+    }
+
+
+    .no-address-box{
+
+        padding:30px 10px;
+
+    }
+
+
+    .no-address-icon{
+
+        font-size:50px;
+
+    }
+
+
+    .no-address-box h3{
+
+        font-size:21px;
+
+    }
+
+
+    footer{
+
+        padding:25px 15px;
+
+    }
+
+
+    footer p{
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+    <div
+        class="nav-links"
+        id="navLinks">
+
+
+        <a href="/user-dashboard">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="/user/products">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="/user/cart">
+
+            CART
+
+        </a>
+
+
+        <a href="/user/orders">
+
+            ORDERS
+
+        </a>
+
+
+        <a href="/user-logout">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     FLASH MESSAGES
+========================= -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+
+        <div class="flash-container">
+
+
+            {% for category, message in messages %}
+
+
+                <div
+                    class="flash-message {{ category }}"
+                    id="flash{{ loop.index }}">
+
+
+                    {{ message }}
+
+
+                    <button
+                        type="button"
+                        class="close-btn"
+                        onclick="closeFlash('flash{{ loop.index }}')">
+
+                        &times;
+
+                    </button>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% endif %}
+
+{% endwith %}
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+
+    <div class="checkout-card">
+
+
+        <!-- CHECKOUT HEADER -->
+
+        <div class="checkout-header">
+
+
+            <div class="checkout-icon">
+
+                🛒
+
+            </div>
+
+
+            <h1 class="checkout-title">
+
+                Checkout
+
+            </h1>
+
+
+            <p class="checkout-subtitle">
+
+                Confirm your delivery address
+                before proceeding to payment.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             ADDRESS EXISTS
+        ========================== -->
+
+        {% if address %}
+
+
+            <div class="address-box">
+
+
+                <div class="address-heading">
+
+
+                    <span class="address-icon">
+
+                        📍
+
+                    </span>
+
+
+                    <h3>
+
+                        Delivery Address
+
+                    </h3>
+
+
+                </div>
+
+
+
+                <div class="address-details">
+
+
+                    <!-- NAME -->
+
+                    <div class="detail-row">
+
+
+                        <div class="detail-icon">
+
+                            👤
+
+                        </div>
+
+
+                        <div class="detail-content">
+
+
+                            <span class="label">
+
+                                FULL NAME
+
+                            </span>
+
+
+                            <div class="detail-value">
+
+                                {{ address.full_name }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="detail-row">
+
+
+                        <div class="detail-icon">
+
+                            🏠
+
+                        </div>
+
+
+                        <div class="detail-content">
+
+
+                            <span class="label">
+
+                                ADDRESS
+
+                            </span>
+
+
+                            <div class="detail-value">
+
+                                {{ address.address }}
+
+                                <br>
+
+                                {{ address.city }},
+                                {{ address.state }}
+
+                                <br>
+
+                                {{ address.pincode }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PHONE -->
+
+                    <div class="detail-row">
+
+
+                        <div class="detail-icon">
+
+                            📞
+
+                        </div>
+
+
+                        <div class="detail-content">
+
+
+                            <span class="label">
+
+                                PHONE NUMBER
+
+                            </span>
+
+
+                            <div class="detail-value">
+
+                                {{ address.phone }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================== -->
+
+            <div class="button-group">
+
+
+                <a
+                    href="/user/cart"
+                    class="btn back-btn">
+
+                    ← Back to Cart
+
+                </a>
+
+
+                <a
+                    href="/user/address"
+                    class="btn change-btn">
+
+                    📍 Change Address
+
+                </a>
+
+
+                <a
+                    href="/user/pay"
+                    class="btn pay-btn">
+
+                    💳 Proceed To Payment
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- NOTE -->
+
+            <div class="checkout-note">
+
+
+                <span>
+
+                    🔒
+
+                </span>
+
+
+                <p>
+
+                    Please verify your delivery address
+                    carefully before proceeding to payment.
+                    Your order will be delivered to the
+                    address shown above.
+
+                </p>
+
+
+            </div>
+
+
+
+        <!-- =========================
+             NO ADDRESS
+        ========================== -->
+
+        {% else %}
+
+
+            <div class="address-box no-address-box">
+
+
+                <div class="no-address-icon">
+
+                    📍
+
+                </div>
+
+
+                <h3>
+
+                    No Delivery Address Found
+
+                </h3>
+
+
+                <p>
+
+                    You need to add a delivery address
+                    before continuing with your order.
+
+                </p>
+
+
+                <div class="button-group">
+
+
+                    <a
+                        href="/user/cart"
+                        class="btn back-btn">
+
+                        ← Back to Cart
+
+                    </a>
+
+
+                    <a
+                        href="/user/add-address"
+                        class="btn pay-btn">
+
+                        ➕ Add Delivery Address
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <h3>
+
+        🛒 Smart Cart
+
+    </h3>
+
+
+    <p>
+
+        Smart Cart is an innovative online shopping platform
+        designed to provide a seamless and secure
+        shopping experience.
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        📍 Telangana, India
+
+    </p>
+
+
+    <p>
+
+        📧
+
+        <a href="mailto:support@smartcart.com">
+
+            support@smartcart.com
+
+        </a>
+
+    </p>
+
+
+    <p>
+
+        📞 +91 6281172858
+
+    </p>
+
+
+    <div class="footer-links">
+
+
+        <a href="#">
+
+            Privacy Policy
+
+        </a>
+
+        |
+
+        <a href="#">
+
+            Terms & Conditions
+
+        </a>
+
+        |
+
+        <a href="/user-contact">
+
+            Contact Us
+
+        </a>
+
+
+    </div>
+
+
+    <br>
+
+
+    <p>
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* MOBILE MENU */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* CLOSE FLASH */
+
+function closeFlash(id){
+
+    const flash =
+        document.getElementById(id);
+
+
+    if(flash){
+
+        flash.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* CLOSE MENU AFTER LINK CLICK */
+
+document
+    .querySelectorAll("#navLinks a")
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById("navLinks")
+                    .classList
+                    .remove("active");
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* RESET MENU ON DESKTOP */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(window.innerWidth > 768){
+
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("active");
+
+
+        }
+
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

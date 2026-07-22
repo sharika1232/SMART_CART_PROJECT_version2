@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#eef7ff,#dbeafe);
+    min-height:100vh;
+    padding:40px 20px;
+}
+
+/* Success Card */
+
+.success-container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(13,110,253,.15);
+}
+
+/* Success Heading */
+
+.success-container h2{
+    text-align:center;
+    color:#22c55e;
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.success-message{
+    text-align:center;
+    color:#64748b;
+    margin-bottom:25px;
+}
+
+/* Order Details */
+
+.order-details{
+    background:#f8fbff;
+    border:1px solid #dbeafe;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+    line-height:1.8;
+}
+
+.order-details strong{
+    color:#0d6efd;
+}
+
+/* Items Table */
+
+.items-list{
+    margin-top:25px;
+}
+
+.items-list h3{
+    color:#0d47a1;
+    margin-bottom:15px;
+}
+
+.items-list table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.items-list th{
+    background:#0d6efd;
+    color:white;
+    padding:12px;
+}
+
+.items-list td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+.items-list tr:nth-child(even){
+    background:#f8fbff;
+}
+
+/* Total Section */
+
+.total{
+    text-align:right;
+    margin-top:20px;
+    font-size:28px;
+    color:#22c55e;
+    font-weight:bold;
+}
+
+/* Buttons */
+
+.button-group{
+    text-align:center;
+    margin-top:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 20px;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    margin:5px;
+    transition:.3s;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#0b5ed7;
+}
+
+.invoice-btn{
+    background:#22c55e;
+}
+
+.invoice-btn:hover{
+    background:#16a34a;
+}
+
+/* Footer */
+
+footer{
+    margin-top:30px;
+    text-align:center;
+    color:#64748b;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .success-container{
+        padding:20px;
+    }
+
+    .success-container h2{
+        font-size:28px;
+    }
+
+    .items-list{
+        overflow-x:auto;
+    }
+
+    .items-list table{
+        min-width:600px;
+    }
+
+    .total{
+        font-size:22px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+<div class="button-group">
+
+    <a href="{{ url_for('user_products') }}" class="btn">
+        🛍️ Continue Shopping
+    </a>
+
+    <a href="{{ url_for('my_orders') }}" class="btn">
+        📦 View My Orders
+    </a>
+
+    <a href="{{ url_for('invoice', order_id=order.order_id) }}"
+       class="btn invoice-btn">
+        🧾 View Invoice
+    </a>
+
+</div>
+<div class="success-container">
+
+    <h2>🎉 Your Order is Confirmed!</h2>
+    <p>Thank you for shopping with <strong>SmartCart</strong>.</p>
+
+    <div class="order-details">
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+        <p><strong>Amount Paid:</strong> ₹{{ order.total_price }}</p>
+        <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
+
+    <div class="items-list">
+        <h3>Order Summary</h3>
+
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price (₹)</th>
+            </tr>
+
+            {% for it in items %}
+            <tr>
+                <td>{{ it.product_name }}</td>
+                <td>{{ it.quantity }}</td>
+                <td>{{ it.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <br>
+
+    <a href="/user/products" class="btn">Continue Shopping</a>
+    <a href="/user/my-orders" class="btn">View My Orders</a>
+
+</div>
+
+</body>
+</html>

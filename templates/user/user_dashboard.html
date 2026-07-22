@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>User Dashboard | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+    --primary:#0d6efd;
+    --secondary:#38bdf8;
+    --dark-blue:#0d47a1;
+    --dark:#0f172a;
+    --text:#475569;
+    --light:#64748b;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+
+    color:#334155;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    padding:18px 50px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.12);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+}
+
+
+.logo{
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+}
+
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+}
+
+
+.logout-nav{
+
+    padding:9px 17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+
+    border-radius:9px;
+}
+
+
+.logout-nav::after{
+
+    display:none;
+}
+
+
+.logout-nav:hover{
+
+    background:white;
+
+    color:#0d6efd;
+}
+
+
+/* Hamburger */
+
+.menu-toggle{
+
+    display:none;
+
+    color:white;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    user-select:none;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+
+    width:92%;
+
+    max-width:1150px;
+
+    margin:
+        40px auto
+        60px;
+
+    flex:1;
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    margin-bottom:20px;
+}
+
+
+.flash{
+
+    position:relative;
+
+    padding:
+        14px
+        45px
+        14px
+        18px;
+
+    border-radius:12px;
+
+    margin-bottom:12px;
+
+    font-weight:500;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,0,0,.07);
+}
+
+
+.flash.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:
+        1px solid
+        #86efac;
+}
+
+
+.flash.danger,
+.flash.error{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:
+        1px solid
+        #fca5a5;
+}
+
+
+.flash.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:
+        1px solid
+        #fcd34d;
+}
+
+
+.close-flash{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    cursor:pointer;
+
+    font-size:21px;
+}
+
+
+/* =========================
+   WELCOME CARD
+========================= */
+
+.dashboard-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:white;
+
+    padding:
+        50px
+        45px;
+
+    border-radius:26px;
+
+    box-shadow:
+        0 15px 35px
+        rgba(13,110,253,.12),
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+    margin-bottom:30px;
+}
+
+
+.dashboard-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+
+    height:230px;
+
+    border-radius:50%;
+
+    background:
+        rgba(56,189,248,.10);
+
+    top:-120px;
+
+    right:-70px;
+}
+
+
+.dashboard-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+        rgba(13,110,253,.07);
+
+    bottom:-110px;
+
+    left:-60px;
+}
+
+
+.welcome-content{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+}
+
+
+.dashboard-icon{
+
+    width:85px;
+
+    height:85px;
+
+    margin:
+        0 auto
+        20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #e0f2fe
+        );
+
+    font-size:42px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(13,110,253,.12);
+}
+
+
+.dashboard-card h1{
+
+    color:#0d47a1;
+
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            42px
+        );
+
+    margin-bottom:12px;
+}
+
+
+.user-name{
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #0ea5e9
+        );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+}
+
+
+.dashboard-card p{
+
+    max-width:650px;
+
+    margin:
+        0 auto
+        28px;
+
+    color:#64748b;
+
+    font-size:16px;
+
+    line-height:1.8;
+}
+
+
+/* Main Shopping Button */
+
+.shop-btn{
+
+    display:inline-block;
+
+    padding:
+        14px
+        30px;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:
+        0 8px 20px
+        rgba(13,110,253,.20);
+}
+
+
+.shop-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(13,110,253,.30);
+}
+
+
+/* =========================
+   DASHBOARD HEADING
+========================= */
+
+.section-heading{
+
+    text-align:center;
+
+    margin:
+        45px 0
+        28px;
+}
+
+
+.section-heading span{
+
+    color:#0d6efd;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+}
+
+
+.section-heading h2{
+
+    color:#0d47a1;
+
+    font-size:30px;
+
+    margin-top:7px;
+}
+
+
+.section-heading p{
+
+    color:#64748b;
+
+    font-size:14px;
+
+    margin-top:7px;
+}
+
+
+/* =========================
+   QUICK ACTION CARDS
+========================= */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px,1fr)
+        );
+
+    gap:22px;
+}
+
+
+.action-card{
+
+    background:white;
+
+    padding:28px;
+
+    border-radius:20px;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    box-shadow:
+        0 8px 22px
+        rgba(15,23,42,.05);
+}
+
+
+.action-card:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:#bae6fd;
+
+    box-shadow:
+        0 16px 35px
+        rgba(13,110,253,.12);
+}
+
+
+.action-icon{
+
+    width:58px;
+
+    height:58px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #e0f2fe
+        );
+
+    font-size:27px;
+
+    margin-bottom:18px;
+}
+
+
+.action-card h3{
+
+    color:#0d47a1;
+
+    font-size:19px;
+
+    margin-bottom:8px;
+}
+
+
+.action-card p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+
+.action-link{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    color:#0d6efd;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+
+/* =========================
+   LOGOUT SECTION
+========================= */
+
+.logout-section{
+
+    margin-top:35px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    box-shadow:
+        0 8px 22px
+        rgba(15,23,42,.05);
+}
+
+
+.logout-info h3{
+
+    color:#334155;
+
+    margin-bottom:5px;
+}
+
+
+.logout-info p{
+
+    color:#64748b;
+
+    font-size:14px;
+}
+
+
+.logout-btn{
+
+    display:inline-block;
+
+    padding:
+        12px
+        25px;
+
+    border-radius:11px;
+
+    background:#ef4444;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    white-space:nowrap;
+}
+
+
+.logout-btn:hover{
+
+    background:#dc2626;
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    background:#0f172a;
+
+    color:white;
+
+    padding:
+        50px 8%
+        25px;
+}
+
+
+.footer-content{
+
+    max-width:1150px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1.3fr;
+
+    gap:45px;
+}
+
+
+.footer-brand h3{
+
+    color:white;
+
+    font-size:24px;
+
+    margin-bottom:14px;
+}
+
+
+.footer-brand p{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    line-height:1.8;
+}
+
+
+.footer-links h3,
+.footer-contact h3{
+
+    color:white;
+
+    font-size:17px;
+
+    margin-bottom:16px;
+}
+
+
+.footer-links a{
+
+    display:block;
+
+    color:#94a3b8;
+
+    text-decoration:none;
+
+    margin-bottom:9px;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+
+.footer-links a:hover{
+
+    color:#38bdf8;
+}
+
+
+.footer-contact p{
+
+    color:#94a3b8;
+
+    margin-bottom:9px;
+
+    font-size:14px;
+}
+
+
+.footer-contact a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+}
+
+
+.footer-bottom{
+
+    max-width:1150px;
+
+    margin:
+        35px auto
+        0;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:992px){
+
+    .navbar{
+
+        padding:
+            16px
+            25px;
+    }
+
+
+    .nav-links{
+
+        gap:15px;
+    }
+
+
+    .nav-links a{
+
+        font-size:13px;
+    }
+
+
+    .footer-content{
+
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+
+    .footer-brand{
+
+        grid-column:
+            1 / -1;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .navbar{
+
+        padding:
+            15px
+            20px;
+    }
+
+
+    .logo{
+
+        font-size:22px;
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        gap:0;
+
+        padding:
+            8px
+            0;
+
+        background:#0d6efd;
+
+        box-shadow:
+            0 10px 20px
+            rgba(0,0,0,.15);
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+    }
+
+
+    .nav-links a{
+
+        display:block;
+
+        width:100%;
+
+        padding:13px;
+
+        text-align:center;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.15);
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+    }
+
+
+    .logout-nav{
+
+        border:none;
+
+        border-radius:0;
+    }
+
+
+    .container{
+
+        width:94%;
+
+        margin:
+            25px auto
+            40px;
+    }
+
+
+    .dashboard-card{
+
+        padding:
+            35px
+            20px;
+    }
+
+
+    .dashboard-card h1{
+
+        font-size:30px;
+    }
+
+
+    .dashboard-grid{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .logout-section{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+
+    .logout-btn{
+
+        width:100%;
+
+        text-align:center;
+    }
+
+
+    .footer-content{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .footer-brand{
+
+        grid-column:auto;
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+    .logo{
+
+        font-size:19px;
+    }
+
+
+    .menu-toggle{
+
+        font-size:27px;
+    }
+
+
+    .dashboard-icon{
+
+        width:70px;
+
+        height:70px;
+
+        font-size:34px;
+    }
+
+
+    .dashboard-card h1{
+
+        font-size:26px;
+    }
+
+
+    .dashboard-card p{
+
+        font-size:14px;
+    }
+
+
+    .shop-btn{
+
+        width:100%;
+    }
+
+
+    .section-heading h2{
+
+        font-size:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <div class="menu-toggle"
+         onclick="toggleMenu()">
+
+        ☰
+
+    </div>
+
+
+    <div class="nav-links"
+         id="navLinks">
+
+        <a href="/user-dashboard">
+
+            DASHBOARD
+
+        </a>
+
+        <a href="/user/products">
+
+            PRODUCTS
+
+        </a>
+
+        <a href="/user/cart">
+
+            CART
+
+        </a>
+
+        <a href="/user/my-orders">
+
+            ORDERS
+
+        </a>
+
+        <a href="/user/address">
+
+            ADDRESSES
+
+        </a>
+
+        <a href="/user-logout"
+           class="logout-nav">
+
+            LOGOUT
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         FLASH MESSAGES
+    ========================= -->
+
+    <div class="flash-container">
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash {{ category }}">
+
+                        {{ message }}
+
+                        <span class="close-flash"
+                              onclick="this.parentElement.style.display='none'">
+
+                            &times;
+
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+    </div>
+
+
+    <!-- =========================
+         WELCOME CARD
+    ========================= -->
+
+    <section class="dashboard-card">
+
+        <div class="welcome-content">
+
+
+            <div class="dashboard-icon">
+
+                🛍️
+
+            </div>
+
+
+            <h1>
+
+                Welcome,
+
+                <span class="user-name">
+
+                    {{ user_name }}!
+
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Welcome to your Smart Cart dashboard.
+                Discover products, manage your shopping cart,
+                view your orders, and manage your delivery
+                addresses — all from one place.
+
+            </p>
+
+
+            <a href="/user/products"
+               class="shop-btn">
+
+                Start Shopping 🛒
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================= -->
+
+    <div class="section-heading">
+
+        <span>
+
+            YOUR SHOPPING HUB
+
+        </span>
+
+        <h2>
+
+            Quick Actions
+
+        </h2>
+
+        <p>
+
+            Everything you need for your
+            Smart Cart shopping experience.
+
+        </p>
+
+    </div>
+
+
+    <section class="dashboard-grid">
+
+
+        <!-- PRODUCTS -->
+
+        <a href="/user/products"
+           class="action-card">
+
+            <div class="action-icon">
+
+                🛍️
+
+            </div>
+
+            <h3>
+
+                Browse Products
+
+            </h3>
+
+            <p>
+
+                Explore available products,
+                view product details,
+                and find what you need.
+
+            </p>
+
+            <span class="action-link">
+
+                View Products →
+
+            </span>
+
+        </a>
+
+
+        <!-- CART -->
+
+        <a href="/user/cart"
+           class="action-card">
+
+            <div class="action-icon">
+
+                🛒
+
+            </div>
+
+            <h3>
+
+                My Cart
+
+            </h3>
+
+            <p>
+
+                Review your selected products,
+                update quantities,
+                and proceed to checkout.
+
+            </p>
+
+            <span class="action-link">
+
+                Open Cart →
+
+            </span>
+
+        </a>
+
+
+        <!-- ORDERS -->
+
+        <a href="/user/my-orders"
+           class="action-card">
+
+            <div class="action-icon">
+
+                📦
+
+            </div>
+
+            <h3>
+
+                My Orders
+
+            </h3>
+
+            <p>
+
+                View your previous orders,
+                order details,
+                payment information,
+                and order status.
+
+            </p>
+
+            <span class="action-link">
+
+                View Orders →
+
+            </span>
+
+        </a>
+
+
+        <!-- ADDRESS -->
+
+        <a href="/user/address"
+           class="action-card">
+
+            <div class="action-icon">
+
+                📍
+
+            </div>
+
+            <h3>
+
+                My Addresses
+
+            </h3>
+
+            <p>
+
+                Add, edit, view,
+                or remove your saved
+                delivery addresses.
+
+            </p>
+
+            <span class="action-link">
+
+                Manage Addresses →
+
+            </span>
+
+        </a>
+
+
+    </section>
+
+
+    <!-- =========================
+         LOGOUT SECTION
+    ========================= -->
+
+    <section class="logout-section">
+
+
+        <div class="logout-info">
+
+            <h3>
+
+                Finished Shopping?
+
+            </h3>
+
+            <p>
+
+                Sign out securely when
+                you're done using your account.
+
+            </p>
+
+        </div>
+
+
+        <a href="/user-logout"
+           class="logout-btn">
+
+            Logout
+
+        </a>
+
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <div class="footer-content">
+
+
+        <div class="footer-brand">
+
+            <h3>
+
+                🛒 Smart Cart
+
+            </h3>
+
+            <p>
+
+                Smart Cart is an innovative
+                online shopping platform designed
+                to provide a seamless, secure,
+                and convenient shopping experience.
+
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+
+                Quick Links
+
+            </h3>
+
+            <a href="/user-dashboard">
+
+                Dashboard
+
+            </a>
+
+            <a href="/user/products">
+
+                Products
+
+            </a>
+
+            <a href="/user/cart">
+
+                Cart
+
+            </a>
+
+            <a href="/user/my-orders">
+
+                My Orders
+
+            </a>
+
+            <a href="/user/address">
+
+                Addresses
+
+            </a>
+
+        </div>
+
+
+        <div class="footer-contact">
+
+            <h3>
+
+                Contact
+
+            </h3>
+
+            <p>
+
+                📍 Jangaon,
+                Telangana,
+                India
+
+            </p>
+
+            <p>
+
+                📧
+
+                <a href="mailto:support@smartcart.com">
+
+                    support@smartcart.com
+
+                </a>
+
+            </p>
+
+            <p>
+
+                📞
+
+                <a href="tel:+916281172858">
+
+                    +91 6281172858
+
+                </a>
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </div>
+
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* Open / Close Mobile Menu */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+/* Close Menu After Clicking Link */
+
+document
+    .querySelectorAll(
+        ".nav-links a"
+    )
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .getElementById(
+                        "navLinks"
+                    )
+                    .classList
+                    .remove(
+                        "active"
+                    );
+
+            }
+        );
+
+    });
+
+
+/* Close Menu When Clicking Outside */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const navbar =
+            document.querySelector(
+                ".navbar"
+            );
+
+        const navLinks =
+            document.getElementById(
+                "navLinks"
+            );
+
+        if(
+            !navbar.contains(
+                event.target
+            )
+        ){
+
+            navLinks
+                .classList
+                .remove(
+                    "active"
+                );
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

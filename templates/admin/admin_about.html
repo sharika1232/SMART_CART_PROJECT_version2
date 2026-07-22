@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>About | Smart Cart Admin</title>
+
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background: #f5f8fc;
+
+            color: #1e293b;
+        }
+
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .navbar {
+
+            min-height: 76px;
+
+            padding: 0 6%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0866d9,
+                    #0d8ee8,
+                    #16a8d7
+                );
+
+            box-shadow:
+                0 4px 18px
+                rgba(15, 23, 42, 0.12);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        /* BRAND */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+
+            color: white;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                rgba(255,255,255,0.17);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.25);
+
+            border-radius: 11px;
+
+            font-size: 21px;
+        }
+
+
+        .logo-text h2 {
+
+            color: white;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            line-height: 1.1;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        .logo-text span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 9px;
+
+            font-weight: 500;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        /* NAV LINKS */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 27px;
+
+            list-style: none;
+        }
+
+
+        .nav-links li {
+
+            list-style: none;
+        }
+
+
+        .nav-links a {
+
+            color:
+                rgba(255,255,255,0.90);
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            white-space: nowrap;
+
+            transition: 0.3s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+        }
+
+
+        .nav-links .active-link {
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        /* REGISTER BUTTON */
+
+        .register-link {
+
+            display: inline-block;
+
+            padding: 9px 17px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.65);
+
+            border-radius: 8px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .register-link:hover {
+
+            background: white;
+
+            color: #0876d1 !important;
+
+            border-color: white;
+        }
+
+
+        /* MOBILE MENU */
+
+        .menu-toggle {
+
+            display: none;
+
+            background: transparent;
+
+            border: none;
+
+            color: white;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .about-hero {
+
+            padding: 80px 7% 75px;
+
+            text-align: center;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(56,189,248,0.14),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 75%,
+                    rgba(13,110,253,0.10),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #ffffff
+                );
+
+            border-bottom:
+                1px solid #e8eef5;
+        }
+
+
+        .hero-content {
+
+            max-width: 850px;
+
+            margin: auto;
+        }
+
+
+        .hero-badge {
+
+            display: inline-block;
+
+            margin-bottom: 18px;
+
+            padding: 7px 16px;
+
+            background: #e7f3ff;
+
+            color: #0878ce;
+
+            border-radius: 30px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .about-hero h1 {
+
+            margin-bottom: 18px;
+
+            color: #123f78;
+
+            font-size:
+                clamp(42px, 6vw, 62px);
+
+            font-weight: 800;
+
+            line-height: 1.15;
+        }
+
+
+        .about-hero h1 span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #087bea,
+                    #00a6c8
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+        }
+
+
+        .about-hero p {
+
+            max-width: 720px;
+
+            margin: auto;
+
+            color: #64748b;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .main-content {
+
+            width: 100%;
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding: 75px 5%;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           INTRO SECTION
+        ========================================= */
+
+        .intro-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+
+            margin-bottom: 65px;
+        }
+
+
+        .intro-card {
+
+            position: relative;
+
+            padding: 35px;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(15,23,42,0.05);
+
+            transition: 0.3s ease;
+        }
+
+
+        .intro-card:hover {
+
+            transform:
+                translateY(-6px);
+
+            border-color: #bae6fd;
+
+            box-shadow:
+                0 18px 40px
+                rgba(15,23,42,0.08);
+        }
+
+
+        .card-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #dbeafe
+                );
+
+            font-size: 24px;
+        }
+
+
+        .intro-card h2 {
+
+            margin-bottom: 12px;
+
+            color: #123f78;
+
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+
+        .intro-card p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           SECTION HEADER
+        ========================================= */
+
+        .section-header {
+
+            max-width: 700px;
+
+            margin:
+                0 auto 42px;
+
+            text-align: center;
+        }
+
+
+        .section-header span {
+
+            color: #0785d1;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .section-header h2 {
+
+            margin:
+                8px 0 12px;
+
+            color: #123f78;
+
+            font-size: 34px;
+
+            font-weight: 700;
+        }
+
+
+        .section-header p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           WHAT WE OFFER
+        ========================================= */
+
+        .features-section {
+
+            margin-bottom: 75px;
+        }
+
+
+        .features-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(210px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+
+        .feature-card {
+
+            padding: 27px 23px;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            transition: 0.3s ease;
+        }
+
+
+        .feature-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color: #bae6fd;
+
+            box-shadow:
+                0 15px 30px
+                rgba(15,23,42,0.07);
+        }
+
+
+        .feature-icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            margin:
+                0 auto 17px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #dbeafe
+                );
+
+            font-size: 21px;
+        }
+
+
+        .feature-card h3 {
+
+            margin-bottom: 8px;
+
+            color: #123f78;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+
+        .feature-card p {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           ADMIN RESPONSIBILITIES
+        ========================================= */
+
+        .responsibility-section {
+
+            margin-bottom: 75px;
+
+            padding: 45px;
+
+            display: grid;
+
+            grid-template-columns:
+                0.8fr 1.2fr;
+
+            gap: 55px;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f1f8ff,
+                    #ecfeff
+                );
+
+            border:
+                1px solid #dbeafe;
+
+            border-radius: 22px;
+        }
+
+
+        .responsibility-intro span {
+
+            color: #0785d1;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+        }
+
+
+        .responsibility-intro h2 {
+
+            margin:
+                8px 0 14px;
+
+            color: #123f78;
+
+            font-size: 30px;
+
+            line-height: 1.3;
+        }
+
+
+        .responsibility-intro p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        .responsibility-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .responsibility-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 15px;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 11px;
+
+            color: #475569;
+
+            font-size: 12px;
+
+            font-weight: 500;
+        }
+
+
+        .check-icon {
+
+            min-width: 27px;
+
+            height: 27px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e8f7ef;
+
+            color: #15803d;
+
+            border-radius: 50%;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           CONTACT
+        ========================================= */
+
+        .contact-section {
+
+            margin-bottom: 20px;
+        }
+
+
+        .contact-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .contact-card {
+
+            padding: 28px;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            transition: 0.3s ease;
+        }
+
+
+        .contact-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color: #bae6fd;
+
+            box-shadow:
+                0 15px 30px
+                rgba(15,23,42,0.07);
+        }
+
+
+        .contact-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            margin:
+                0 auto 16px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0f2fe,
+                    #dbeafe
+                );
+
+            border-radius: 14px;
+
+            font-size: 22px;
+        }
+
+
+        .contact-card h3 {
+
+            margin-bottom: 7px;
+
+            color: #123f78;
+
+            font-size: 16px;
+        }
+
+
+        .contact-card p,
+        .contact-card a {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            text-decoration: none;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .contact-card a:hover {
+
+            color: #087bea;
+        }
+
+
+        /* =========================================
+           CTA
+        ========================================= */
+
+        .cta {
+
+            max-width: 1180px;
+
+            margin:
+                0 auto 75px;
+
+            padding:
+                48px 5%;
+
+            text-align: center;
+
+            border-radius: 22px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0866d9,
+                    #16a8d7
+                );
+
+            box-shadow:
+                0 18px 45px
+                rgba(8,102,217,0.18);
+        }
+
+
+        .cta h2 {
+
+            margin-bottom: 10px;
+
+            font-size: 29px;
+        }
+
+
+        .cta p {
+
+            max-width: 650px;
+
+            margin:
+                0 auto 23px;
+
+            color:
+                rgba(255,255,255,0.88);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        .cta-btn {
+
+            display: inline-block;
+
+            padding: 12px 23px;
+
+            background: white;
+
+            color: #0876d1;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.3s ease;
+        }
+
+
+        .cta-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,0.15);
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            padding: 25px 7%;
+
+            background: #0f172a;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+
+            color: white;
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media screen and (max-width: 992px) {
+
+            .navbar {
+
+                padding:
+                    0 4%;
+            }
+
+
+            .nav-links {
+
+                gap: 17px;
+            }
+
+
+            .nav-links a {
+
+                font-size: 12px;
+            }
+
+
+            .responsibility-section {
+
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 768px) {
+
+            /* NAV */
+
+            .navbar {
+
+                min-height: 70px;
+
+                padding:
+                    12px 5%;
+
+                position: sticky;
+            }
+
+
+            .logo-icon {
+
+                width: 38px;
+
+                height: 38px;
+
+                font-size: 18px;
+            }
+
+
+            .logo-text h2 {
+
+                font-size: 18px;
+            }
+
+
+            .logo-text span {
+
+                font-size: 8px;
+            }
+
+
+            .menu-toggle {
+
+                display: block;
+            }
+
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                left: 0;
+
+                width: 100%;
+
+                padding:
+                    10px 5% 18px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 3px;
+
+                background:
+                    linear-gradient(
+                        135deg,
+                        #0866d9,
+                        #0d8ee8
+                    );
+
+                box-shadow:
+                    0 12px 25px
+                    rgba(15,23,42,0.15);
+            }
+
+
+            .nav-links.active {
+
+                display: flex;
+            }
+
+
+            .nav-links li {
+
+                width: 100%;
+            }
+
+
+            .nav-links a {
+
+                display: block;
+
+                width: 100%;
+
+                padding:
+                    11px 13px;
+
+                border-radius: 7px;
+
+                font-size: 13px;
+            }
+
+
+            .nav-links a:hover {
+
+                background:
+                    rgba(255,255,255,0.12);
+            }
+
+
+            .register-link {
+
+                margin-top: 4px;
+
+                text-align: center;
+            }
+
+
+            /* HERO */
+
+            .about-hero {
+
+                padding:
+                    60px 5%;
+            }
+
+
+            .about-hero h1 {
+
+                font-size: 40px;
+            }
+
+
+            .about-hero p {
+
+                font-size: 14px;
+            }
+
+
+            /* MAIN */
+
+            .main-content {
+
+                padding:
+                    55px 5%;
+            }
+
+
+            /* INTRO */
+
+            .intro-grid {
+
+                grid-template-columns: 1fr;
+
+                margin-bottom: 55px;
+            }
+
+
+            .intro-card {
+
+                padding: 27px;
+            }
+
+
+            /* HEADINGS */
+
+            .section-header h2 {
+
+                font-size: 28px;
+            }
+
+
+            /* RESPONSIBILITY */
+
+            .responsibility-section {
+
+                padding: 30px 22px;
+            }
+
+
+            .responsibility-intro h2 {
+
+                font-size: 26px;
+            }
+
+
+            .responsibility-list {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            /* CONTACT */
+
+            .contact-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            /* CTA */
+
+            .cta {
+
+                width: 90%;
+
+                margin-bottom: 55px;
+
+                padding:
+                    40px 20px;
+            }
+
+
+            .cta h2 {
+
+                font-size: 25px;
+            }
+
+        }
+
+
+        /* =========================================
+           SMALL MOBILE
+        ========================================= */
+
+        @media screen and (max-width: 480px) {
+
+            .about-hero h1 {
+
+                font-size: 33px;
+            }
+
+
+            .hero-badge {
+
+                font-size: 9px;
+            }
+
+
+            .main-content {
+
+                padding-left: 14px;
+
+                padding-right: 14px;
+            }
+
+
+            .intro-card {
+
+                padding: 23px;
+            }
+
+
+            .section-header h2 {
+
+                font-size: 25px;
+            }
+
+
+            .feature-card {
+
+                padding: 23px 18px;
+            }
+
+
+            .responsibility-section {
+
+                padding: 25px 17px;
+
+                border-radius: 16px;
+            }
+
+
+            footer {
+
+                font-size: 12px;
+
+                line-height: 1.7;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+
+    <a href="{{ url_for('admin_home') }}"
+       class="brand">
+
+
+        <div class="logo-icon">
+
+            🛒
+
+        </div>
+
+
+        <div class="logo-text">
+
+            <h2>
+
+                SMART CART
+
+            </h2>
+
+
+            <span>
+
+                ADMIN PORTAL
+
+            </span>
+
+        </div>
+
+
+    </a>
+
+
+
+    <button
+
+        class="menu-toggle"
+
+        type="button"
+
+        onclick="toggleMenu()"
+
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+
+    <ul class="nav-links"
+        id="navLinks">
+
+
+        <li>
+
+            <a href="{{ url_for('admin_home') }}">
+
+                HOME
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_about') }}"
+               class="active-link">
+
+                ABOUT
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_contact') }}">
+
+                CONTACT
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_login') }}">
+
+                LOGIN
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="{{ url_for('admin_signup') }}"
+               class="register-link">
+
+                REGISTER
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+</nav>
+
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="about-hero">
+
+
+    <div class="hero-content">
+
+
+        <span class="hero-badge">
+
+            ABOUT SMART CART
+
+        </span>
+
+
+        <h1>
+
+            Built for Smarter
+
+            <br>
+
+            <span>
+
+                Store Management.
+
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Smart Cart combines a seamless shopping
+            experience with efficient administration
+            tools, helping users shop conveniently
+            while enabling administrators to manage
+            the platform securely and effectively.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="main-content">
+
+
+
+    <!-- =====================================
+         WHO WE ARE + MISSION
+    ====================================== -->
+
+    <section class="intro-grid">
+
+
+        <article class="intro-card">
+
+
+            <div class="card-icon">
+
+                🛒
+
+            </div>
+
+
+            <h2>
+
+                Who We Are
+
+            </h2>
+
+
+            <p>
+
+                Smart Cart is a modern shopping platform
+                designed to simplify product discovery,
+                cart management, and store administration.
+                Our goal is to provide a reliable and
+                convenient digital environment for both
+                customers and administrators.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="intro-card">
+
+
+            <div class="card-icon">
+
+                🎯
+
+            </div>
+
+
+            <h2>
+
+                Our Mission
+
+            </h2>
+
+
+            <p>
+
+                Our mission is to deliver a secure,
+                user-friendly, and efficient shopping
+                platform that simplifies everyday
+                operations while maintaining reliable
+                performance, organized management,
+                and a smooth user experience.
+
+            </p>
+
+
+        </article>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         WHAT WE OFFER
+    ====================================== -->
+
+    <section class="features-section">
+
+
+        <div class="section-header">
+
+
+            <span>
+
+                PLATFORM CAPABILITIES
+
+            </span>
+
+
+            <h2>
+
+                What Smart Cart Offers
+
+            </h2>
+
+
+            <p>
+
+                Essential features designed to support
+                both a seamless customer experience
+                and efficient platform administration.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="features-grid">
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+
+                    👤
+
+                </div>
+
+
+                <h3>
+
+                    User Accounts
+
+                </h3>
+
+
+                <p>
+
+                    Secure registration and login
+                    functionality for Smart Cart users.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+
+                    📦
+
+                </div>
+
+
+                <h3>
+
+                    Product Management
+
+                </h3>
+
+
+                <p>
+
+                    Add, update, view, and organize
+                    products efficiently.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+
+                    🛍️
+
+                </div>
+
+
+                <h3>
+
+                    Shopping Experience
+
+                </h3>
+
+
+                <p>
+
+                    A simple interface for browsing
+                    products and managing shopping
+                    activities.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="feature-card">
+
+
+                <div class="feature-icon">
+
+                    🔒
+
+                </div>
+
+
+                <h3>
+
+                    Secure Platform
+
+                </h3>
+
+
+                <p>
+
+                    Structured account access and
+                    reliable handling of application
+                    information.
+
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         ADMIN RESPONSIBILITIES
+    ====================================== -->
+
+    <section class="responsibility-section">
+
+
+        <div class="responsibility-intro">
+
+
+            <span>
+
+                ADMINISTRATION
+
+            </span>
+
+
+            <h2>
+
+                Responsible Platform Management
+
+            </h2>
+
+
+            <p>
+
+                Administrators help maintain an organized,
+                reliable, and secure Smart Cart environment
+                by managing essential store operations and
+                platform information.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="responsibility-list">
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Manage Product Information
+
+            </div>
+
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Manage User Accounts
+
+            </div>
+
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Monitor Store Activities
+
+            </div>
+
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Maintain Platform Information
+
+            </div>
+
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Support Secure Operations
+
+            </div>
+
+
+
+            <div class="responsibility-item">
+
+                <span class="check-icon">
+
+                    ✓
+
+                </span>
+
+                Maintain Organized Records
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         CONTACT
+    ====================================== -->
+
+    <section class="contact-section">
+
+
+        <div class="section-header">
+
+
+            <span>
+
+                GET IN TOUCH
+
+            </span>
+
+
+            <h2>
+
+                Contact Information
+
+            </h2>
+
+
+            <p>
+
+                Reach the Smart Cart team through
+                the contact information below.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="contact-grid">
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-card">
+
+
+                <div class="contact-icon">
+
+                    ✉️
+
+                </div>
+
+
+                <h3>
+
+                    Email
+
+                </h3>
+
+
+                <a href="mailto:ammulucky506@gmail.com">
+
+                    ammulucky506@gmail.com
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="contact-card">
+
+
+                <div class="contact-icon">
+
+                    📞
+
+                </div>
+
+
+                <h3>
+
+                    Phone
+
+                </h3>
+
+
+                <a href="tel:+916281172858">
+
+                    +91 6281172858
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- LOCATION -->
+
+            <div class="contact-card">
+
+
+                <div class="contact-icon">
+
+                    📍
+
+                </div>
+
+
+                <h3>
+
+                    Location
+
+                </h3>
+
+
+                <p>
+
+                    Jangaon, Telangana, India
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="cta">
+
+
+    <h2>
+
+        Smart Shopping. Efficient Management.
+
+    </h2>
+
+
+    <p>
+
+        Smart Cart brings customer convenience
+        and organized store administration
+        together in one modern platform.
+
+    </p>
+
+
+    <a href="{{ url_for('admin_home') }}"
+       class="cta-btn">
+
+        Back to Admin Home
+
+    </a>
+
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+
+    © 2026
+
+    <strong>
+
+        Smart Cart
+
+    </strong>
+
+    Administration Portal.
+
+    All Rights Reserved.
+
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+
+    function toggleMenu() {
+
+        document
+            .getElementById('navLinks')
+            .classList
+            .toggle('active');
+
+    }
+
+
+
+    /*
+       Close menu automatically
+       after selecting a link on mobile
+    */
+
+    document
+        .querySelectorAll('.nav-links a')
+        .forEach(function(link) {
+
+
+            link.addEventListener(
+                'click',
+                function() {
+
+
+                    document
+                        .getElementById('navLinks')
+                        .classList
+                        .remove('active');
+
+
+                }
+            );
+
+
+        });
+
+
+</script>
+
+
+</body>
+
+</html>

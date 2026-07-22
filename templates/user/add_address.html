@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Add Address | Smart Cart</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================
+   ROOT
+========================= */
+
+:root{
+
+    --primary:#0d6efd;
+
+    --secondary:#38bdf8;
+
+    --dark:#0f172a;
+
+    --light:#f8fbff;
+
+    --text:#334155;
+
+}
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #eef7ff,
+            #dbeafe
+        );
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    min-height:78px;
+
+    padding:15px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    box-shadow:
+
+        0 4px 15px
+        rgba(0,0,0,.15);
+
+    position:relative;
+
+    z-index:1000;
+
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    color:white;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a:hover{
+
+    color:#e0f2fe;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:100%;
+
+}
+
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.menu-toggle{
+
+    display:none;
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:30px;
+
+    line-height:1;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content{
+
+    flex:1;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:50px 20px;
+
+}
+
+
+/* =========================
+   ADDRESS CARD
+========================= */
+
+.container{
+
+    width:100%;
+
+    max-width:700px;
+
+    margin:0 auto;
+
+    padding:40px;
+
+    background:white;
+
+    border-radius:24px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(13,110,253,.12),
+
+        0 5px 15px
+        rgba(0,0,0,.05);
+
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.page-title{
+
+    text-align:center;
+
+    color:#0d47a1;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+
+.subtitle{
+
+    max-width:520px;
+
+    margin:
+
+        0 auto 30px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-container{
+
+    width:100%;
+
+    margin-bottom:20px;
+
+}
+
+
+.flash{
+
+    position:relative;
+
+    width:100%;
+
+    padding:14px 45px 14px 16px;
+
+    margin-bottom:12px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    animation:
+
+        slideDown .3s ease;
+
+}
+
+
+.flash.success{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    border:
+
+        1px solid #bbf7d0;
+
+}
+
+
+.flash.error,
+.flash.danger{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border:
+
+        1px solid #fecaca;
+
+}
+
+
+.flash.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border:
+
+        1px solid #fde68a;
+
+}
+
+
+.flash.info{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    border:
+
+        1px solid #bfdbfe;
+
+}
+
+
+.close-btn{
+
+    position:absolute;
+
+    right:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:none;
+
+    background:transparent;
+
+    color:inherit;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+
+    margin-bottom:20px;
+
+}
+
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+
+input,
+textarea{
+
+    display:block;
+
+    width:100%;
+
+    padding:14px 15px;
+
+    border:
+
+        2px solid
+        #dbeafe;
+
+    border-radius:12px;
+
+    background:#f8fbff;
+
+    color:#1e293b;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#94a3b8;
+
+}
+
+
+input:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#38bdf8;
+
+    background:white;
+
+    box-shadow:
+
+        0 0 12px
+        rgba(56,189,248,.25);
+
+}
+
+
+textarea{
+
+    min-height:130px;
+
+    resize:vertical;
+
+}
+
+
+/* =========================
+   TWO COLUMN FIELDS
+========================= */
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.btn{
+
+    display:block;
+
+    width:100%;
+
+    padding:14px 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #0d6efd,
+            #38bdf8
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.btn:hover{
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0 10px 25px
+        rgba(13,110,253,.25);
+
+}
+
+
+.btn:active{
+
+    transform:
+
+        translateY(0);
+
+}
+
+
+/* =========================
+   BOTTOM LINKS
+========================= */
+
+.links{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:12px 25px;
+
+    margin-top:25px;
+
+}
+
+
+.links a{
+
+    color:#0d6efd;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+.links a:hover{
+
+    color:#084298;
+
+    text-decoration:underline;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    width:100%;
+
+    padding:30px 20px;
+
+    background:#0f172a;
+
+    color:white;
+
+    text-align:center;
+
+}
+
+
+footer h3{
+
+    margin-bottom:10px;
+
+    font-size:21px;
+
+}
+
+
+footer p{
+
+    max-width:850px;
+
+    margin:
+
+        5px auto;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+footer a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+}
+
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+.footer-links{
+
+    margin-top:15px;
+
+}
+
+
+.footer-links a{
+
+    display:inline-block;
+
+    margin:0 6px;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width:992px){
+
+    .navbar{
+
+        padding:
+
+            15px 20px;
+
+    }
+
+
+    .logo{
+
+        font-size:25px;
+
+    }
+
+
+    .nav-links{
+
+        gap:16px;
+
+    }
+
+
+    .nav-links a{
+
+        font-size:12px;
+
+    }
+
+
+    .container{
+
+        max-width:650px;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+
+    /* NAVBAR */
+
+    .navbar{
+
+        min-height:68px;
+
+        padding:
+
+            14px 18px;
+
+        position:relative;
+
+    }
+
+
+    .logo{
+
+        font-size:22px;
+
+    }
+
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:0;
+
+        padding:8px 0;
+
+        background:#0d6efd;
+
+        box-shadow:
+
+            0 10px 25px
+            rgba(0,0,0,.15);
+
+        z-index:999;
+
+    }
+
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        display:block;
+
+        width:100%;
+
+        padding:13px 20px;
+
+        text-align:center;
+
+        font-size:14px;
+
+        border-bottom:
+
+            1px solid
+            rgba(255,255,255,.15);
+
+    }
+
+
+    .nav-links a:last-child{
+
+        border-bottom:none;
+
+    }
+
+
+    .nav-links a::after{
+
+        display:none;
+
+    }
+
+
+    .nav-links a:hover{
+
+        background:
+
+            rgba(255,255,255,.1);
+
+        color:white;
+
+    }
+
+
+    /* MAIN */
+
+    .main-content{
+
+        padding:
+
+            35px 15px;
+
+    }
+
+
+    .container{
+
+        width:100%;
+
+        padding:28px 22px;
+
+        border-radius:18px;
+
+    }
+
+
+    .page-title{
+
+        font-size:29px;
+
+    }
+
+
+    .subtitle{
+
+        font-size:13px;
+
+    }
+
+
+    /* FORM */
+
+    .form-row{
+
+        grid-template-columns:1fr;
+
+        gap:0;
+
+    }
+
+
+    input,
+    textarea{
+
+        font-size:16px;
+
+    }
+
+
+    /* LINKS */
+
+    .links{
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+
+    /* FOOTER */
+
+    footer{
+
+        padding:
+
+            28px 18px;
+
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width:480px){
+
+
+    .navbar{
+
+        padding:
+
+            13px 15px;
+
+    }
+
+
+    .logo{
+
+        font-size:18px;
+
+    }
+
+
+    .menu-toggle{
+
+        font-size:26px;
+
+    }
+
+
+    .main-content{
+
+        padding:
+
+            25px 12px;
+
+    }
+
+
+    .container{
+
+        padding:
+
+            24px 16px;
+
+        border-radius:16px;
+
+    }
+
+
+    .page-title{
+
+        font-size:25px;
+
+    }
+
+
+    .subtitle{
+
+        margin-bottom:24px;
+
+    }
+
+
+    label{
+
+        font-size:13px;
+
+    }
+
+
+    input,
+    textarea{
+
+        padding:
+
+            12px 13px;
+
+    }
+
+
+    textarea{
+
+        min-height:110px;
+
+    }
+
+
+    .btn{
+
+        padding:13px;
+
+        font-size:15px;
+
+    }
+
+
+    footer p{
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+
+        SMART CART
+
+    </div>
+
+
+    <!-- MOBILE HAMBURGER -->
+
+    <button
+        type="button"
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation">
+
+        ☰
+
+    </button>
+
+
+    <div
+        class="nav-links"
+        id="navLinks">
+
+
+        <a href="/user-dashboard">
+
+            DASHBOARD
+
+        </a>
+
+
+        <a href="/user/products">
+
+            PRODUCTS
+
+        </a>
+
+
+        <a href="/user/cart">
+
+            CART
+
+        </a>
+
+
+        <a href="/user/my-orders">
+
+            ORDERS
+
+        </a>
+
+
+        <a href="/user-logout">
+
+            LOGOUT
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+
+    <div class="container">
+
+
+        <!-- =========================
+             FLASH MESSAGES
+        ========================== -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+
+                    {% for category, message in messages %}
+
+
+                        <div
+                            class="flash {{ category }}"
+                            id="flash{{ loop.index }}">
+
+
+                            {{ message }}
+
+
+                            <button
+                                type="button"
+                                class="close-btn"
+                                onclick="closeFlash('flash{{ loop.index }}')">
+
+                                &times;
+
+                            </button>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- =========================
+             HEADING
+        ========================== -->
+
+        <h2 class="page-title">
+
+            📍 Add Delivery Address
+
+        </h2>
+
+
+        <p class="subtitle">
+
+            Enter your delivery details carefully
+            so your order can reach the correct address.
+
+        </p>
+
+
+
+        <!-- =========================
+             ADDRESS FORM
+        ========================== -->
+
+        <form method="POST">
+
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+
+                <label for="full_name">
+
+                    Full Name
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required>
+
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+
+                <label for="phone">
+
+                    Phone Number
+
+                </label>
+
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    autocomplete="tel"
+                    inputmode="numeric"
+                    required>
+
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-group">
+
+
+                <label for="address">
+
+                    Address
+
+                </label>
+
+
+                <textarea
+                    id="address"
+                    name="address"
+                    placeholder="House number, street, area, landmark..."
+                    autocomplete="street-address"
+                    required></textarea>
+
+
+            </div>
+
+
+
+            <!-- CITY + STATE -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+
+                    <label for="city">
+
+                        City
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="Enter city"
+                        autocomplete="address-level2"
+                        required>
+
+
+                </div>
+
+
+
+                <div class="form-group">
+
+
+                    <label for="state">
+
+                        State
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        placeholder="Enter state"
+                        autocomplete="address-level1"
+                        required>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- PINCODE -->
+
+            <div class="form-group">
+
+
+                <label for="pincode">
+
+                    Pincode
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="pincode"
+                    name="pincode"
+                    placeholder="Enter 6-digit pincode"
+                    autocomplete="postal-code"
+                    inputmode="numeric"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    title="Please enter a valid 6-digit pincode"
+                    required>
+
+
+            </div>
+
+
+
+            <!-- SAVE BUTTON -->
+
+            <button
+                type="submit"
+                class="btn">
+
+                💾 Save Address
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =========================
+             LINKS
+        ========================== -->
+
+        <div class="links">
+
+
+            <a href="/user/address">
+
+                📍 View Saved Addresses
+
+            </a>
+
+
+            <a href="/user-dashboard">
+
+                ← Back to Dashboard
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <h3>
+
+        🛒 Smart Cart
+
+    </h3>
+
+
+    <p>
+
+        Smart Cart is an innovative online shopping
+        platform designed to provide a seamless and
+        secure shopping experience.
+
+    </p>
+
+
+    <br>
+
+
+    <p>
+
+        📍 Telangana, India
+
+    </p>
+
+
+    <p>
+
+        📧
+
+        <a href="mailto:support@smartcart.com">
+
+            support@smartcart.com
+
+        </a>
+
+    </p>
+
+
+    <p>
+
+        📞 +91 6281172858
+
+    </p>
+
+
+    <div class="footer-links">
+
+
+        <a href="#">
+
+            Privacy Policy
+
+        </a>
+
+        |
+
+        <a href="#">
+
+            Terms & Conditions
+
+        </a>
+
+        |
+
+        <a href="/user-contact">
+
+            Contact Us
+
+        </a>
+
+
+    </div>
+
+
+    <br>
+
+
+    <p>
+
+        © 2026 Smart Cart.
+        All Rights Reserved.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* MOBILE NAVBAR */
+
+function toggleMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("active");
+
+}
+
+
+
+/* CLOSE FLASH MESSAGE */
+
+function closeFlash(id){
+
+    const flash =
+        document.getElementById(id);
+
+    if(flash){
+
+        flash.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* CLOSE NAVBAR AFTER LINK CLICK */
+
+document
+    .querySelectorAll(
+        "#navLinks a"
+    )
+    .forEach(function(link){
+
+
+        link.addEventListener(
+            "click",
+            function(){
+
+
+                document
+                    .getElementById(
+                        "navLinks"
+                    )
+                    .classList
+                    .remove(
+                        "active"
+                    );
+
+
+            }
+        );
+
+
+    });
+
+
+
+/* RESET MOBILE MENU ON DESKTOP */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+
+        if(
+            window.innerWidth > 768
+        ){
+
+
+            document
+                .getElementById(
+                    "navLinks"
+                )
+                .classList
+                .remove(
+                    "active"
+                );
+
+
+        }
+
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
