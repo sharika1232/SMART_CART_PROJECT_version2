@@ -1144,13 +1144,13 @@ def user_contact():
         subject = request.form.get('subject')
         message = request.form.get('message')
 
-        body = f"""
-Name : {name}
-Email : {email}
-
-Message:
-{message}
-"""
+                body = f"""
+        Name : {name}
+        Email : {email}
+        
+        Message:
+        {message}
+        """
 
         msg = MIMEText(body)
         msg['Subject'] = subject
@@ -1158,22 +1158,35 @@ Message:
         msg['To'] = config.MAIL_USERNAME
 
         try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(
-                config.MAIL_USERNAME,
-                config.MAIL_PASSWORD
+            response = requests.post(
+                "https://api.resend.com/emails",
+                headers={
+                    "Authorization": f"Bearer {os.environ.get('RESEND_API_KEY')}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "from": "SmartCart <onboarding@resend.dev>",
+                    "to": ["YOUR_RESEND_ACCOUNT_EMAIL@gmail.com"],
+                    "subject": f"SmartCart User Contact - {name}",
+                    "html": f"""
+                        <h2>New User Contact Message</h2>
+                        <p><strong>Name:</strong> {name}</p>
+                        <p><strong>Email:</strong> {email}</p>
+                        <p><strong>Message:</strong></p>
+                        <p>{message}</p>
+                    """
+                },
+                timeout=15
             )
-
-            server.send_message(msg)
-            server.quit()
-
+        
+            response.raise_for_status()
+        
             flash("Message sent successfully!", "success")
 
-        except Exception as e:
-            flash(str(e), "danger")
-
-        return redirect(url_for('user_contact'))
+    except Exception as e:
+        print("User Contact Resend Error:", e)
+        flash("Unable to send message. Please try again.", "danger")
+                return redirect(url_for('user_contact'))
 
     return render_template("user/user_contact.html")
 
