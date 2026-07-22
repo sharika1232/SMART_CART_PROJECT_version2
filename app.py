@@ -9,6 +9,7 @@ import razorpay
 import traceback
 import config
 import os
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -1332,33 +1333,36 @@ def user_forgot_password():
     session['reset_otp'] = otp
     session['reset_email'] = email
 
-    try:
-
-        message = Message(
-            subject="SmartCart Password Reset OTP",
-            sender=config.MAIL_USERNAME,
-            recipients=[email]
+     try:
+        response = requests.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {os.environ.get('RESEND_API_KEY')}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "from": "SmartCart <onboarding@resend.dev>",
+                "to": [email],
+                "subject": "SmartCart Password Reset OTP",
+                "html": f"""
+                    <h2>SmartCart Password Reset</h2>
+                    <p>Your OTP is:</p>
+                    <h1>{otp}</h1>
+                    <p>Do not share this OTP with anyone.</p>
+                """
+            },
+            timeout=15
         )
-
-        message.body = f"""
-Hello,
-
-Your SmartCart Password Reset OTP is:
-
-{otp}
-
-Do not share this OTP with anyone.
-"""
-
-        mail.send(message)
-
+    
+        response.raise_for_status()
         flash("OTP sent successfully!", "success")
-
+    
     except Exception as e:
-
+        print("Resend error:", e)
         flash(f"Mail Error: {e}", "danger")
-
         return redirect(url_for('user_forgot_password'))
+
+    
 
     return redirect(url_for('user_reset_password'))
 
