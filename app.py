@@ -539,6 +539,9 @@ def update_item_page(item_id):
 # ==========================================================
 # ADMIN FORGOT PASSWORD
 # ==========================================================
+# ==========================================================
+# ADMIN FORGOT PASSWORD
+# ==========================================================
 @app.route('/admin/forgot-password', methods=['GET', 'POST'])
 def admin_forgot_password():
 
@@ -561,40 +564,48 @@ def admin_forgot_password():
     conn.close()
 
     if not admin:
-        flash("Email not found! Please register first.", "danger")
+        flash(
+            "Email not found! Please register first.",
+            "danger"
+        )
         return redirect(url_for('admin_forgot_password'))
 
-       otp = random.randint(100000, 999999)
+    otp = random.randint(100000, 999999)
 
-session['admin_reset_otp'] = otp
-session['admin_reset_email'] = email
+    session['admin_reset_otp'] = otp
+    session['admin_reset_email'] = email
 
-try:
-    resend.api_key = os.environ.get("RESEND_API_KEY")
+    try:
+        resend.api_key = os.environ.get("RESEND_API_KEY")
 
-    params = {
-        "from": "SmartCart <onboarding@resend.dev>",
-        "to": [email],
-        "subject": "SmartCart Admin Password Reset OTP",
-        "html": f"""
-            <h2>SmartCart Admin Password Reset</h2>
-            <p>Hello Admin,</p>
-            <p>Your password reset OTP is:</p>
-            <h1>{otp}</h1>
-            <p>Please do not share this OTP with anyone.</p>
-        """
-    }
+        params = {
+            "from": "SmartCart <onboarding@resend.dev>",
+            "to": [email],
+            "subject": "SmartCart Admin Password Reset OTP",
+            "html": f"""
+                <h2>SmartCart Admin Password Reset</h2>
+                <p>Hello Admin,</p>
+                <p>Your password reset OTP is:</p>
+                <h1>{otp}</h1>
+                <p>Please do not share this OTP with anyone.</p>
+            """
+        }
 
-    resend.Emails.send(params)
+        resend.Emails.send(params)
 
-    flash("OTP sent successfully!", "success")
+        flash("OTP sent successfully!", "success")
 
-except Exception as e:
-    print("Resend Admin OTP Error:", e)
-    flash(f"Mail Error: {e}", "danger")
-    return redirect(url_for('admin_forgot_password'))
+    except Exception as e:
+        print("Resend Admin OTP Error:", e)
+        flash(f"Mail Error: {e}", "danger")
+        return redirect(url_for('admin_forgot_password'))
 
-return redirect(url_for('admin_reset_password'))
+    return redirect(url_for('admin_reset_password'))
+
+
+# ==========================================================
+# ADMIN RESET PASSWORD
+# ==========================================================
 # ==========================================================
 # ADMIN RESET PASSWORD
 # ==========================================================
