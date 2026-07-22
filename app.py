@@ -162,7 +162,7 @@ Message:
         msg["To"] = config.MAIL_USERNAME
 
         try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10)
             server.starttls()
             server.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
             server.send_message(msg)
