@@ -12,10 +12,10 @@ DB_PASSWORD = "root"
 DB_NAME = "smartcart_db"
 
 # Email SMTP Settings
-MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 587
-MAIL_USE_TLS = True
-MAIL_USE_SSL = False
+MAIL_SERVER = "smtp.gmail.com"
+MAIL_PORT = 465
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True
 MAIL_USERNAME = "ammulucky506@gmail.com"
 MAIL_PASSWORD = "tghj gbsr lpgt sgmv"   # Gmail App Password
 
